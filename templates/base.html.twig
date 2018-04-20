@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% block head %}
-            <meta charset="UTF-8">
-            <title>{{ "NAGIDO" }}</title>
-            {% block stylesheets %}
-                <link rel="stylesheet" href="{{ asset('build/css/landing.css') }}">
-            {% endblock %}
-            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-            <meta name="viewport" content="width=device-width,initial-scale=1.0">
-            {% block canonical_meta %}{% endblock %}
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>{{ "NAGIDO" }}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/css/landing.css') }}">
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}
-            <div>{% block header %}{% endblock %}</div>
-            <div>{% block content %}{% endblock %}</div>
-            <div>
-                {% block footer %}
-                    &copy; Copyright 2018 by D&G
-                {% endblock %}
-            </div>
-            {% block javascripts %}
-                <script src="{{ asset('build/js/app.js') }}"></script>
-            {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        {% block canonical_meta %}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div>{% block header %}{% endblock %}</div>
+    <div>{% block content %}{% endblock %}</div>
+    <div>
+        {% block footer %}
+            <footer>&copy; 2018 by D&G</footer>
         {% endblock %}
-    </body>
+    </div>
+{% block javascripts %}
+    <script src="{{ asset('build/js/app.js') }}"></script>
+{% endblock %}
+{% endblock %}
+</body>
 </html>
