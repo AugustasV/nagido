@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title>{{ "NAGIDO" }}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/css/landing.css') }}">
+            <link href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700" rel="stylesheet" type="text/css">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -21,9 +21,9 @@
             <footer>&copy; 2018 by D&G</footer>
         {% endblock %}
     </div>
-{% block javascripts %}
-    <script src="{{ asset('build/js/app.js') }}"></script>
-{% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset('build/js/app.js') }}"></script>
+    {% endblock %}
 {% endblock %}
 </body>
 </html>
