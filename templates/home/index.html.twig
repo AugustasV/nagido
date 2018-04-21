@@ -13,9 +13,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="pageTitle">
-        {% block section1 %}
 
+    {% block section1 %}
+        <div class="pageTitle">
             <h1>Namų dokumentų gidas</h1>
 
             <p class="pageText">
@@ -28,9 +28,9 @@
                     <span>Prisijungti su Google</span>
                 </button>
             </p>
+        </div>
+    {% endblock %}
 
-        {% endblock %}
-    </div>
 
     {% block section2 %}
         <div class="pageSubTitle">

@@ -5,904 +5,892 @@
     <link rel="stylesheet" href="{{ asset('build/css/inside.css') }}">
 {% endblock %}
 
-{% block body %}
-<header>
-    <div class="horizontalList">
-        <div>
-            <button class="menuButton" title="Meniu" onclick="openNav()">
-                <img id="menuIcon" class="menuIcon" title="Pagrindinis meniu" src="img/menu.png" alt="Menu"/>
-            </button>
-        </div>
-        <div>
-            <h1>NAGIDO</h1>
-        </div>
-        <div>
-            <button class="searchButton" id="one" title="Paieška">
-                <img class="searchImage" src="img/search-single.png" alt="Search"/>
-            </button>
-        </div>
-        <div>
-            <form class="searchForm">
-                <button class="searchButton" id="two" title="Paieška">
-                    <img class="searchImage" src="img/search-single.png" alt="Search"/>
+{% block header %}
+    <header>
+        <div class="horizontalList">
+            <div>
+                <button class="menuButton" title="Meniu" onclick="openNav()">
+                    <img class="menuIcon" src="{{ asset('images/menu.png') }}" alt="Meniu"/>
                 </button>
-                <input type="text" id="search" placeholder="Ieškokite">
-                <!--<a href="javascript:void(0)" class="closebtn" onclick="#">&times;</a>-->
-            </form>
-        </div>
-        <div>
-            <button id="signOut" class="signOutButton">
-                <span>Atsijungti</span>
-            </button>
-        </div>
-    </div>
-</header>
-<section>
-    <div id="sideNavigation" class="sideNavigation">
-        <ul id="ul1">
-            <li>
-                <a href="javascript:showArticle(1);">
-                    <img src="img/paper.png" alt="Document"/>
-                    <span class="sideList">Dokumentai</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(2);">
-                    <img src="img/calendar.png" alt="Calendar"/>
-                    <span class="sideList">Priminimai</span>
-                </a>
-            </li>
-        </ul>
-        <ul id="ul2">
-            <li>
-                <div class="sideNavigationTitle_left"><b>KATEGORIJOS</b></div>
-            </li>
-            <li>
-                <a href="javascript:showArticle(3);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Nuosavybės dokumentai</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(4);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Sutartys</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(5);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Draudimo polisai</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(6);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Pažymos</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(7);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Mokesčiai</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(8);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Kvitai</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(9);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Instrukcijos ir garantijos</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(10);">
-                    <img src="img/folder.png" alt="Aplankas"/>
-                    <span class="sideList">Įvairūs</span>
-                </a>
-            </li>
-        </ul>
-        <ul id="ul3">
-            <li>
-                <div class="sideNavigationTitle_left"><b>ETIKETĖS</b></div>
-                <div class="sideNavigationTitle_right">
-                    <a href="#">
-                        <b>Redaguoti</b>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <a href="javascript:showArticle(11);">
-                    <img src="img/tag.png" alt="Etiketė"/>
-                    <span class="sideList">Namas</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:showArticle(12);">
-                    <img src="img/tag.png" alt="Etiketė"/>
-                    <span class="sideList">Stepas</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="img/add.png" alt="Sukurti naują"/>
-                    <span class="sideList">Sukurti naują</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
-<section>
-    <div id="main">
-        <div>
-            <button id="newDocument" class="addDocumentButton" onclick="AddDocument()">
-                Sukurti naują dokumentą..
-            </button>
-        </div>
-        <div id="newDocumentWindow" class="newDocumentWindow">
-            <div class="newWindow">
-                <form>
-                    <label for="documentTitle"><b>Pavadinimas:</b></label>
-                    <input type="text" id="documentTitle" name="documentTitle" placeholder="Įrašykite pavadinimą..">
-                    <br>
+            </div>
 
-                    <label for="category"><b>Kategorija:</b></label>
-                    <select id="category" name="category">
-                        <option value="nuosavybe">pasirinkite</option>
-                        <option value="nuosavybe">Nuosavybės dokumentai</option>
-                        <option value="sutartys">Sutartys</option>
-                        <option value="polisai">Draudimo polisai</option>
-                        <option value="pazymos">Pažymos</option>
-                        <option value="mokesciai">Mokesčiai</option>
-                        <option value="kvitai">Kvitai</option>
-                        <option value="garantijos">Instrukcijos ir garantijos</option>
-                        <option value="ivairus">Įvairūs</option>
-                    </select>
-                    <br>
+            <div>
+                <h1>NAGIDO</h1>
+            </div>
 
-                    <label for="tag"><b>Etiketės:</b></label>
-                    <input type="checkbox" id="tag" name="tag" value="Mamas">Namas
-                    <input type="checkbox" id="tag1" name="tag1" value="stepas">Stepas
-                    <br>
+            <div>
+                <button class="searchButton" title="Paieška">
+                    <img class="searchImage" src="{{ asset('images/search-single.png') }}" alt="Paieška"/>
+                </button>
+            </div>
 
-                    <label for="dateFrom"><b>Galioja nuo:</b></label>
-                    <input type="date" id="dateFrom" name="from">
-                    <br>
-
-                    <label for="dateUntil"><b>Galioja iki:</b></label>
-                    <input type="date" id="dateUntil" name="until">
-                    <br>
-
-                    <label for="attachment"><b>Priedas:</b></label>
-                    <input type="file" name="attachment" id="attachment"/>
-                    <br>
-
-                    <label for="reminder"><b>Galioja nuo:</b></label>
-                    <input type="date" id="reminder" name="reminder">
-                    <br>
-
-                    <input type="button" class="saveButton" value="Išsaugoti" onClick="goBack()">
-                    <input type="button" class="saveButton" value ="Atšaukti" onClick="goBack()">
+            <div>
+                <form class="searchForm">
+                    <input type="text" id="search" placeholder="Ieškokite">
                 </form>
+            </div>
 
+            <div>
+                <button id="signOut" class="signOutButton">
+                    <span>Atsijungti</span>
+                </button>
             </div>
         </div>
-        <article id="1">
-            <div style="overflow-x:auto;">
-                <table >
-                    <tr>
-                        <th>Pavadinimas</th>
-                        <th>Kategorija</th>
-                        <th>Etiketės</th>
-                        <th>Galioja nuo</th>
-                        <th>Galioja iki</th>
-                        <th>Priedai</th>
-                        <th>Priminimas</th>
-                        <th colspan="2">Veiksmai</th>
-                    </tr>
-                    <tr>
-                        <td>Mini Cooper</td>
-                        <td>Draudimo polisai</td>
-                        <td></td>
-                        <td>2018-04-03</td>
-                        <td>2018-11-03</td>
-                        <td></td>
-                        <td>2018-10-20</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Turto draudimas</td>
-                        <td>Draudimo polisai</td>
-                        <td>Namas <br> Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-04-15</td>
-                        <td></td>
-                        <td>2019-03-05</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Darbo sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Autorinė sutartis</td>
-                        <td>Sutartys</td>
-                        <td></td>
-                        <td>2017-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>NPD prašymas</td>
-                        <td>Įvairūs</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td></td>
-                        <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </article>
-        <article id="2">
-            <div style="overflow-x:auto;">
-                <table >
-                    <tr>
-                        <th>Pavadinimas</th>
-                        <th>Kategorija</th>
-                        <th>Etiketės</th>
-                        <th>Galioja nuo</th>
-                        <th>Galioja iki</th>
-                        <th>Priedai</th>
-                        <th>Priminimas</th>
-                        <th colspan="2">Veiksmai</th>
-                    </tr>
-                    <tr>
-                        <td>Mini Cooper</td>
-                        <td>Draudimo polisai</td>
-                        <td></td>
-                        <td>2018-04-03</td>
-                        <td>2018-11-03</td>
-                        <td></td>
-                        <td>2018-10-20</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Turto draudimas</td>
-                        <td>Draudimo polisai</td>
-                        <td>Namas <br> Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-04-15</td>
-                        <td></td>
-                        <td>2019-03-05</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tele2 sutartis</td>
-                        <td>Sutartys</td>
-                        <td>Stepas</td>
-                        <td>2018-04-03</td>
-                        <td>2019-02-01</td>
-                        <td></td>
-                        <td>2019-01-25</td>
-                        <td>
-                            <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
-                        </td>
-                        <td>
-                            <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </article>
-        <article id="3">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
-                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-            </div>
-        </article>
-        <article id="4">
-            <p>aaaaa</p>
-        </article>
-        <article id="5">
-            <p>aaaaa</p>
-        </article>
-        <article id="6">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
-                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-            </div>
-        </article>
-        <article id="7">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
-                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-            </div>
-        </article>
-        <article id="8">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
-                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-            </div>
-        </article>
-        <article id="9">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
-                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-            </div>
-        </article>
-        <article id="10">
-            <p>aaaaa</p>
-        </article>
-        <article id="11">
-            <div class="displayCenter">
-                <img class="emptyImage" src="img/tag1.png" alt="Empty Tag"/>
-                <div>Nėra dokumentų su šia etikete</div>
-            </div>
-        </article>
-        <article id="12">
-            <p>Yra</p>
-        </article>
-    </div>
-</section>
-<script src="js/scripts.js"></script>
-<script>
-    function AddDocument() {
-        var x = document.getElementById("newDocumentWindow");
-        x.style.display = "block";
-    }
+    </header>
+{% endblock %}
 
-    function Display() {
-        var x = document.getElementById("newDocumentWindow");
-        x.style.display = "block";
-    }
-    function goBack() {
-        var x = document.getElementById("newDocumentWindow");
-        x.style.display = "none";
-    }
-</script>
+{% block content %}
+    {% block section1 %}
+        <section>
+            <div id="sideNavigation" class="sideNavigation">
+                <ul id="ul1">
+                    <li>
+                        <a href="javascript:showArticle(1);">
+                            <img src="{{ asset('images/paper.png') }}" alt="Dokumentas"/>
+                            <span class="sideList">Dokumentai</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:showArticle(2);">
+                            <img src="{{ asset('images/calendar.png') }}" alt="Kalendorius"/>
+                            <span class="sideList">Priminimai</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul id="ul2">
+                    <li>
+                        <div class="sideNavigationTitle_left"><b>KATEGORIJOS</b></div>
+                    </li>
+
+                    {% for i in 3..10 %}
+                        <li>
+                            <a href="javascript:showArticle(i);">
+                                <div>
+                                    <img src="{{ asset('images/folder.png') }}" alt="Aplankas"/>
+                                    <span class="sideList">{{ "Nuosavybės dokumentai" }}</span>
+                                </div>
+
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+
+
+
+
+
+
+
+
+                <ul id="ul3">
+                    <li>
+                        <div class="sideNavigationTitle_left"><b>ETIKETĖS</b></div>
+                        <div class="sideNavigationTitle_right">
+                            <a href="#">
+                                <b>Redaguoti</b>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:showArticle(11);">
+                            <img src="img/tag.png" alt="Etiketė"/>
+                            <span class="sideList">Namas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:showArticle(12);">
+                            <img src="img/tag.png" alt="Etiketė"/>
+                            <span class="sideList">Stepas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/add.png" alt="Sukurti naują"/>
+                            <span class="sideList">Sukurti naują</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    {% endblock %}
+
+    {% block section2 %}
+        <section>
+            <div id="main">
+                <div>
+                    <button id="newDocument" class="addDocumentButton" onclick="AddDocument()">
+                        Sukurti naują dokumentą..
+                    </button>
+                </div>
+                <div id="newDocumentWindow" class="newDocumentWindow">
+                    <div class="newWindow">
+                        <form>
+                            <label for="documentTitle"><b>Pavadinimas:</b></label>
+                            <input type="text" id="documentTitle" name="documentTitle" placeholder="Įrašykite pavadinimą..">
+                            <br>
+
+                            <label for="category"><b>Kategorija:</b></label>
+                            <select id="category" name="category">
+                                <option value="nuosavybe">pasirinkite</option>
+                                <option value="nuosavybe">Nuosavybės dokumentai</option>
+                                <option value="sutartys">Sutartys</option>
+                                <option value="polisai">Draudimo polisai</option>
+                                <option value="pazymos">Pažymos</option>
+                                <option value="mokesciai">Mokesčiai</option>
+                                <option value="kvitai">Kvitai</option>
+                                <option value="garantijos">Instrukcijos ir garantijos</option>
+                                <option value="ivairus">Įvairūs</option>
+                            </select>
+                            <br>
+
+                            <label for="tag"><b>Etiketės:</b></label>
+                            <input type="checkbox" id="tag" name="tag" value="Mamas">Namas
+                            <input type="checkbox" id="tag1" name="tag1" value="stepas">Stepas
+                            <br>
+
+                            <label for="dateFrom"><b>Galioja nuo:</b></label>
+                            <input type="date" id="dateFrom" name="from">
+                            <br>
+
+                            <label for="dateUntil"><b>Galioja iki:</b></label>
+                            <input type="date" id="dateUntil" name="until">
+                            <br>
+
+                            <label for="attachment"><b>Priedas:</b></label>
+                            <input type="file" name="attachment" id="attachment"/>
+                            <br>
+
+                            <label for="reminder"><b>Galioja nuo:</b></label>
+                            <input type="date" id="reminder" name="reminder">
+                            <br>
+
+                            <input type="button" class="saveButton" value="Išsaugoti" onClick="goBack()">
+                            <input type="button" class="saveButton" value ="Atšaukti" onClick="goBack()">
+                        </form>
+
+                    </div>
+                </div>
+                <article id="1">
+                    <div style="overflow-x:auto;">
+                        <table >
+                            <tr>
+                                <th>Pavadinimas</th>
+                                <th>Kategorija</th>
+                                <th>Etiketės</th>
+                                <th>Galioja nuo</th>
+                                <th>Galioja iki</th>
+                                <th>Priedai</th>
+                                <th>Priminimas</th>
+                                <th colspan="2">Veiksmai</th>
+                            </tr>
+                            <tr>
+                                <td>Mini Cooper</td>
+                                <td>Draudimo polisai</td>
+                                <td></td>
+                                <td>2018-04-03</td>
+                                <td>2018-11-03</td>
+                                <td></td>
+                                <td>2018-10-20</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Turto draudimas</td>
+                                <td>Draudimo polisai</td>
+                                <td>Namas <br> Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-04-15</td>
+                                <td></td>
+                                <td>2019-03-05</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Darbo sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/darbo-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Autorinė sutartis</td>
+                                <td>Sutartys</td>
+                                <td></td>
+                                <td>2017-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/kurinio-autorine-sutartis.pdf','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NPD prašymas</td>
+                                <td>Įvairūs</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td></td>
+                                <td><a href="#" onClick="MyWindow=window.open('files/prasymas-taikyti-npd.jpg','MyWindow','width=auto,height=auto'); return false;"><img src="img/attachment.png" alt="Dokumentas" title="Peržiūrėti priedą"/></a></td>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </article>
+                <article id="2">
+                    <div style="overflow-x:auto;">
+                        <table >
+                            <tr>
+                                <th>Pavadinimas</th>
+                                <th>Kategorija</th>
+                                <th>Etiketės</th>
+                                <th>Galioja nuo</th>
+                                <th>Galioja iki</th>
+                                <th>Priedai</th>
+                                <th>Priminimas</th>
+                                <th colspan="2">Veiksmai</th>
+                            </tr>
+                            <tr>
+                                <td>Mini Cooper</td>
+                                <td>Draudimo polisai</td>
+                                <td></td>
+                                <td>2018-04-03</td>
+                                <td>2018-11-03</td>
+                                <td></td>
+                                <td>2018-10-20</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Turto draudimas</td>
+                                <td>Draudimo polisai</td>
+                                <td>Namas <br> Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-04-15</td>
+                                <td></td>
+                                <td>2019-03-05</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tele2 sutartis</td>
+                                <td>Sutartys</td>
+                                <td>Stepas</td>
+                                <td>2018-04-03</td>
+                                <td>2019-02-01</td>
+                                <td></td>
+                                <td>2019-01-25</td>
+                                <td>
+                                    <a href="javascript:Display();"><img src="img/edit1.png" alt="Redagavimas" title="Redaguoti"/></a>
+                                </td>
+                                <td>
+                                    <a href="#"><img src="img/delete.png" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </article>
+                <article id="3">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
+                        <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                    </div>
+                </article>
+                <article id="4">
+                    <p>aaaaa</p>
+                </article>
+                <article id="5">
+                    <p>aaaaa</p>
+                </article>
+                <article id="6">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
+                        <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                    </div>
+                </article>
+                <article id="7">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
+                        <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                    </div>
+                </article>
+                <article id="8">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
+                        <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                    </div>
+                </article>
+                <article id="9">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/folder1.png" alt="Empty Folder"/>
+                        <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                    </div>
+                </article>
+                <article id="10">
+                    <p>aaaaa</p>
+                </article>
+                <article id="11">
+                    <div class="displayCenter">
+                        <img class="emptyImage" src="img/tag1.png" alt="Empty Tag"/>
+                        <div>Nėra dokumentų su šia etikete</div>
+                    </div>
+                </article>
+                <article id="12">
+                    <p>Yra</p>
+                </article>
+            </div>
+        </section>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('build/js/scripts.js') }}"></script>
+        <script>
+            function AddDocument() {
+                var x = document.getElementById("newDocumentWindow");
+                x.style.display = "block";
+            }
+
+            function Display() {
+                var x = document.getElementById("newDocumentWindow");
+                x.style.display = "block";
+            }
+            function goBack() {
+                var x = document.getElementById("newDocumentWindow");
+                x.style.display = "none";
+            }
+        </script>
+    {% endblock %}
+
 
 {% endblock %}
