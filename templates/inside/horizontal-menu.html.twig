@@ -1,0 +1,31 @@
+<header>
+    <div class="horizontalList">
+        <div>
+            <button class="menuButton" title="Meniu" onclick="openNav()">
+                <img class="menuIcon" src="{{ asset('images/menu.png') }}" alt="Meniu"/>
+            </button>
+        </div>
+
+        <div>
+            <h1>NAGIDO</h1>
+        </div>
+
+        <div>
+            <button class="searchButton" title="Paieška">
+                <img class="searchImage" src="{{ asset('images/search-single.png') }}" alt="Paieška"/>
+            </button>
+        </div>
+
+        <div>
+            <form class="searchForm">
+                <input type="text" id="search" placeholder="Ieškokite">
+            </form>
+        </div>
+
+        <div>
+            <button id="signOut" class="signOutButton">
+                <span>Atsijungti</span>
+            </button>
+        </div>
+    </div>
+</header>
