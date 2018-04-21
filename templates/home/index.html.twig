@@ -83,7 +83,13 @@
     </div>
 
     {% block javascripts %}
-        <script src="{{ asset('build/js/scripts.js') }}"></script>
+        <script>
+            document.getElementById('sigIn').onclick = function ()
+            {
+                var x = document.getElementById('loginConfirmation');
+                x.style.display = 'block';
+            };
+        </script>
     {% endblock %}
 
 {% endblock %}
