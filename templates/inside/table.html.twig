@@ -1,0 +1,44 @@
+{% block table %}
+    <div style="overflow-x:auto;">
+        <table >
+            <tr>
+                <th>Pavadinimas</th>
+                <th>Kategorija</th>
+                <th>Etiketės</th>
+                <th>Priedai</th>
+                <th>Galioja nuo</th>
+                <th>Galioja iki</th>
+                <th>Priminimas</th>
+                <th>Pastabos</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+
+            {% for i in 1..12 %}
+                <tr>
+                <td>{{ ["Pavadinimas ", i]|join }}</td>
+                <td>{{ ["Kategorija ", i]|join }}</td>
+                <td>
+                    {% for j in 1..3 %}
+                        {{ ["Etiketė ", j]|join }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in 1..2 %}
+                        {{ ["Priedai ", j]|join }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ ["Data ", i]|join }}</td>
+                <td>{{ ["Data ", i]|join }}</td>
+                <td>{{ ["Data ", i]|join }}</td>
+                <td>{{ ["Pastabos ", i]|join }}</td>
+                <td>
+                    <a href="javascript:Display();"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
+                </td>
+                <td>
+                    <a href="#"><img src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
