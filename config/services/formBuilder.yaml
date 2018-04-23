@@ -1,0 +1,3 @@
+services:
+    app.accSystem.formBuilder:
+        class: App\accSystem\formBuilder
