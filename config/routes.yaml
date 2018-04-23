@@ -2,6 +2,10 @@ index:
     path: /
     controller: App\Controller\HomeController::index
 
-inside:
-    path: /inside/
-    controller: App\Controller\InsideController::index
+login:
+  path: /login
+  controller: App\Controller\GoogleApiController::login
+
+logout:
+  path: /logout
+  controller: App\Controller\GoogleApiController::logout

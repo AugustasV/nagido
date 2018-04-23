@@ -7,42 +7,11 @@
 
     <div id="newDocumentWindow" class="newDocumentWindow">
         <div class="newWindow">
-            <form>
-                <label for="documentTitle"><b>Pavadinimas:</b></label>
-                <input type="text" id="documentTitle" name="documentTitle" placeholder="Įrašykite pavadinimą..">
-                <br>
-
-                <label for="category"><b>Kategorija:</b></label>
-                <select id="category" name="category">
-                    <option value={{ ["Kategorija ", 0]|join }}> {{ "Pasirinkite" }}</option>
-                    {% for i in 1..8 %}
-                        <option value={{ ["Kategorija ", i]|join }}> {{ ["Kategorija ", i]|join }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-
-                <label for="tag"><b>Etiketės:</b></label>
-                {% for i in 1..2 %}
-                    <input type="checkbox" id="tag" name="tag" value={{ ["Tag ", i]|join }}>{{ ["Etiketė ", i]|join }}
-                {% endfor %}
-                <br>
-
-                <label for="attachment"><b>Priedas:</b></label>
-                <input type="file" name="attachment" id="attachment"/>
-                <br>
-
-                {#<a href="javascript:ShowMore();">#}
-                    {#Daugiau parametrų..#}
-                {#</a>#}
-
-                {{ include ('inside/more.html.twig') }}
-
-                <br>
-
-                <input type="button" class="saveButton" value="Išsaugoti" onClick="GoBack()">
-                <input type="button" class="saveButton" value ="Atšaukti" onClick="GoBack()">
-            </form>
-
+            {% if form %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
