@@ -3,6 +3,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('build/css/landing.css') }}">
+    <style>
+        .loginButton {
+            padding: 5px 15px;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 {% endblock %}
 
 {% block header %}
@@ -23,20 +30,15 @@
             </p>
 
             <p class="googleLogin">
-                <button id="sigIn" class="loginButton">
-                    <img class="googleLogo" src="{{ asset('images/google-icon.png') }}" alt="Google logo"/>
-                    <span>Prisijungti su Google</span>
-                </button>
+                <a class="loginButton" href="{{ path('login') }}">Prisijungti su Google</a>
             </p>
         </div>
     {% endblock %}
-
 
     {% block section2 %}
         <div class="pageSubTitle">
             <h1>Sprendimai</h1>
         </div>
-
         <div class="cardGrid">
             <div class="card">
                 <img src="{{ asset('images/safety.png') }}" alt="Saugojimas"/>
@@ -70,27 +72,4 @@
             </div>
         </div>
     {% endblock %}
-
-    <div id="loginConfirmation" class="loginConfirmation">
-        <div class="confirmationWindow">
-            <p>Sveikiname sėkmingai prisijungus prie sistemos!</p>
-            <p>
-                <button onclick="window.location.href={{ path('inside') }}">
-                    <span>Tęsti</span>
-                </button>
-            </p>
-        </div>
-    </div>
-
-    {% block javascripts %}
-        <script>
-            document.getElementById('sigIn').onclick = function ()
-            {
-                var x = document.getElementById('loginConfirmation');
-                x.style.display = 'block';
-            };
-        </script>
-    {% endblock %}
-
 {% endblock %}
-
