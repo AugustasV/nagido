@@ -12,13 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+//use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $session = new Session();
+        //$session = new Session();
+        $session = $request->getSession();
         $session->start();
         $tokens = $session->get("accessToken");
 
