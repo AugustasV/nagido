@@ -1,23 +1,18 @@
-WindowSize();
-ShowArticle(1);
+windowSize();
+showArticle(1);
 
-function ShowArticle(articleID)
-{
-    for(i = 1; i <= 12; i++)
-    {
-        if(i === articleID)
-        {
+function showArticle(articleID) {
+    for(i = 1; i <= 12; i++) {
+        if(i === articleID) {
             document.getElementById(i).style.display = 'block';
         }
-        else
-        {
+        else {
             document.getElementById(i).style.display = 'none';
         }
     }
 }
 
-function WindowSize()
-{
+function windowSize() {
     var x1 = document.body.clientWidth;
     var x2;
     if (document.getElementById('sideNavigation').style.width === '250px' || document.getElementById('sideNavigation').style.width === '') {
@@ -30,8 +25,7 @@ function WindowSize()
     document.getElementById('main').style.width = x3;
 }
 
-function OpenNav()
-{
+function openNav() {
     var x1 = document.body.clientWidth;
     var x2;
     if (document.getElementById('sideNavigation').style.width === '250px' || document.getElementById('sideNavigation').style.width === '') {
@@ -48,25 +42,22 @@ function OpenNav()
     document.getElementById('main').style.width = x3;
 }
 
-function AddDocument()
-{
+function addDocument() {
     var x = document.getElementById('newDocumentWindow');
     x.style.display = 'block';
 }
 
-function Display()
-{
+function display() {
     var x = document.getElementById('newDocumentWindow');
     x.style.display = 'block';
 }
 
-function GoBack()
-{
+function goBack() {
     var x = document.getElementById('newDocumentWindow');
     x.style.display = 'none';
 }
 
-// function ShowMore() {
+// function showMore() {
 //     var x = document.getElementById('options');
 //     x.style.display = 'block';
 //     document.getElementById('newDocumentWindow').style.height = "700px";
