@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block body %}
-    <body onresize="windowSize()">
+    <body onresize="WindowSize()">
         {% block header %}
             {{ include ('inside/horizontal-menu.html.twig') }}
         {% endblock %}
@@ -72,7 +72,7 @@
             {% block footer %}{% endblock %}
 
             {% block javascripts %}
-                <script src="{{ asset('build/js/app.js') }}"></script>
+                <script src="{{ asset('build/js/scripts.js') }}"></script>
             {% endblock %}
         {% endblock %}
     </body>
