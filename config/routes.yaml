@@ -13,3 +13,7 @@ logout:
 reminder:
   path: /remind
   controller: App\Controller\HomeController::reminder
+
+kategorijos:
+  path: /{kategorija}
+  controller: App\Controller\HomeController::categories

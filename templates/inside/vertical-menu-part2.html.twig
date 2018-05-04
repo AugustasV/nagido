@@ -6,7 +6,7 @@
 
         {% for category in categories %}
             <li>
-                <a href="#">
+                <a href="/{{ category.categoryId }}">
                     <div>
                         <img src="{{ asset('images/folder.png') }}" alt="Aplankas"/>
                         <span class="sideList">{{ category.categoryName }}</span>

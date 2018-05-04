@@ -84,7 +84,7 @@ class HomeController extends Controller
             $id = $session->get("id");
             $client->setAccessToken($tokens);
 
-            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id]);
+            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "docReminder" => Null]);
             $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
             $form = $this->newForm();
@@ -152,5 +152,46 @@ class HomeController extends Controller
                 'attr' => array("onClick" => "GoBack()")
             ))
             ->getForm();
+    }
+
+    public function categories(request $request, $kategorija) {
+        $session = $request->getSession();
+        $session->start();
+        $tokens = $session->get("accessToken");
+
+        if (isset($tokens) && $tokens) {
+            $client = new Google_Client();
+            try {
+                $client->setAuthConfig('client_secrets.json');
+            } catch (\Google_Exception $e) {
+                $client = null;
+            }
+            $client->addScope("https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email");
+            $id = $session->get("id");
+            $client->setAccessToken($tokens);
+            $kategorija = $kategorija - 1;
+            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "categoryId" => $kategorija]);
+            $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+
+            $form = $this->newForm();
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()) {
+                $article = $form->getData();
+                $article->setUserId($id);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($article);
+                $entityManager->flush();
+                return $this->redirectToRoute('index');
+            }
+            return $this->render('home/home.html.twig', [
+                'files' => $userFiles,
+                'categories' => $categories,
+                'form' => $form->createView()
+            ]);
+        } else {
+            return $this->render('home/index.html.twig', [
+            ]);
+        }
     }
 }

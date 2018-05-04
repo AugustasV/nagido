@@ -9,7 +9,6 @@
                 <th>Galioja nuo</th>
                 <th>Galioja iki</th>
                 <th>Priminimas</th>
-                <th>Pastabos</th>
                 <th colspan="2">Veiksmai</th>
             </tr>
 
@@ -34,10 +33,6 @@
                     {% else %}
                         <td>{{ file.DocReminder|date("Y/m/d") }}</td>
                     {% endif %}
-
-
-
-                    <td>Pastabos</td>
                     <td>
                         <a href="javascript:Display();"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
                     </td>
