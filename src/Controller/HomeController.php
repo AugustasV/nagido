@@ -84,7 +84,7 @@ class HomeController extends Controller
             $id = $session->get("id");
             $client->setAccessToken($tokens);
 
-            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "docReminder" => Null]);
+            $userFiles = $this->getReminderDates($id);
             $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
             $form = $this->newForm();
@@ -193,5 +193,18 @@ class HomeController extends Controller
             return $this->render('home/index.html.twig', [
             ]);
         }
+    }
+
+    public function getReminderDates($id)
+    {
+        $em = $this->getDoctrine()->getManager()->getRepository(Documents::class);
+        $qb = $em->createQueryBuilder("e");
+        $qb
+            ->andWhere('e.docReminder IS NOT NULL AND e.userId = :id')
+            ->setParameter('id', $id)
+        ;
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 }
