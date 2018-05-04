@@ -3,9 +3,13 @@ index:
     controller: App\Controller\HomeController::index
 
 login:
-  path: /login
+  path: /login/
   controller: App\Controller\GoogleApiController::login
 
 logout:
   path: /logout
   controller: App\Controller\GoogleApiController::logout
+
+reminder:
+  path: /remind
+  controller: App\Controller\HomeController::reminder

@@ -15,20 +15,34 @@
 
             {% for file in files %}
                 <tr>
-                    <td>{{ file.getDocName() }}</td>
-                    {#<td>{{ file.getCategoryId() }}</td>#}
-                    <td>Kategorija 1</td>
+                    <td>{{ file.docName }}</td>
+                    <td>{{ categories[file.CategoryId].CategoryName }}</td>
                     <td>Etiketės </td>
                     <td>Files </td>
-                    <td>{{ file.getDocDate()|date("Y/m/d") }}</td>
-                    <td>{{ file.getDocExpires()|date("Y/m/d") }}</td>
-                    <td>{{ file.getDocReminder()|date("Y/m/d") }}</td>
+                    {% if file.DocDate == NULL %}
+                        <td></td>
+                        {% else %}
+                            <td>{{ file.DocDate|date("Y/m/d") }}</td>
+                    {% endif %}
+                    {% if file.DocExpires == NULL %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ file.DocExpires|date("Y/m/d") }}</td>
+                    {% endif %}
+                    {% if file.DocReminder == NULL %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ file.DocReminder|date("Y/m/d") }}</td>
+                    {% endif %}
+
+
+
                     <td>Pastabos</td>
                     <td>
                         <a href="javascript:Display();"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
                     </td>
                     <td>
-                        <a href="#"><img src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                        <a href="#"><img src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></a>
                     </td>
                 </tr>
             {% endfor %}

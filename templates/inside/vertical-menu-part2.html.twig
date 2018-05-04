@@ -4,15 +4,16 @@
             <div class="sideNavigationTitle_left"><b>KATEGORIJOS</b></div>
         </li>
 
-        {% for i in 3..10 %}
+        {% for category in categories %}
             <li>
-                <a href="javascript:showArticle({{ i }});">
+                <a href="#">
                     <div>
                         <img src="{{ asset('images/folder.png') }}" alt="Aplankas"/>
-                        <span class="sideList">{{ ["Kategorija ", i-2]|join }}</span>
+                        <span class="sideList">{{ category.categoryName }}</span>
                     </div>
                 </a>
             </li>
         {% endfor %}
+
     </ul>
 {% endblock %}
