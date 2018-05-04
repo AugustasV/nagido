@@ -3,10 +3,14 @@
 }
 
 body {
+    display: block;
     color: #494948;
     padding: 0;
     margin: 0;
     background-color: #f0f0f0;
+    min-width: 360px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 article,
@@ -61,13 +65,13 @@ h1 {
     background: inherit;
     border: none;
     outline: none;
-    padding: 0;
+    padding: 10px;
+    margin: -10px;
     display: inline-block;
     cursor: pointer;
 }
 
 .searchButton {
-    padding: 0;
     margin-left: -20px;
 }
 
@@ -274,7 +278,7 @@ tr:hover {
     height:calc(100% - 70px);
     width:100%;
     background-color: #f0f0f0;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     overflow-x:hidden;
