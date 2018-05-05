@@ -2,7 +2,7 @@
     <div style="overflow-x:auto;">
         <table >
             <tr>
-                <th>Pavadinimas</th>
+                <th colspan="2">Pavadinimas</th>
                 <th>Kategorija</th>
                 <th>Etiketės</th>
                 <th>Priedai</th>
@@ -15,6 +15,7 @@
 
             {% for file in files %}
                 <tr>
+                    <td><a href="javascript:toggle();"><img src="{{ asset('images/show-more-button.png') }}" alt="Ištrinimas" title="Ištrinti įrašą"/></a></td>
                     <td>{{ file.getDocName() }}</td>
                     {#<td>{{ file.getCategoryId() }}</td>#}
                     <td>Kategorija 1</td>
