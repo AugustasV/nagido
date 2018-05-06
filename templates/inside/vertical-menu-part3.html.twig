@@ -1,4 +1,4 @@
-{% block list2 %}
+{% block list3 %}
     <ul id="ul3">
         <li>
             <div class="sideNavigationTitle_left"><b>ETIKETĖS</b></div>
@@ -11,7 +11,7 @@
 
         {% for i in 11..12 %}
             <li>
-                <a href="javascript:showArticle({{ i }});">
+                <a href="javascript:showArticle({{ i }})">
                     <div>
                         <img src="{{ asset('images/tag.png') }}" alt="Etiketė"/>
                         <span class="sideList">{{ ["Etiketė ", i-10]|join }}</span>
