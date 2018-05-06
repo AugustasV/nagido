@@ -29,6 +29,8 @@
                 <section>
                     <div id="sideNavigation" class="sideNavigation">
 
+                        {{ include ('inside/vertical-menu-part0.html.twig') }}
+
                         {{ include ('inside/vertical-menu-part1.html.twig') }}
 
                         {{ include ('inside/vertical-menu-part2.html.twig') }}
@@ -39,7 +41,7 @@
                 </section>
             {% endblock %}
 
-            {% block section2 %}
+            {% block section %}
                 <section>
                     <div id="main">
 
@@ -68,12 +70,12 @@
                     </div>
                 </section>
             {% endblock %}
+        {% endblock %}
 
-            {% block footer %}{% endblock %}
+        {% block footer %}{% endblock %}
 
-            {% block javascripts %}
-                <script src="{{ asset('build/js/scripts.js') }}"></script>
-            {% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('build/js/landing.js') }}"></script>
         {% endblock %}
     </body>
 {% endblock %}
