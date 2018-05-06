@@ -15,14 +15,17 @@
 <body>
 {% block body %}
     <div>{% block header %}{% endblock %}</div>
+
     <div>{% block content %}{% endblock %}</div>
+
     <div>
         {% block footer %}
             <footer>&copy; 2018 by D&G</footer>
         {% endblock %}
     </div>
+
     {% block javascripts %}
-        <script src="{{ asset('build/js/scripts.js') }}"></script>
+        <script src="{{ asset('build/js/app.js') }}"></script>
     {% endblock %}
 {% endblock %}
 </body>
