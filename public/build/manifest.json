@@ -1,5 +1,6 @@
 {
   "build/css/inside.css": "/build/css/inside.css",
   "build/css/landing.css": "/build/css/landing.css",
-  "build/js/scripts.js": "/build/js/scripts.js"
+  "build/js/app.js": "/build/js/app.js",
+  "build/js/landing.js": "/build/js/landing.js"
 }
