@@ -64,6 +64,20 @@
 
             </div>
         </section>
+        <script>
+            let table = document.getElementsByTagName("table")[0];
+            if (table) {
+                table.addEventListener("click", (e) => {
+                    if (e.target.className === "delete") {
+                        console.log("test");
+                        const id = e.target.getAttribute("data-id");
+                        fetch(`/delete/${id}`, {
+                            method: "DELETE"
+                        }).then(res => window.location.reload());
+                    }
+                });
+            }
+        </script>
     {% endblock %}
 
     {% block footer %}{% endblock %}

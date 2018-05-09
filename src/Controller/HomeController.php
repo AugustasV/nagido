@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -206,5 +207,23 @@ class HomeController extends Controller
         $result = $qb->getQuery()->getResult();
 
         return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     */
+    public  function delete(Request $request, $id) {
+        $file = $this->getDoctrine()->getRepository(Documents::class)->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($file);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->send();
+    }
+
+    public function search(Request $request, $input) {
+
     }
 }

@@ -17,3 +17,11 @@ reminder:
 kategorijos:
   path: /{kategorija}
   controller: App\Controller\HomeController::categories
+
+delete:
+  path: /delete/{id}
+  controller: App\Controller\HomeController::delete
+
+search:
+  path: /search/{input}
+  controller: App\Controller\HomeController::search
