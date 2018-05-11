@@ -25,13 +25,18 @@
         <div class="pageTitle">
             <h1>Namų dokumentų gidas</h1>
 
-            <p class="pageText">
+            <div     class="pageText">
                 Elektroninių ir suskaitmenintų popierinių dokumentų saugojimas vienoje vietoje: sutarčių, pažymų, kvitų, instrukcijų, garantijų ir kt. dokumentų.
-            </p>
-
-            <p class="googleLogin">
-                <a class="loginButton" href="{{ path('login') }}">Prisijungti su Google</a>
-            </p>
+            </div>
+            <br>
+            <div>
+                <a href="{{ asset('login') }}">
+                    <button class="loginButton">
+                        <img class="googleLogoImage" src="{{ asset('images/google-logo.png') }}" alt="Google prisijungimas"/>
+                        <span>Prisijungti su Google</span>
+                    </button>
+                </a>
+            </div>
         </div>
     {% endblock %}
 
