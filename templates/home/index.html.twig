@@ -30,14 +30,16 @@
             </div>
             <br>
 
-            <button class="loginButton">
+            <div>
                 <a href="{{ asset('login') }}">
-                    <div>
-                        <img class="googleLogoImage" />
+                    <button class="loginButton">
+
+                        <img class="googleLogoImage" src="{{ asset('images/google-logo.png') }}" alt="Prisijungimas su Google"/>
                         <span>Prisijungti su Google</span>
-                    </div>
+
+                    </button>
                 </a>
-            </button>
+            </div>
         </div>
     {% endblock %}
 
