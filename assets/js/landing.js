@@ -9,6 +9,7 @@ function showArticle(articleID) {
             if (document.body.clientWidth < 1024) {
                 document.getElementById('sideNavigation').style.visibility = 'hidden';
             }
+            document.getElementById('sideNavigation').scrollTop = 0;
         } else {
             x.style.display = 'none';
         }
@@ -40,6 +41,7 @@ function windowSize() {
         document.getElementById('main').style.marginLeft = '0px';
         document.getElementById('main').style.width = x1 + 'px';
         document.getElementById('sideNavigation').style.visibility = 'hidden';
+        document.getElementById('sideNavigation').scrollTop = 0;
     }
 }
 
@@ -62,6 +64,7 @@ function openNav() {
         document.getElementById('sideNavigation').style.width = '250px';
         document.getElementById('sideNavigation').style.visibility = 'visible';
     }
+    document.getElementById('sideNavigation').scrollTop = 0;
 }
 
 function addDocument() {
