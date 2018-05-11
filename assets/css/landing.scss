@@ -64,8 +64,8 @@ footer {
 
 .loginButton {
     background-color: #ffffff;
-    color: #444;
-    width: 190px;
+    width: 240px;
+    height: 50px;
     border-radius: 5px;
     border: thin solid #888;
     box-shadow: 1px 1px 1px grey;
@@ -76,23 +76,32 @@ footer {
         cursor: pointer;
     }
 
-    .googleLogoImage {
-        display: inline-block;
-        vertical-align: middle;
-        width: 42px;
-        height: 42px;
+    a {
+        text-decoration: none;
+
+        div {
+            .googleLogoImage {
+                display: inline-block;
+                vertical-align: middle;
+                width: 42px;
+                height: 42px;
+            }
+
+            span {
+                display: inline-block;
+                vertical-align: middle;
+                padding-left: 24px;
+                font-size: 14px;
+                font-weight: bold;
+                font-family: 'Roboto', sans-serif;
+                color: #494948;
+            }
+        }
     }
 
-    span {
-        display: inline-block;
-        vertical-align: middle;
-        padding-left: 24px;
-        padding-right: 24px;
-        font-size: 16px;
-        font-weight: bold;
-        font-family: 'Roboto', sans-serif;
-        color: #494948;
-    }
+
+
+
 }
 
 .card {
@@ -146,9 +155,7 @@ footer {
         width: 70%;
         font-size: 1.5em;
     }
-    .loginButton {
-        width: 50%;
-    }
+
     .cardGrid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -161,17 +168,12 @@ footer {
     .pageText {
         width: 80%;
     }
-    .loginButton {
-        width: 35%;
-        font-size: 1.5em;
-    }
+
     .cardGrid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 992px) {
-    .loginButton {
-        width: 30%;
-    }
+
 }
