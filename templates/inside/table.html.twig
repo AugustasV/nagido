@@ -34,7 +34,7 @@
                         <td>{{ file.DocReminder|date("Y/m/d") }}</td>
                     {% endif %}
                     <td>
-                        <a href="javascript:Display();"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
+                        <a href=""><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></a>
                     </td>
                     <td>
                         <a href="#"><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></a>

@@ -40,7 +40,9 @@
     {% block section2 %}
         <section>
             <div id="main">
-
+                {% if app.request.isXmlHttpRequest() %}
+                    <h1>Test</h1>
+                {% endif %}
                 {{ include ('inside/new-document.html.twig') }}
 
                 {% for i in 1..12 %}
@@ -59,12 +61,25 @@
                             <div>Nėra dokumentų su šia etikete</div>
                             {% endif %}
                             {% endblock %}
+                        </div>
                     </article>
                 {% endfor %}
 
             </div>
         </section>
+        <script
+                src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
         <script>
+            let searchForm = document.getElementsByClassName("searchForm")[0];
+            searchForm.addEventListener("keyup", function() {
+                let value = document.getElementById("search").value;
+                fetch(`/search/${value}`, {
+                    method: "POST"
+                }).then(window.location.reload());
+            });
+
             let table = document.getElementsByTagName("table")[0];
             if (table) {
                 table.addEventListener("click", (e) => {
@@ -73,7 +88,35 @@
                         const id = e.target.getAttribute("data-id");
                         fetch(`/delete/${id}`, {
                             method: "DELETE"
-                        }).then(res => window.location.reload());
+                        }).then(window.location.reload());
+                    }
+                });
+            }
+
+            if (table) {
+                table.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (e.target.className === "edit") {
+                        const id = e.target.getAttribute("data-id");
+                        $.ajax({
+                            url:        '/',
+                            type:       'POST',
+                            async:      true,
+                            data: {
+                                id: id
+                            },
+                            success: function(data) {
+                                $("#form_docName").val(data.docName);
+                                $("#form_docDate").val(data.docDate);
+                                $("#form_docExpires").val(data.docExpires);
+                                let reminder = $("#form_docReminder");
+                                if(reminder) {
+                                    reminder.val(data.docReminder);
+                                }
+                                $("#form_category_id option[value= "+ data.docCategory +"]").prop('selected', true);
+                                Display();
+                            },
+                        });
                     }
                 });
             }

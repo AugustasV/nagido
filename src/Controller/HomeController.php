@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,6 +28,29 @@ class HomeController extends Controller
         $session = $request->getSession();
         $session->start();
         $tokens = $session->get("accessToken");
+
+        if ($request->isXmlHttpRequest()) {
+            $documentId = $request->request->get('id');
+            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocReminder() !== NULL) {
+                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docReminder" => $reminder,
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                }
+            return new JsonResponse($jsonData);
+        }
 
         if (isset($tokens) && $tokens) {
             $client = new Google_Client();
@@ -155,7 +179,13 @@ class HomeController extends Controller
             ->getForm();
     }
 
-    public function categories(request $request, $kategorija) {
+    /**
+     * @param Request $request
+     * @param $kategorija
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function categories(request $request, $kategorija)
+    {
         $session = $request->getSession();
         $session->start();
         $tokens = $session->get("accessToken");
@@ -180,11 +210,13 @@ class HomeController extends Controller
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
                 $article->setUserId($id);
+                $article->setCategoryId(1);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
                 return $this->redirectToRoute('index');
             }
+
             return $this->render('home/home.html.twig', [
                 'files' => $userFiles,
                 'categories' => $categories,
@@ -196,6 +228,10 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getReminderDates($id)
     {
         $em = $this->getDoctrine()->getManager()->getRepository(Documents::class);
@@ -213,17 +249,13 @@ class HomeController extends Controller
      * @param Request $request
      * @param $id
      */
-    public  function delete(Request $request, $id) {
+    public  function delete(Request $request, $id)
+    {
         $file = $this->getDoctrine()->getRepository(Documents::class)->find($id);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($file);
         $entityManager->flush();
-
         $response = new Response();
         $response->send();
-    }
-
-    public function search(Request $request, $input) {
-
     }
 }
