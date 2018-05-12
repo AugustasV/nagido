@@ -72,14 +72,6 @@
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous"></script>
         <script>
-            let searchForm = document.getElementsByClassName("searchForm")[0];
-            searchForm.addEventListener("keyup", function() {
-                let value = document.getElementById("search").value;
-                fetch(`/search/${value}`, {
-                    method: "POST"
-                }).then(window.location.reload());
-            });
-
             let table = document.getElementsByTagName("table")[0];
             if (table) {
                 table.addEventListener("click", (e) => {
