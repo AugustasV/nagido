@@ -11,14 +11,14 @@
         </div>
 
         <div>
-            <button class="searchButton" title="Paieška">
-                <img class="searchImage" src="{{ asset('images/search-single.png') }}" alt="Paieška"/>
+            <button id="searchButton" class="searchButton" title="Paieška" onclick="displaySearchInput()">
+                <img id="searchImage" class="searchImage" src="{{ asset('images/search-single.png') }}" alt="Paieška"/>
             </button>
         </div>
 
         <div>
-            <form class="searchForm">
-                <input type="text" id="search" placeholder="Ieškokite">
+            <form id="searchForm" class="searchForm">
+                <input id="searchInput" type="text" id="search" placeholder="Ieškokite">
             </form>
         </div>
 
