@@ -18,53 +18,59 @@
     </style>
 {% endblock %}
 
-{% block header %}
-    {{ include ('inside/horizontal-menu.html.twig') }}
-{% endblock %}
+{% block body %}
+    <body onresize="windowSize()">
+        {% block header %}
+            {{ include ('inside/horizontal-menu.html.twig') }}
+        {% endblock %}
 
-{% block content %}
-    {% block side %}
-        <section>
-            <div id="sideNavigation" class="sideNavigation">
+        {% block content %}
+            {% block side %}
+                <section>
+                    <div id="sideNavigation" class="sideNavigation">
 
-                {{ include ('inside/vertical-menu-part1.html.twig') }}
+                        {{ include ('inside/vertical-menu-part0.html.twig') }}
 
-                {{ include ('inside/vertical-menu-part2.html.twig') }}
+                        {{ include ('inside/vertical-menu-part1.html.twig') }}
 
-                {{ include ('inside/vertical-menu-part3.html.twig') }}
+                        {{ include ('inside/vertical-menu-part2.html.twig') }}
 
-            </div>
-        </section>
-    {% endblock %}
+                        {{ include ('inside/vertical-menu-part3.html.twig') }}
 
-    {% block section2 %}
-        <section>
-            <div id="main">
-                {% if app.request.isXmlHttpRequest() %}
-                    <h1>Test</h1>
-                {% endif %}
-                {{ include ('inside/new-document.html.twig') }}
+                    </div>
+                </section>
+            {% endblock %}
 
-                {% for i in 1..12 %}
-                    <article id={{ i }}>
-                        {% block table %}
-                        {% if i <= 6 or i == 11%}
-                        {{ include ('inside/table.html.twig') }}
-                        {% elseif i >= 7 and i <= 10 %}
-                            <div class="displayCenter">
-                                <img class="emptyImage" src="{{ asset('images/folder1.png') }}" alt="Empty Folder"/>
-                                <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-                            </div>
-                        {% elseif i == 12 %}
-                        <div class="displayCenter">
-                            <img class="emptyImage" src="{{ asset('images/tag1.png') }}" alt="Empty Folder"/>
-                            <div>Nėra dokumentų su šia etikete</div>
-                            {% endif %}
-                            {% endblock %}
-                        </div>
-                    </article>
-                {% endfor %}
+            {% block section %}
+                <section>
+                    <div id="main">
 
+                        {{ include ('inside/new-document.html.twig') }}
+
+                        {% for i in 1..12 %}
+                            <article id={{ i }}>
+                                {% block table %}
+                                    {% if i <= 6 or i == 11%}
+                                        {{ include ('inside/table.html.twig') }}
+                                    {% elseif i >= 7 and i <= 10 %}
+                                        <div class="displayCenter">
+                                            <img class="emptyImage" src="{{ asset('images/folder1.png') }}" alt="Empty Folder"/>
+                                            <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
+                                        </div>
+                                    {% elseif i == 12 %}
+                                        <div class="displayCenter">
+                                            <img class="emptyImage" src="{{ asset('images/tag1.png') }}" alt="Empty Folder"/>
+                                            <div>Nėra dokumentų su šia etikete</div>
+                                        </div>
+                                    {% endif %}
+                                {% endblock %}
+                            </article>
+                        {% endfor %}
+
+                    </div>
+                </section>
+            {% endblock %}
+        {% endblock %}
             </div>
         </section>
         <script
@@ -115,10 +121,10 @@
         </script>
     {% endblock %}
 
-    {% block footer %}{% endblock %}
+        {% block footer %}{% endblock %}
 
-    {% block javascripts %}
-        <script src="{{ asset('build/js/scripts.js') }}"></script>
-    {% endblock %}
-
+        {% block javascripts %}
+            <script src="{{ asset('build/js/landing.js') }}"></script>
+        {% endblock %}
+    </body>
 {% endblock %}
