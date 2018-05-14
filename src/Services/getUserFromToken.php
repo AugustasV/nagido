@@ -1,6 +1,6 @@
 <?php
 
-namespace App\accSystem;
+namespace App\Services;
 
 class getUserFromToken
 {

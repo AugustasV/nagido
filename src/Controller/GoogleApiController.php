@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\accSystem\getUserFromToken;
+use App\Services\getUserFromToken;
 use App\Entity\Users;
 use Google_Client;
 use Symfony\Component\HttpFoundation\Request;
