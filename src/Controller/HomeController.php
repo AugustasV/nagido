@@ -53,7 +53,7 @@ class HomeController extends Controller
                     "label" => "Add",
                     'attr' => array('style' => 'float: left')
                 ))
-                ->add("cancel", ButtonType::class, array('attr' => array("onClick" => "GoBack()")))
+                ->add("cancel", ButtonType::class, array('attr' => array("onClick" => "goBack()")))
                 ->getForm();
 
             $form->handleRequest($request);
