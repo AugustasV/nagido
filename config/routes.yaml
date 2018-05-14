@@ -3,7 +3,7 @@ index:
     controller: App\Controller\HomeController::index
 
 login:
-  path: /login/
+  path: /login
   controller: App\Controller\GoogleApiController::login
 
 logout:
