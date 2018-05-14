@@ -15,7 +15,7 @@ reminder:
   controller: App\Controller\HomeController::reminder
 
 kategorijos:
-  path: /{kategorija}
+  path: kategorija/{kategorija}
   controller: App\Controller\HomeController::categories
 
 delete:
@@ -23,5 +23,5 @@ delete:
   controller: App\Controller\HomeController::delete
 
 search:
-  path: /search/{input}
-  controller: App\Controller\HomeController::search
+  path: /search
+  controller: App\Controller\searchController::index

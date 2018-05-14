@@ -64,7 +64,8 @@ class HomeController extends Controller
             $client->setAccessToken($tokens);
 
             $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id]);
-            $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+            //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+            $categories = null;
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -110,7 +111,8 @@ class HomeController extends Controller
             $client->setAccessToken($tokens);
 
             $userFiles = $this->getReminderDates($id);
-            $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+            //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+            $categories = null;
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -174,7 +176,7 @@ class HomeController extends Controller
                 'attr' => array('style' => 'float: left')
             ))
             ->add("cancel", ButtonType::class, array(
-                'attr' => array("onClick" => "GoBack()")
+                'attr' => array("onClick" => "goBack()")
             ))
             ->getForm();
     }

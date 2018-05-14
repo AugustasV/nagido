@@ -70,21 +70,11 @@
                     </div>
                 </section>
             {% endblock %}
-        {% endblock %}
-            </div>
-        </section>
         <script
                 src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous"></script>
         <script>
-            let searchForm = document.getElementsByClassName("searchForm")[0];
-            searchForm.addEventListener("keyup", function() {
-                let value = document.getElementById("search").value;
-                fetch(`/search/${value}`, {
-                    method: "POST"
-                }).then(window.location.reload());
-            });
 
             let table = document.getElementsByTagName("table")[0];
             if (table) {
@@ -120,7 +110,7 @@
                                     reminder.val(data.docReminder);
                                 }
                                 $("#form_category_id option[value= "+ data.docCategory +"]").prop('selected', true);
-                                Display();
+                                display();
                             },
                         });
                     }
