@@ -20,6 +20,7 @@
                     <td>Kategorija 1</td>
                     <td>Etiketės </td>
                     <td>Files </td>
+                    
                     {% if file.DocDate == NULL %}
                         <td></td>
                         {% else %}
@@ -68,9 +69,9 @@
                     <td colspan="4">
                         <b>Etiketės: </b>Etiketės<br>
                         <b>Priedai: </b>Files<br>
-                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y/m/d") }}<br>
-                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y/m/d") }}<br>
-                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y/m/d") }}<br>
+                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y-m-d") }}<br>
+                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y-m-d") }}<br>
+                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y-m-d") }}<br>
                         <b>Pastabos: </b>Pastabos
                     </td>
                 </tr>
