@@ -17,8 +17,8 @@
         </div>
 
         <div>
-            <form id="searchForm" class="searchForm">
-                <input id="searchInput" type="text" id="search" placeholder="Ieškokite">
+            <form method="POST" action="{{ path('search') }}" class="searchForm">
+                <input type="text" name="search" id="search" placeholder="Ieškokite">
             </form>
         </div>
 
