@@ -82,8 +82,6 @@ function openNav() {
         }
     }
     document.getElementById('sideNavigation').scrollTop = 0;
-
-
 }
 
 function addDocument() {
