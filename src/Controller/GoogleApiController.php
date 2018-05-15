@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\accSystem\getUserFromToken;
+use App\Services\getUserFromToken;
 use App\Entity\Users;
 use Google_Client;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class GoogleApiController extends Controller
@@ -15,9 +14,10 @@ class GoogleApiController extends Controller
      * @param getUserFromToken $getUserFromToken
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function login(getUserFromToken $getUserFromToken)
+    public function login(Request $request, getUserFromToken $getUserFromToken)
     {
-        $session = new Session();
+        $session = $request->getSession();
+        //$session = new Session();
         $session->start();
 
         $client = new Google_Client();
@@ -51,11 +51,13 @@ class GoogleApiController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
+        //$session = new Session();
         $session->start();
         $session->invalidate();
 

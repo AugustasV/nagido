@@ -9,3 +9,19 @@ login:
 logout:
   path: /logout
   controller: App\Controller\GoogleApiController::logout
+
+reminder:
+  path: /remind
+  controller: App\Controller\HomeController::reminder
+
+kategorijos:
+  path: kategorija/{kategorija}
+  controller: App\Controller\HomeController::categories
+
+delete:
+  path: /delete/{id}
+  controller: App\Controller\HomeController::delete
+
+search:
+  path: /search
+  controller: App\Controller\searchController::index

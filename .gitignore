@@ -39,3 +39,4 @@ npm-debug.log
 ###< Old symfony and common infrastructure ###
 /vendor/
 .idea
+/.idea
