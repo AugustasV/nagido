@@ -25,7 +25,7 @@ class HomeController extends Controller
         if (isset($tokens) && $tokens) {
             $client = new Google_Client();
             try {
-                $client->setAuthConfig('client_secrets.json');
+                $client->setAuthConfig('../config/client_secrets.json');
             } catch (\Google_Exception $e) {
                 $client = null;
             }

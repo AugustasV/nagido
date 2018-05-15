@@ -20,9 +20,9 @@
                     <td>Kategorija 1</td>
                     <td>Etiketės </td>
                     <td>Files </td>
-                    <td>{{ file.getDocDate()|date("Y/m/d") }}</td>
-                    <td>{{ file.getDocExpires()|date("Y/m/d") }}</td>
-                    <td>{{ file.getDocReminder()|date("Y/m/d") }}</td>
+                    <td>{{ file.getDocDate()|date("Y-m-d") }}</td>
+                    <td>{{ file.getDocExpires()|date("Y-m-d") }}</td>
+                    <td>{{ file.getDocReminder()|date("Y-m-d") }}</td>
                     <td>Pastabos</td>
                     <td>
                         <a href="javascript:display()"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
@@ -58,9 +58,9 @@
                     <td colspan="4">
                         <b>Etiketės: </b>Etiketės<br>
                         <b>Priedai: </b>Files<br>
-                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y/m/d") }}<br>
-                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y/m/d") }}<br>
-                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y/m/d") }}<br>
+                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y-m-d") }}<br>
+                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y-m-d") }}<br>
+                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y-m-d") }}<br>
                         <b>Pastabos: </b>Pastabos
                     </td>
                 </tr>
