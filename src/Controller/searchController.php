@@ -21,8 +21,12 @@ class searchController extends Controller
      */
     public function index(Request $request)
     {
+        $session = $request->getSession();
+        $id = $session->get("id");
+
         $input = $request->request->get('search');
-        $userFiles = $this->getReminderDates($input);
+        $userFiles = $this->getReminderDates($input, $id);
+
         //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
         $categories = null;
 
@@ -37,13 +41,16 @@ class searchController extends Controller
      * @param $input
      * @return mixed
      */
-    public function getReminderDates($input)
+    public function getReminderDates($input, $id)
     {
+
         $em = $this->getDoctrine()->getManager()->getRepository(Documents::class);
         $qb = $em->createQueryBuilder("document");
         $qb
             ->andWhere('document.docName LIKE :id')
+            ->andWhere('document.userId = :user')
             ->setParameter('id', "%".$input."%")
+            ->setParameter('user', $id)
         ;
         $result = $qb->getQuery()->getResult();
         return $result;
