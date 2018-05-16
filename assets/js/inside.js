@@ -1,5 +1,7 @@
-windowSize();
-showArticle(1);
+document.addEventListener('DOMContentLoaded', () => {
+    windowSize();
+    showArticle(1);
+});
 
 function showArticle(articleID) {
     for (var i = 1; i <= 12; i++) {
@@ -15,6 +17,7 @@ function showArticle(articleID) {
         }
     }
     var rows = document.getElementById('smallTable').getElementsByTagName('tr').length;
+    alert(rows);
     for (var i = 1; i <= rows; i++) {
         var x = document.getElementById('displayMoreData' + i);
         var y = document.getElementById('imgClickAndChange' + i);
