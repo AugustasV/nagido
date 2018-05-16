@@ -17,7 +17,6 @@ function showArticle(articleID) {
         }
     }
     var rows = document.getElementById('smallTable').getElementsByTagName('tr').length;
-    alert(rows);
     for (var i = 1; i <= rows; i++) {
         var x = document.getElementById('displayMoreData' + i);
         var y = document.getElementById('imgClickAndChange' + i);
