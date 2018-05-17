@@ -23,23 +23,26 @@
                     
                     {% if file.DocDate == NULL %}
                         <td></td>
-                        {% else %}
-                            <td>{{ file.DocDate|date("Y/m/d") }}</td>
+                    {% else %}
+                        <td>{{ file.DocDate|date("Y-m-d") }}</td>
                     {% endif %}
+
                     {% if file.DocExpires == NULL %}
                         <td></td>
                     {% else %}
-                        <td>{{ file.DocExpires|date("Y/m/d") }}</td>
+                        <td>{{ file.DocExpires|date("Y-m-d") }}</td>
                     {% endif %}
+
                     {% if file.DocReminder == NULL %}
                         <td></td>
                     {% else %}
-                        <td>{{ file.DocReminder|date("Y/m/d") }}</td>
+                        <td>{{ file.DocReminder|date("Y-m-d") }}</td>
                     {% endif %}
+
                     <td></td>
                     <td>
-                        <a href=""><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></a>
-                        <a href="#"><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></a>
+                        <span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></span>
+                        <span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></span>
                     </td>
                 </tr>
             {% endfor %}
@@ -53,15 +56,14 @@
 
             {% for file in files %}
                 <tr>
-                    <td><a href="javascript:toggle({{ loop.index }})"><img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></a></td>
+                    <td><span class="clickAndChange" data-row-nr="{{ loop.index }}"><img src="{{ asset('images/show-more-button.png') }}"
+                                                               id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></span></td>
                     <td>{{ file.getDocName() }}</td>
                     {#<td>{{ file.getCategoryId() }}</td>#}
                     <td>Kategorija 1</td>
                     <td>
-                        <a href="javascript:display()"><img src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti"/></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą"/></a>
+                        <span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></span>
+                        <span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></span>
                     </td>
                 </tr>
                 <tr id="displayMoreData{{ loop.index }}" class="displayMoreData">
