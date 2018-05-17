@@ -1,7 +1,7 @@
 <header>
     <div class="horizontalList">
         <div>
-            <button class="menuButton" title="Meniu" onclick="openNav()">
+            <button id="menuButton" class="menuButton" title="Meniu">
                 <img class="menuIcon" src="{{ asset('images/menu.png') }}" alt="Meniu"/>
             </button>
         </div>
@@ -11,22 +11,20 @@
         </div>
 
         <div>
-            <button id="searchButton" class="searchButton" title="Paieška" onclick="displaySearchInput()">
+            <button id="searchButton" class="searchButton" title="Paieška">
                 <img id="searchImage" class="searchImage" src="{{ asset('images/search-single.png') }}" alt="Paieška"/>
             </button>
         </div>
 
         <div>
             <form id="searchForm" method="POST" action="{{ path('search') }}" class="searchForm">
-                <input id="searchInput" type="text" name="search" id="search" placeholder="Ieškokite">
+                <input id="searchInput" type="text" name="search" placeholder="Ieškokite">
             </form>
         </div>
 
         <div>
-            <a href="{{ asset('logout') }}">
-                <button class="signOutButton" >
-                    <span>Atsijungti</span>
-                </button>
+            <a href="{{ asset('logout') }}" class="signOutButton">
+                Atsijungti
             </a>
         </div>
     </div>
