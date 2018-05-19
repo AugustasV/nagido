@@ -8,7 +8,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Categories;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Documents;
@@ -27,8 +27,7 @@ class searchController extends Controller
         $input = $request->request->get('search');
         $userFiles = $this->getReminderDates($input, $id);
 
-        //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
-        $categories = null;
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('home/home.html.twig', [
             'files' => $userFiles,
