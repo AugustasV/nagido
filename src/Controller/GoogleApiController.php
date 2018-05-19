@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Services\getUserFromToken;
+use App\Entity\User;
+use App\Service\getUserFromToken;
 use App\Entity\Users;
 use Google_Client;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,10 +39,10 @@ class GoogleApiController extends Controller
             $token = $client->getAccessToken();
             $authCheck = $getUserFromToken->getUser($token["id_token"], $client);
             if ($authCheck) {
-                $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(["userTokenId" => $authCheck['sub']]);
+                $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["userToken" => $authCheck['sub']]);
                 if (!$user) {
                     $this->save($authCheck['name'], $authCheck['email'], $authCheck['sub']);
-                    $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(["userTokenId" => $authCheck['sub']]);
+                    $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["userToken" => $authCheck['sub']]);
                 }
                 $session->set('accessToken', $client->getAccessToken());
                 $session->set('id', $user->getId());
@@ -73,10 +74,10 @@ class GoogleApiController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         //Insert data to Users table
-        $user = new Users();
+        $user = new User();
         $user->setUserName($name);
         $user->setUserEmail($email);
-        $user->setUserTokenId($token);
+        $user->setUserToken($token);
         //Save
         $entityManager->persist($user);
         $entityManager->flush();
