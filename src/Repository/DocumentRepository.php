@@ -43,7 +43,7 @@ class DocumentRepository extends ServiceEntityRepository
     public function reminderDates($id)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentReminder IS NOT NULL AND e.user = :id')
+            ->andWhere('document.documentReminder IS NOT NULL AND document.user = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult()
