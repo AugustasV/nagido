@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showArticle(articleID) {
-    for (var i = 1; i <= 12; i++) {
-        var article = document.getElementById(i);
-        var sideNavigation = document.getElementById('sideNavigation');
+    for (let i = 1; i <= 12; i++) {
+        let article = document.getElementById(i);
+        let sideNavigation = document.getElementById('sideNavigation');
         if (i === articleID) {
             article.style.display = 'block';
             if (document.body.clientWidth < 1024) {
@@ -17,11 +17,11 @@ function showArticle(articleID) {
             article.style.display = 'none';
         }
     }
-    var smallTable = document.getElementById('smallTable');
-    var rows = smallTable.getElementsByTagName('tr').length;
+    let smallTable = document.getElementById('smallTable');
+    let rows = smallTable.getElementsByTagName('tr').length;
     for (i = 1; i <= rows; i++) {
-        var x = document.getElementById('displayMoreData' + i);
-        var y = document.getElementById('imgClickAndChange' + i);
+        let x = document.getElementById('displayMoreData' + i);
+        let y = document.getElementById('imgClickAndChange' + i);
         x.style.display = 'none';
         y.src = 'images/show-more-button.png';
         y.title = 'Rodyti daugiau';
@@ -31,18 +31,18 @@ function showArticle(articleID) {
 window.addEventListener("resize", windowSize);
 
 function windowSize() {
-    var bodyWidth = document.body.clientWidth;
-    var sideNavigation = document.getElementById('sideNavigation');
-    var main = document.getElementById('main');
+    let bodyWidth = document.body.clientWidth;
+    let sideNavigation = document.getElementById('sideNavigation');
+    let main = document.getElementById('main');
 
     if (bodyWidth >= 1024) {
-        var sideWidth;
+        let sideWidth;
         if (sideNavigation.style.width === '250px' || sideNavigation.style.width === '') {
             sideWidth = 250;
         } else {
             sideWidth = 0;
         }
-        var mainWidth = bodyWidth - sideWidth;
+        let mainWidth = bodyWidth - sideWidth;
         main.style.marginLeft = sideWidth + 'px';
         main.style.width = mainWidth + 'px';
         sideNavigation.style.visibility = 'visible';
@@ -53,7 +53,7 @@ function windowSize() {
         sideNavigation.scrollTop = 0;
     }
 
-    var searchForm = document.getElementById('searchForm');
+    let searchForm = document.getElementById('searchForm');
 
     if (bodyWidth >= 992) {
         searchForm.style.display = "inline-block";
@@ -68,18 +68,18 @@ function windowSize() {
 document.querySelectorAll('.menuButton').forEach((e) => { e.addEventListener('click', openNav); });
 
 function openNav() {
-    var bodyWidth = document.body.clientWidth;
-    var sideNavigation = document.getElementById('sideNavigation');
-    var main = document.getElementById('main');
+    let bodyWidth = document.body.clientWidth;
+    let sideNavigation = document.getElementById('sideNavigation');
+    let main = document.getElementById('main');
 
     if (bodyWidth >= 1024) {
-        var sideWidth;
+        let sideWidth;
         if (sideNavigation.style.width === '250px' || sideNavigation.style.width === '') {
             sideWidth = 0;
         } else {
             sideWidth = 250;
         }
-        var mainWidth = bodyWidth - sideWidth;
+        let mainWidth = bodyWidth - sideWidth;
         main.style.marginLeft = sideWidth + 'px';
         main.style.width = mainWidth + 'px';
         sideNavigation.style.width = sideWidth + 'px';
@@ -101,12 +101,12 @@ function openNav() {
 document.querySelectorAll('.searchButton').forEach((e) => { e.addEventListener('click', displaySearchInput); });
 
 function displaySearchInput() {
-    var searchForm = document.getElementById('searchForm');
+    let searchForm = document.getElementById('searchForm');
 
     searchForm.style.display = 'inline-block';
 
-    var searchInput = document.getElementById('searchInput');
-    var bodyWidth = document.body.clientWidth;
+    let searchInput = document.getElementById('searchInput');
+    let bodyWidth = document.body.clientWidth;
 
     if (bodyWidth < 600) {
         searchForm.style.marginLeft = '-130px';
@@ -126,17 +126,17 @@ function displaySearchInput() {
 document.querySelectorAll('.addDocumentButton').forEach((e) => { e.addEventListener('click', addDocument); });
 
 function addDocument() {
-    var x = document.getElementById('newDocumentWindow');
+    let x = document.getElementById('newDocumentWindow');
     x.style.display = 'block';
 }
 
 function display() {
-    var x = document.getElementById('newDocumentWindow');
+    let x = document.getElementById('newDocumentWindow');
     x.style.display = 'block';
 }
 
 function goBack() {
-    var x = document.getElementById('newDocumentWindow');
+    let x = document.getElementById('newDocumentWindow');
     x.style.display = 'none';
 }
 
@@ -148,9 +148,8 @@ function toggleRR() {
 }
 
 function toggle(i) {
-    // e.preventDefault();
-    var x = document.getElementById('displayMoreData' + i);
-    var y = document.getElementById('imgClickAndChange' + i);
+    let x = document.getElementById('displayMoreData' + i);
+    let y = document.getElementById('imgClickAndChange' + i);
     if (x.style.display === 'none' || x.style.display === '') {
         x.style.display = 'table-row';
         y.src = 'images/show-less-button.png';
@@ -162,43 +161,45 @@ function toggle(i) {
     }
 }
 
-let table = document.getElementsByTagName('table')[0];
+for(let i = 0; i < 2; i++)
+{
+    let table = document.getElementsByTagName('table')[i];
 
-if (table) {
-    table.addEventListener('click', (e) => {
-        if (e.target.className === 'delete') {
-            const id = e.target.getAttribute("data-id");
-            fetch(`/delete/${id}`, {
-                method: "DELETE"
-            }).then(res => window.location.reload());
-        }
-    });
-}
+    if (table) {
+        table.addEventListener('click', (e) => {
+            if (e.target.className === 'delete') {
+                const id = e.target.getAttribute("data-id");
+                fetch(`/delete/${id}`, {
+                    method: "DELETE"
+                }).then(res => window.location.reload());
+            }
+        });
+    }
 
-if (table) {
-    console.log('Test');
-    table.addEventListener('click', (e) => {
-        if (e.target.className === 'edit') {
-            const id = e.target.getAttribute("data-id");
-            $.ajax({
-                url:        '/',
-                type:       'POST',
-                async:      true,
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    $("#form_docName").val(data.docName);
-                    $("#form_docDate").val(data.docDate);
-                    $("#form_docExpires").val(data.docExpires);
-                    let reminder = $("#form_docReminder");
-                    if(reminder) {
-                        reminder.val(data.docReminder);
-                    }
-                    $("#form_category_id option[value= "+ data.docCategory +"]").prop('selected', true);
-                    display();
-                },
-            });
-        }
-    });
+    if (table) {
+        table.addEventListener('click', (e) => {
+            if (e.target.className === 'edit') {
+                const id = e.target.getAttribute("data-id");
+                $.ajax({
+                    url:        '/',
+                    type:       'POST',
+                    async:      true,
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        $("#form_docName").val(data.docName);
+                        $("#form_docDate").val(data.docDate);
+                        $("#form_docExpires").val(data.docExpires);
+                        let reminder = $("#form_docReminder");
+                        if(reminder) {
+                            reminder.val(data.docReminder);
+                        }
+                        $("#form_category_id option[value= "+ data.docCategory +"]").prop('selected', true);
+                        display();
+                    },
+                });
+            }
+        });
+    }
 }
