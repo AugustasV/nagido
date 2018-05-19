@@ -15,7 +15,7 @@ reminder:
   controller: App\Controller\HomeController::reminder
 
 kategorijos:
-  path: kategorija/{kategorija}
+  path: /{kategorija}
   controller: App\Controller\HomeController::categories
 
 delete:
