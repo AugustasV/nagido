@@ -19,6 +19,37 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
+    /**
+     * @param $value
+     * @param $id
+     * @return mixed
+     */
+    public function search($value, $id)
+    {
+        return $this->createQueryBuilder("document")
+            ->andWhere('document.documentName LIKE :id')
+            ->andWhere('document.user = :user')
+            ->setParameter('id', "%".$value."%")
+            ->setParameter('user', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function reminderDates($id)
+    {
+        return $this->createQueryBuilder("document")
+            ->andWhere('document.documentReminder IS NOT NULL AND e.user = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Document[] Returns an array of Document objects
 //     */

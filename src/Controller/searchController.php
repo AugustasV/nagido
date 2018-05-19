@@ -9,9 +9,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Document;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Documents;
 
 class searchController extends Controller
 {
@@ -25,8 +25,7 @@ class searchController extends Controller
         $id = $session->get("id");
 
         $input = $request->request->get('search');
-        $userFiles = $this->getReminderDates($input, $id);
-
+        $userFiles = $this->getDoctrine()->getManager()->getRepository(Document::class)->search($input, $id);
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('home/home.html.twig', [
@@ -34,24 +33,5 @@ class searchController extends Controller
             'categories' => $categories,
             'form' => Null
         ]);
-    }
-
-    /**
-     * @param $input
-     * @return mixed
-     */
-    public function getReminderDates($input, $id)
-    {
-
-        $em = $this->getDoctrine()->getManager()->getRepository(Documents::class);
-        $qb = $em->createQueryBuilder("document");
-        $qb
-            ->andWhere('document.docName LIKE :id')
-            ->andWhere('document.userId = :user')
-            ->setParameter('id', "%".$input."%")
-            ->setParameter('user', $id)
-        ;
-        $result = $qb->getQuery()->getResult();
-        return $result;
     }
 }

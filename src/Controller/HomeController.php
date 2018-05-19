@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Document;
-use App\Entity\User;
 use App\Form\DocumentType;
 use Google_Client;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -221,14 +220,7 @@ class HomeController extends Controller
      */
     public function getReminderDates($id)
     {
-        $em = $this->getDoctrine()->getManager()->getRepository(Document::class);
-        $qb = $em->createQueryBuilder("e");
-        $qb
-            ->andWhere('e.documentReminder IS NOT NULL AND e.user = :id')
-            ->setParameter('id', $id)
-        ;
-        $result = $qb->getQuery()->getResult();
-        return $result;
+        return $this->getDoctrine()->getManager()->getRepository(Document::class)->reminderDates($id);
     }
 
     /**
