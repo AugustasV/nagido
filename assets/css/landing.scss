@@ -62,7 +62,7 @@ footer {
     margin: auto;
 }
 
-.loginButton {
+.login {
     background-color: #ffffff;
     width: 240px;
     height: 50px;
@@ -72,6 +72,11 @@ footer {
     white-space: nowrap;
     outline: none;
     cursor: pointer;
+    text-decoration: none;
+    display: block;
+    line-height: 1.15;
+    padding: 10px;
+    margin: auto;
 
     .googleLogoImage {
         display: inline-block;

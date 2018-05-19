@@ -21,16 +21,13 @@
             <div class="pageText">
                 Elektroninių ir suskaitmenintų popierinių dokumentų saugojimas vienoje vietoje: sutarčių, pažymų, kvitų, instrukcijų, garantijų ir kt. dokumentų.
             </div>
+
             <br>
 
             <div>
-                <a href="{{ path('login') }}">
-                    <button class="loginButton">
-
-                        <img class="googleLogoImage" src="{{ asset('images/google-logo.png') }}" alt="Prisijungimas su Google"/>
-                        <span>Prisijungti su Google</span>
-
-                    </button>
+                <a href="{{ path('login') }}" class="login">
+                    <img class="googleLogoImage" src="{{ asset('images/google-logo.png') }}" alt="Google logo"/>
+                    <span>Prisijungti su Google</span>
                 </a>
             </div>
         </div>
@@ -40,6 +37,7 @@
         <div class="pageSubTitle">
             <h1>Sprendimai</h1>
         </div>
+
         <div class="cardGrid">
             <div class="card">
                 <img src="{{ asset('images/safety.png') }}" alt="Saugojimas"/>
@@ -59,12 +57,12 @@
             <div class="card">
                 <img src="{{ asset('images/edit.png') }}" alt="Redagavimas"/>
                 <h2>Redagavimas</h2>
-                <div>Redaguokite dokumentų informaciją: pavadinimą, pastabas, priminimo datą, kategorijas ir etiketes.</div>
+                <div>Redaguokite dokumentų informaciją: pavadinimą, kategorijas ir etiketes, pastabas, datas.</div>
             </div>
             <div class="card">
                 <img src="{{ asset('images/search.png') }}" alt="Paieška"/>
                 <h2>Paieška</h2>
-                <div>Suraskite reikiamus dokumentus pagal pavadinimą, įkėlimo ir priminimo datas, kategorijas, etiketes.</div>
+                <div>Suraskite reikiamus dokumentus pagal kategorijas ir etiketes, taip pat pavadinimą, datas, pastabas.</div>
             </div>
             <div class="card">
                 <img src="{{ asset('images/download.png') }}" alt="Atsisiuntimas"/>
