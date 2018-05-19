@@ -297,11 +297,11 @@ tr:hover {
     background-color: #ddd;
 }
 
-.largeTable {
+#largeTable {
     display: none;
 }
 
-.smallTable {
+#smallTable {
     display: table;
 }
 
@@ -382,11 +382,11 @@ tr:hover {
         top: 0;
         left: 0;
     }
-    .largeTable {
+    #largeTable {
         display: table;
     }
 
-    .smallTable {
+    #smallTable {
         display: none;
     }
 }
