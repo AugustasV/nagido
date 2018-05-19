@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Document;
+use App\Entity\User;
 use App\Form\DocumentType;
 use Google_Client;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,13 +64,15 @@ class HomeController extends Controller
             $userFiles = $this->getDoctrine()->getRepository(Document::class)->findBy(["user" => $id]);
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
+
             $form = $this->newForm();
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()) {
 
                 $article = $form->getData();
-                $article->setUser($id);
+
+                $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
@@ -108,8 +111,7 @@ class HomeController extends Controller
             $client->setAccessToken($tokens);
 
             $userFiles = $this->getReminderDates($id);
-            //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
-            $categories = null;
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -187,7 +189,7 @@ class HomeController extends Controller
             $client->setAccessToken($tokens);
             $kategorija = $kategorija - 1;
             $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "categoryId" => $kategorija]);
-            $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
