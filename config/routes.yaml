@@ -11,7 +11,7 @@ logout:
   controller: App\Controller\GoogleApiController::logout
 
 reminder:
-  path: /remind
+  path: /priminimai
   controller: App\Controller\HomeController::reminder
 
 kategorijos:
