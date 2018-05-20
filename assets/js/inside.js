@@ -135,6 +135,8 @@ function display() {
     x.style.display = 'block';
 }
 
+document.querySelectorAll('#form_cancel').forEach((e) => { e.addEventListener('click', goBack); });
+
 function goBack() {
     let x = document.getElementById('newDocumentWindow');
     x.style.display = 'none';

@@ -172,11 +172,12 @@ class HomeController extends Controller
                     'Įvairūs' => 7
                 )))
             ->add("save", SubmitType::class, array(
-                "label" => "Add",
+                "label" => "Išsaugoti",
                 'attr' => array('style' => 'float: left')
             ))
             ->add("cancel", ButtonType::class, array(
-                'attr' => array("onClick" => "goBack()")
+                "label" => "Atšaukti",
+                'attr' => array()
             ))
             ->getForm();
     }
