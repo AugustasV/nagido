@@ -173,11 +173,7 @@ for(let i = 0; i < 2; i++)
                     method: "DELETE"
                 }).then(res => window.location.reload());
             }
-        });
-    }
 
-    if (table) {
-        table.addEventListener('click', (e) => {
             if (e.target.className === 'edit') {
                 const id = e.target.getAttribute("data-id");
                 $.ajax({
@@ -200,6 +196,7 @@ for(let i = 0; i < 2; i++)
                     },
                 });
             }
+
         });
     }
 }
