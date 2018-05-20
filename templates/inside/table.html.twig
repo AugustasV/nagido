@@ -46,6 +46,8 @@
                     </td>
                     <td>
                         <span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></span>
+                    </td>
+                    <td>
                         <span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></span>
                     </td>
                 </tr>
@@ -62,12 +64,16 @@
                 <tr>
                     <td>
                         <span class="clickAndChange" data-row-nr="{{ loop.index }}">
-                        <img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></span></td>
+                            <img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/>
+                        </span>
+                    </td>
                     <td>{{ file.getDocName() }}</td>
                     {#<td>{{ file.getCategoryId() }}</td>#}
                     <td>Kategorija 1</td>
                     <td>
                         <span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></span>
+                    </td>
+                    <td>
                         <span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></span>
                     </td>
                 </tr>
