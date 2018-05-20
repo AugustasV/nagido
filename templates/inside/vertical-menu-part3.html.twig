@@ -9,12 +9,14 @@
             </div>
         </li>
 
-        {% for i in 11..12 %}
+
+
+        {% for tag in tags %}
             <li>
-                <a href="javascript:showArticle({{ i }})">
+                <a href="">
                     <div>
                         <img src="{{ asset('images/tag.png') }}" alt="Etiketė"/>
-                        <span class="sideList">{{ ["Etiketė ", i-10]|join }}</span>
+                        <span class="sideList">{{ tag.tagName }}</span>
                     </div>
                 </a>
             </li>

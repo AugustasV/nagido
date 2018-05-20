@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Document;
+use App\Entity\Tag;
 use App\Form\DocumentType;
 use Google_Client;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -62,7 +63,7 @@ class HomeController extends Controller
 
             $userFiles = $this->getDoctrine()->getRepository(Document::class)->findBy(["user" => $id]);
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-
+            $tag = $this->getDoctrine()->getRepository(Tag::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -80,7 +81,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'files' => $userFiles,
                 'categories' => $categories,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'tags' => $tag
             ]);
         } else {
             return $this->render('home/index.html.twig', [
@@ -111,6 +113,7 @@ class HomeController extends Controller
 
             $userFiles = $this->getReminderDates($id);
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $tag = $this->getDoctrine()->getRepository(Tag::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -126,7 +129,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'files' => $userFiles,
                 'categories' => $categories,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'tags' => $tag
             ]);
         } else {
             return $this->render('home/index.html.twig', [
@@ -189,6 +193,7 @@ class HomeController extends Controller
             $kategorija = $kategorija - 1;
             $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "categoryId" => $kategorija]);
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $tag = $this->getDoctrine()->getRepository(Tag::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -206,7 +211,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'files' => $userFiles,
                 'categories' => $categories,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'tags' => $tag
             ]);
         } else {
             return $this->render('home/index.html.twig', [
