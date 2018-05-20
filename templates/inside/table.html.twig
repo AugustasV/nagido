@@ -1,6 +1,6 @@
 {% block table %}
     <div>
-        <table class="largeTable">
+        <table id="largeTable" class="documentsTable">
             <tr>
                 <th>Pavadinimas</th>
                 <th>Kategorija</th>
@@ -47,7 +47,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <table class="smallTable" id="smallTable">
+        <table id="smallTable" class="documentsTable">
             <tr>
                 <th colspan="2">Pavadinimas</th>
                 <th>Kategorija</th>
@@ -56,8 +56,9 @@
 
             {% for file in files %}
                 <tr>
-                    <td><span class="clickAndChange" data-row-nr="{{ loop.index }}"><img src="{{ asset('images/show-more-button.png') }}"
-                                                               id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></span></td>
+                    <td>
+                        <span class="clickAndChange" data-row-nr="{{ loop.index }}">
+                        <img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></span></td>
                     <td>{{ file.getDocName() }}</td>
                     {#<td>{{ file.getCategoryId() }}</td>#}
                     <td>Kategorija 1</td>
