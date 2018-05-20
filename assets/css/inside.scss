@@ -277,7 +277,7 @@ label {
 table {
     border-collapse: collapse;
     border: 1px solid #9d938c;
-    padding: 20px;
+    padding: 20px 40px 20px 20px;
 }
 
 th {
@@ -293,8 +293,38 @@ tr, td {
     background-color: #ffffff;
 }
 
+td:nth-last-child(1) {
+    text-align: right;
+}
+
 tr:hover {
     background-color: #ddd;
+}
+
+.notes {
+    max-height: 100px;
+    overflow-y: auto;
+    scroll-padding-top: 0;
+}
+
+.tabName {
+    display: block;
+    float: left;
+    border: 1px solid #9d938c;
+    background-color: lightgrey;
+    text-align: left;
+    width: 120px;
+    font-weight: bold;
+    line-height: 1;
+    padding: 1.5px;
+    margin: 0 5px -2px 0;
+}
+
+.tabContent {
+    display: block;
+    text-align: left;
+    padding: 2px;
+    border-bottom: 1px solid #F0F0F0;
 }
 
 #largeTable {

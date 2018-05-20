@@ -39,7 +39,11 @@
                         <td>{{ file.DocReminder|date("Y-m-d") }}</td>
                     {% endif %}
 
-                    <td></td>
+                    <td>
+                        <div class="notes">
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                        </div>
+                    </td>
                     <td>
                         <span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></span>
                         <span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></span>
@@ -70,12 +74,14 @@
                 <tr id="displayMoreData{{ loop.index }}" class="displayMoreData">
                     <td></td>
                     <td colspan="4">
-                        <b>Etiketės: </b>Etiketės<br>
-                        <b>Priedai: </b>Files<br>
-                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y-m-d") }}<br>
-                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y-m-d") }}<br>
-                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y-m-d") }}<br>
-                        <b>Pastabos: </b>Pastabos
+                        <div class="tabName">Etiketės: </div><div class="tabContent">Etiketės</div>
+                        <div class="tabName">Priedai: </div><div class="tabContent">Files</div>
+                        <div class="tabName">Galioja nuo: </div><div class="tabContent">{{ file.getDocDate()|date("Y-m-d") }}</div>
+                        <div class="tabName">Galioja iki: </div><div class="tabContent">{{ file.getDocExpires()|date("Y-m-d") }}</div>
+                        <div class="tabName">Priminimas: </div><div class="tabContent">{{ file.getDocReminder()|date("Y-m-d") }}</div>
+                        <div class="tabName notes">Pastabos: </div><div class="tabContent">
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
