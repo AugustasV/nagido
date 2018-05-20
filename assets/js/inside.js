@@ -9,7 +9,7 @@ function showArticle(articleID) {
         let sideNavigation = document.getElementById('sideNavigation');
         if (i === articleID) {
             article.style.display = 'block';
-            if (document.body.clientWidth < 1024) {
+            if (document.body.clientWidth < 1100) {
                 sideNavigation.style.visibility = 'hidden';
             }
             sideNavigation.scrollTop = 0;
@@ -35,7 +35,7 @@ function windowSize() {
     let sideNavigation = document.getElementById('sideNavigation');
     let main = document.getElementById('main');
 
-    if (bodyWidth >= 1024) {
+    if (bodyWidth >= 1100) {
         let sideWidth;
         if (sideNavigation.style.width === '250px' || sideNavigation.style.width === '') {
             sideWidth = 250;
@@ -46,7 +46,7 @@ function windowSize() {
         main.style.marginLeft = sideWidth + 'px';
         main.style.width = mainWidth + 'px';
         sideNavigation.style.visibility = 'visible';
-    } else if (bodyWidth < 1024) {
+    } else if (bodyWidth < 1100) {
         main.style.marginLeft = '0px';
         main.style.width = bodyWidth + 'px';
         sideNavigation.style.visibility = 'hidden';
@@ -72,7 +72,7 @@ function openNav() {
     let sideNavigation = document.getElementById('sideNavigation');
     let main = document.getElementById('main');
 
-    if (bodyWidth >= 1024) {
+    if (bodyWidth >= 1100) {
         let sideWidth;
         if (sideNavigation.style.width === '250px' || sideNavigation.style.width === '') {
             sideWidth = 0;
@@ -83,14 +83,14 @@ function openNav() {
         main.style.marginLeft = sideWidth + 'px';
         main.style.width = mainWidth + 'px';
         sideNavigation.style.width = sideWidth + 'px';
-    } else if (bodyWidth < 1024) {
+    } else if (bodyWidth < 1100) {
         main.style.marginLeft = '0px';
         main.style.width = bodyWidth + 'px';
         sideNavigation.style.width = '250px';
         sideNavigation.style.visibility = 'visible';
 
         window.addEventListener('click', function(event) {
-            if (event.pageX > 250 && bodyWidth < 1024) {
+            if (event.pageX > 250 && bodyWidth < 1100) {
                 sideNavigation.style.visibility = 'hidden';
             }
         });
