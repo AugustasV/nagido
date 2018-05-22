@@ -12,31 +12,34 @@
                 <th>Pastabos</th>
                 <th colspan="2">Veiksmai</th>
             </tr>
-
             {% for file in files %}
+
                 <tr>
-                    <td>{{ file.getDocName() }}</td>
-                    {#<td>{{ file.getCategoryId() }}</td>#}
-                    <td>Kategorija 1</td>
+                    <td>{{ file.documentName }}</td>
+                    <td>{{ file.getCategory().getCategoryName() }}</td>
                     <td>Etiketės </td>
                     <td>Files </td>
                     
-                    {% if file.DocDate == NULL %}
+                    {% if file.DocumentDate == NULL %}
                         <td></td>
                         {% else %}
-                            <td>{{ file.DocDate|date("Y/m/d") }}</td>
+                            <td>{{ file.DocumentDate | date("Y-m-d") }}</td>
                     {% endif %}
-                    {% if file.DocExpires == NULL %}
+                    {% if file.DocumentExpires == NULL %}
                         <td></td>
                     {% else %}
-                        <td>{{ file.DocExpires|date("Y/m/d") }}</td>
+                        <td>{{ file.DocumentExpires|date("Y-m-d") }}</td>
                     {% endif %}
-                    {% if file.DocReminder == NULL %}
+                    {% if file.DocumentReminder == NULL %}
                         <td></td>
                     {% else %}
-                        <td>{{ file.DocReminder|date("Y/m/d") }}</td>
+                        <td>{{ file.DocumentReminder|date("Y-m-d") }}</td>
                     {% endif %}
-                    <td></td>
+                    {% if file.DocumentNotes == NULL %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ file.DocumentNotes }}</td>
+                    {% endif %}
                     <td>
                         <a href=""><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></a>
                         <a href="#"><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></a>
@@ -54,7 +57,7 @@
             {% for file in files %}
                 <tr>
                     <td><a href="javascript:toggle({{ loop.index }})"><img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/></a></td>
-                    <td>{{ file.getDocName() }}</td>
+                    <td>{{ file.DocumentName}}</td>
                     {#<td>{{ file.getCategoryId() }}</td>#}
                     <td>Kategorija 1</td>
                     <td>
@@ -69,9 +72,9 @@
                     <td colspan="4">
                         <b>Etiketės: </b>Etiketės<br>
                         <b>Priedai: </b>Files<br>
-                        <b>Galioja nuo: </b>{{ file.getDocDate()|date("Y-m-d") }}<br>
-                        <b>Galioja iki: </b>{{ file.getDocExpires()|date("Y-m-d") }}<br>
-                        <b>Priminimas: </b> {{ file.getDocReminder()|date("Y-m-d") }}<br>
+                        <b>Galioja nuo: </b>{{ file.DocumentDate | date("Y-m-d") }}<br>
+                        <b>Galioja iki: </b>{{ file.DocumentExpires | date("Y-m-d") }}<br>
+                        <b>Priminimas: </b> {{ file.DocumentReminder | date("Y-m-d") }}<br>
                         <b>Pastabos: </b>Pastabos
                     </td>
                 </tr>
