@@ -21,16 +21,16 @@ class DocumentRepository extends ServiceEntityRepository
 
     /**
      * @param $value
-     * @param $id
+     * @param $user
      * @return mixed
      */
-    public function search($value, $id)
+    public function search($value, $user)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentName LIKE :id')
+            ->andWhere('document.documentName LIKE :value')
             ->andWhere('document.user = :user')
-            ->setParameter('id', "%".$value."%")
-            ->setParameter('user', $id)
+            ->setParameter('value', "%".$value."%")
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
             ;
@@ -43,8 +43,19 @@ class DocumentRepository extends ServiceEntityRepository
     public function reminderDates($id)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentReminder IS NOT NULL AND document.user = :id')
-            ->setParameter('id', $id)
+            ->andWhere('document.documentReminder IS NOT NULL AND document.user = :user')
+            ->setParameter('user', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function categoryFiles($category, $user)
+    {
+        return $this->createQueryBuilder("document")
+            ->andWhere('document.category = :category AND document.user = :user')
+            ->setParameter('user', $user)
+            ->setParameter('category', $category)
             ->getQuery()
             ->getResult()
             ;

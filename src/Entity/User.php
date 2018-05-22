@@ -5,38 +5,35 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="fos_user")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userName;
+    protected $googleId;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userEmail;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $userToken;
+    protected $googleAccessToken;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="user")
      */
-    private $documents;
+    protected $documents;
 
     public function __construct()
     {
@@ -48,38 +45,26 @@ class User
         return $this->id;
     }
 
-    public function getUserName(): ?string
+    public function getGoogleId(): ?string
     {
-        return $this->userName;
+        return $this->googleId;
     }
 
-    public function setUserName(string $userName): self
+    public function setGoogleId(?string $googleId): self
     {
-        $this->userName = $userName;
+        $this->googleId = $googleId;
 
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getGoogleAccessToken(): ?string
     {
-        return $this->userEmail;
+        return $this->googleAccessToken;
     }
 
-    public function setUserEmail(string $userEmail): self
+    public function setGoogleAccessToken(?string $googleAccessToken): self
     {
-        $this->userEmail = $userEmail;
-
-        return $this;
-    }
-
-    public function getUserToken(): ?string
-    {
-        return $this->userToken;
-    }
-
-    public function setUserToken(string $userToken): self
-    {
-        $this->userToken = $userToken;
+        $this->googleAccessToken = $googleAccessToken;
 
         return $this;
     }

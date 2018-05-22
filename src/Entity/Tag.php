@@ -24,7 +24,7 @@ class Tag
     private $tagName;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Document", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Document", mappedBy="tag")
      */
     private $documents;
 

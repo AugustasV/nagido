@@ -24,7 +24,7 @@ class Document
     private $documentName;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $documentDate;
 
@@ -39,7 +39,7 @@ class Document
     private $documentExpires;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $documentNotes;
 
@@ -58,16 +58,16 @@ class Document
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="documents")
      */
-    private $tags;
+    private $tag;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="document")
      */
     private $files;
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->tag = new ArrayCollection();
         $this->files = new ArrayCollection();
     }
 
@@ -93,7 +93,7 @@ class Document
         return $this->documentDate;
     }
 
-    public function setDocumentDate(\DateTimeInterface $documentDate): self
+    public function setDocumentDate(?\DateTimeInterface $documentDate): self
     {
         $this->documentDate = $documentDate;
 
@@ -129,7 +129,7 @@ class Document
         return $this->documentNotes;
     }
 
-    public function setDocumentNotes(string $documentNotes): self
+    public function setDocumentNotes(?string $documentNotes): self
     {
         $this->documentNotes = $documentNotes;
 
@@ -163,15 +163,15 @@ class Document
     /**
      * @return Collection|Tag[]
      */
-    public function getTags(): Collection
+    public function getTag(): Collection
     {
-        return $this->tags;
+        return $this->tag;
     }
 
     public function addTag(Tag $tag): self
     {
-        if (!$this->tags->contains($tag)) {
-            $this->tags[] = $tag;
+        if (!$this->tag->contains($tag)) {
+            $this->tag[] = $tag;
         }
 
         return $this;
@@ -179,22 +179,22 @@ class Document
 
     public function removeTag(Tag $tag): self
     {
-        if ($this->tags->contains($tag)) {
-            $this->tags->removeElement($tag);
+        if ($this->tag->contains($tag)) {
+            $this->tag->removeElement($tag);
         }
 
         return $this;
     }
 
     /**
-     * @return Collection|File[]
+     * @return Collection|Files[]
      */
     public function getFiles(): Collection
     {
         return $this->files;
     }
 
-    public function addFile(File $file): self
+    public function addFile(Files $file): self
     {
         if (!$this->files->contains($file)) {
             $this->files[] = $file;
@@ -204,7 +204,7 @@ class Document
         return $this;
     }
 
-    public function removeFile(File $file): self
+    public function removeFile(Files $file): self
     {
         if ($this->files->contains($file)) {
             $this->files->removeElement($file);
