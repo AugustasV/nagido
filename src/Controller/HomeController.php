@@ -2,36 +2,41 @@
 
 namespace App\Controller;
 
-use Google_Client;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+//DB
+use App\Entity\Category;
+use App\Entity\Document;
+use App\Entity\User;
+
 //Form
-use App\Entity\Categories;
-use App\Entity\Documents;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\DocumentType;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
+
 class HomeController extends Controller
 {
     /**
      * @param Request $request
+     * @param AuthorizationCheckerInterface $authChecker
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker)
     {
-        $session = $request->getSession();
-        $session->start();
-        $tokens = $session->get("accessToken");
+        if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->render('home/index.html.twig', [
+            ]);
+        } else {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
+            $id = $this->getDoctrine()->getRepository(User::class)->find($this->getUser())->getId();
 
-        if ($request->isXmlHttpRequest()) {
-            $documentId = $request->request->get('id');
-            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findOneBy(["id" => $documentId]);
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
                 if($userFiles->getDocReminder() !== NULL) {
                     $reminder = $userFiles->getDocReminder()->format("Y-m-d");
                     $jsonData = array(
@@ -49,89 +54,89 @@ class HomeController extends Controller
                         "docCategory" => $userFiles->getCategoryId(),
                     );
                 }
-            return new JsonResponse($jsonData);
-        }
-
-        if (isset($tokens) && $tokens) {
-            $client = new Google_Client();
-            try {
-                $client->setAuthConfig('../config/client_secrets.json');
-            } catch (\Google_Exception $e) {
-                $client = null;
+                return new JsonResponse($jsonData);
             }
-            $client->addScope("https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email");
-            $id = $session->get("id");
-            $client->setAccessToken($tokens);
-
-            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id]);
-            //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
-            $categories = null;
 
             $form = $this->newForm();
             $form->handleRequest($request);
 
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
+
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
-                $article->setUserId($id);
+                $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
                 return $this->redirectToRoute('index');
             }
+
             return $this->render('home/home.html.twig', [
-                'files' => $userFiles,
+                'files' => $user->getDocuments(),
                 'categories' => $categories,
-                'form' => $form->createView()
-            ]);
-        } else {
-            return $this->render('home/index.html.twig', [
+                'form' => $form->createView(),
+                'tags' => null,
+                'reminders' => $reminders
             ]);
         }
     }
 
     /**
      * @param Request $request
+     * @param AuthorizationCheckerInterface $authChecker
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function reminder(Request $request)
+    public function reminder(Request $request, AuthorizationCheckerInterface $authChecker)
     {
-        $session = $request->getSession();
-        $session->start();
-        $tokens = $session->get("accessToken");
+        if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->render('home/index.html.twig', [
+            ]);
+        } else {
 
-        if (isset($tokens) && $tokens) {
-            $client = new Google_Client();
-            try {
-                $client->setAuthConfig('../config/client_secrets.json');
-            } catch (\Google_Exception $e) {
-                $client = null;
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocReminder() !== NULL) {
+                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docReminder" => $reminder,
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                }
+                return new JsonResponse($jsonData);
             }
-            $client->addScope("https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email");
-            $id = $session->get("id");
-            $client->setAccessToken($tokens);
-
-            $userFiles = $this->getReminderDates($id);
-            //$categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
-            $categories = null;
 
             $form = $this->newForm();
             $form->handleRequest($request);
 
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
+
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
-                $article->setUserId($id);
+                $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
                 return $this->redirectToRoute('index');
             }
+
             return $this->render('home/home.html.twig', [
-                'files' => $userFiles,
+                'files' => $reminders,
                 'categories' => $categories,
-                'form' => $form->createView()
-            ]);
-        } else {
-            return $this->render('home/index.html.twig', [
+                'form' => $form->createView(),
+                'tags' => null
             ]);
         }
     }
@@ -140,80 +145,58 @@ class HomeController extends Controller
      * @return \Symfony\Component\Form\FormInterface
      */
     public function newForm() {
-        $file = new Documents();
-
-        return $this->createFormBuilder($file)
-            ->add("docName", TextType::class, array('attr' => array()))
-            ->add("docDate", DateType::class, array(
-                "html5" => true,
-                'widget' => 'single_text',
-                'attr' => array(),
-                'required' => false
-            ))
-            ->add("docExpires", DateType::class, array(
-                'widget' => 'single_text',
-                'attr' => array(),
-                'required' => false
-            ))
-            ->add("docReminder", DateType::class, array(
-                'widget' => 'single_text',
-                'attr' => array(),
-                'required' => false
-            ))
-            ->add('category_id', ChoiceType::class, array(
-                'choices' => array(
-                    'Nuosavybės dokumentai' => 0,
-                    'Sutartys' => 1,
-                    'Draudimo polisai' => 2,
-                    'Pažymos' => 3,
-                    'Mokesčiai' => 4,
-                    'Kvitai' => 5,
-                    'Instrukcijos ir garantijos' => 6,
-                    'Įvairūs' => 7
-                )))
-            ->add("save", SubmitType::class, array(
-                "label" => "Išsaugoti",
-                'attr' => array('style' => 'float: left')
-            ))
-            ->add("cancel", ButtonType::class, array(
-                "label" => "Atšaukti",
-                'attr' => array()
-            ))
-            ->getForm();
+        $file = new Document();
+        return $this->createForm(DocumentType::class, $file);
     }
 
     /**
      * @param Request $request
      * @param $kategorija
+     * @param AuthorizationCheckerInterface $authChecker
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function categories(request $request, $kategorija)
+    public function categories(request $request, $kategorija, AuthorizationCheckerInterface $authChecker)
     {
-        $session = $request->getSession();
-        $session->start();
-        $tokens = $session->get("accessToken");
+        if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->render('home/index.html.twig', [
+            ]);
+        } else {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
 
-        if (isset($tokens) && $tokens) {
-            $client = new Google_Client();
-            try {
-                $client->setAuthConfig('../config/client_secrets.json');
-            } catch (\Google_Exception $e) {
-                $client = null;
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocReminder() !== NULL) {
+                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docReminder" => $reminder,
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                }
+                return new JsonResponse($jsonData);
             }
-            $client->addScope("https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email");
-            $id = $session->get("id");
-            $client->setAccessToken($tokens);
-            $kategorija = $kategorija - 1;
-            $userFiles = $this->getDoctrine()->getRepository(Documents::class)->findBy(["userId" => $id, "categoryId" => $kategorija]);
-            $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
             $form = $this->newForm();
             $form->handleRequest($request);
 
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
+            $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(["id" => $kategorija]);
+            $categoryFiles = $this->getDoctrine()->getRepository(Document::class)->categoryFiles($category, $user);
+
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
-                $article->setUserId($id);
-                $article->setCategoryId(1);
+                $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
@@ -221,40 +204,21 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $userFiles,
+                'files' => $categoryFiles,
                 'categories' => $categories,
-                'form' => $form->createView()
-            ]);
-        } else {
-            return $this->render('home/index.html.twig', [
+                'form' => $form->createView(),
+                'tags' => null,
+                'reminders' => $reminders
             ]);
         }
     }
 
     /**
      * @param $id
-     * @return mixed
      */
-    public function getReminderDates($id)
+    public  function delete($id)
     {
-        $em = $this->getDoctrine()->getManager()->getRepository(Documents::class);
-        $qb = $em->createQueryBuilder("e");
-        $qb
-            ->andWhere('e.docReminder IS NOT NULL AND e.userId = :id')
-            ->setParameter('id', $id)
-        ;
-        $result = $qb->getQuery()->getResult();
-
-        return $result;
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     */
-    public  function delete(Request $request, $id)
-    {
-        $file = $this->getDoctrine()->getRepository(Documents::class)->find($id);
+        $file = $this->getDoctrine()->getRepository(Document::class)->find($id);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($file);
         $entityManager->flush();

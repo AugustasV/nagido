@@ -44,29 +44,8 @@
             {% block section %}
                 <section>
                     <div id="main">
-
                         {{ include ('inside/new-document.html.twig') }}
-
-                        {% for i in 1..12 %}
-                            <article id={{ i }}>
-                                {% block table %}
-                                    {% if i <= 6 or i == 11%}
-                                        {{ include ('inside/table.html.twig') }}
-                                    {% elseif i >= 7 and i <= 10 %}
-                                        <div class="displayCenter">
-                                            <img class="emptyImage" src="{{ asset('images/folder1.png') }}" alt="Aplankas"/>
-                                            <div>Nėra dokumentų, priskirtų šiai kategorijai</div>
-                                        </div>
-                                    {% elseif i == 12 %}
-                                        <div class="displayCenter">
-                                            <img class="emptyImage" src="{{ asset('images/tag1.png') }}" alt="Etiketė"/>
-                                            <div>Nėra dokumentų su šia etikete</div>
-                                        </div>
-                                    {% endif %}
-                                {% endblock %}
-                            </article>
-                        {% endfor %}
-
+                        {{ include ('inside/table.html.twig') }}
                     </div>
                 </section>
             {% endblock %}

@@ -1,27 +1,42 @@
+fos_user:
+    resource: '@FOSUserBundle/Resources/config/routing/all.xml'
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /connect
+
+google_login:
+    path: /login
+
+logout:
+    path: /logout
+
 index:
     path: /
     controller: App\Controller\HomeController::index
 
-login:
-  path: /login
-  controller: App\Controller\GoogleApiController::login
-
-logout:
-  path: /logout
-  controller: App\Controller\GoogleApiController::logout
-
 reminder:
-  path: /remind
+  path: /priminimai
   controller: App\Controller\HomeController::reminder
 
+search:
+  path: /search
+  controller: App\Controller\searchController::index
+
 kategorijos:
-  path: kategorija/{kategorija}
+  path: /{kategorija}
   controller: App\Controller\HomeController::categories
 
 delete:
   path: /delete/{id}
   controller: App\Controller\HomeController::delete
 
-search:
-  path: /search
-  controller: App\Controller\searchController::index
+
