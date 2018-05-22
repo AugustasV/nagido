@@ -10,7 +10,6 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Document;
-use App\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,19 +21,13 @@ class searchController extends Controller
      */
     public function index(Request $request)
     {
-        $session = $request->getSession();
-        $id = $session->get("id");
-
         $input = $request->request->get('search');
-        $userFiles = $this->getDoctrine()->getManager()->getRepository(Document::class)->search($input, $id);
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-        $tag = $this->getDoctrine()->getRepository(Tag::class)->findAll();
 
         return $this->render('home/home.html.twig', [
-            'files' => $userFiles,
-            'categories' => $categories,
-            'form' => Null,
-            'tags' => $tag
+            'files' => $this->getDoctrine()->getManager()->getRepository(Document::class)->search($input, $this->getUser()),
+            'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+            'form' => null,
+            'tags' => null
         ]);
     }
 }
