@@ -26,6 +26,6 @@ final class Version20180524152209 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DELETE FROM category WHERE ID IN (1, 2, 3, 4, 5 , 6 ,7 ,8)');
+        $this->addSql('DELETE FROM category WHERE ID IN (1, 2, 3, 4, 5, 6, 7, 8)');
     }
 }
