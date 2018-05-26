@@ -77,9 +77,7 @@
                         <div class="tabName">Galioja nuo: </div><div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
                         <div class="tabName">Galioja iki: </div><div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
                         <div class="tabName">Priminimas: </div><div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
-                        <div class="tabName notes">Pastabos: </div><div class="tabContent">
-                           Pastabos
-                        </div>
+                        <div class="tabName notes">Pastabos: </div><div class="tabContent">{{ file.DocumentNotes }}</div>
                     </td>
                 </tr>
             {% endfor %}
