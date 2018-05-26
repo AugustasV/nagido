@@ -58,11 +58,12 @@ class DocumentType extends AbstractType
                 'choice_label' => 'categoryName',
             ))
             ->add("save", SubmitType::class, array(
-                "label" => "Pridėti",
+                "label" => "Išsaugoti",
                 'attr' => array('style' => 'float: left')
             ))
             ->add("cancel", ButtonType::class, array(
-                'attr' => array("onClick" => "goBack()")
+                "label" => "Atšaukti",
+                'attr' => array()
             ))
         ;
     }
