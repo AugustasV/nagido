@@ -56,7 +56,7 @@ class Document
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="documents")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="documents", cascade={"persist"})
      */
     private $tag;
 

@@ -19,6 +19,17 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function tagFiles($user)
+    {
+        return $this->createQueryBuilder("tag")
+            ->leftJoin('tag.documents', 'c')
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */

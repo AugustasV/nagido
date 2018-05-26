@@ -27,33 +27,42 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add("documentName", TextType::class, array(
+                "label" => "Pavadinimas",
                 'attr' => array()
             ))
             ->add("documentDate", DateType::class, array(
+                "label" => "Pradžia",
                 "html5" => true,
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => true
             ))
             ->add("documentExpires", DateType::class, array(
+                "label" => "Pabaiga",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => false
             ))
             ->add("documentReminder", DateType::class, array(
+                "label" => "Priminimas",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => false
             ))
-//            ->add('tag', CollectionType::class, array(
-//                'entry_type' => TagType::class,
-//                'entry_options' => array('label' => false),
-//            ))
+            ->add('tag', CollectionType::class, array(
+                'entry_type' => TagType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
             ->add("documentNotes", TextareaType::class, array(
+                "label" => "Pastabos",
                 'attr' => array(),
                 'required' => false
             ))
             ->add('category', EntityType::class, array(
+                "label" => "Kategorija",
                 'class' => Category::class,
                 'choice_label' => 'categoryName',
             ))
@@ -62,7 +71,6 @@ class DocumentType extends AbstractType
                 'attr' => array('style' => 'float: left')
             ))
             ->add("cancel", ButtonType::class, array(
-                'attr' => array("onClick" => "goBack()")
             ))
         ;
     }

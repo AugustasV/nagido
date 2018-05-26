@@ -61,6 +61,19 @@ class DocumentRepository extends ServiceEntityRepository
             ;
     }
 
+    public function tagFiles($tag, $user)
+    {
+        return $this->createQueryBuilder("document")
+            ->leftJoin('document.tag', 'c')
+            ->andWhere('c.id = :tag')
+            ->setParameter('tag', $tag)
+            ->andWhere('document.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Document[] Returns an array of Document objects
 //     */

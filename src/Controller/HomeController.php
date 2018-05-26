@@ -5,6 +5,7 @@ namespace App\Controller;
 //DB
 use App\Entity\Category;
 use App\Entity\Document;
+use App\Entity\Tag;
 use App\Entity\User;
 
 //Form
@@ -32,8 +33,6 @@ class HomeController extends Controller
             ]);
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
-            $id = $this->getDoctrine()->getRepository(User::class)->find($this->getUser())->getId();
-
             if ($request->isXmlHttpRequest()) {
                 $documentId = $request->request->get('id');
                 $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
@@ -57,10 +56,13 @@ class HomeController extends Controller
                 return new JsonResponse($jsonData);
             }
 
-            $form = $this->newForm();
+            $document = new Document();
+            $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
+
             $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
@@ -76,7 +78,7 @@ class HomeController extends Controller
                 'files' => $user->getDocuments(),
                 'categories' => $categories,
                 'form' => $form->createView(),
-                'tags' => null,
+                'tags' => $tags,
                 'reminders' => $reminders
             ]);
         }
@@ -208,6 +210,71 @@ class HomeController extends Controller
                 'categories' => $categories,
                 'form' => $form->createView(),
                 'tags' => null,
+                'reminders' => $reminders
+            ]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $etikete
+     * @param AuthorizationCheckerInterface $authChecker
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function tags(request $request, $etikete, AuthorizationCheckerInterface $authChecker)
+    {
+        if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->render('home/index.html.twig', [
+            ]);
+        } else {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
+
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocReminder() !== NULL) {
+                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docReminder" => $reminder,
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "docName" => $userFiles->getDocName(),
+                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
+                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
+                        "docCategory" => $userFiles->getCategoryId(),
+                    );
+                }
+                return new JsonResponse($jsonData);
+            }
+
+            $form = $this->newForm();
+            $form->handleRequest($request);
+
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
+
+            $tagFiles = $this->getDoctrine()->getRepository(Document::class)->tagFiles($etikete, $user);
+            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
+
+            if($form->isSubmitted() && $form->isValid()) {
+                $article = $form->getData();
+                $article->setUser($this->getUser());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($article);
+                $entityManager->flush();
+                return $this->redirectToRoute('index');
+            }
+
+            return $this->render('home/home.html.twig', [
+                'files' => $tagFiles,
+                'categories' => $categories,
+                'form' => $form->createView(),
+                'tags' => $tags,
                 'reminders' => $reminders
             ]);
         }
