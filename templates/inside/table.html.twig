@@ -18,7 +18,11 @@
                 <tr>
                     <td>{{ file.documentName }}</td>
                     <td>{{ file.getCategory().getCategoryName() }}</td>
-                    <td>Etiketės </td>
+                    <td>
+                        {% for tag in file.tag %}
+                            {{ tag.tagName }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </td>
                     <td>Files </td>
                     
                     {% if file.DocumentDate == NULL %}

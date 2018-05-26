@@ -9,7 +9,17 @@
         <div class="newWindow">
             {% if form %}
                 {{ form_start(form) }}
-                {{ form_widget(form) }}
+                {{ form_row(form.documentName) }}
+                {{ form_row(form.category) }}
+                {{ form_row(form.documentDate) }}
+                {{ form_row(form.documentExpires) }}
+                {{ form_row(form.documentReminder) }}
+                <label for="tags">Etiketės</label>
+                <ul style="list-style: none; padding: 0;" class="tags" data-prototype="{{ form_widget(form.tag.vars.prototype)|e('html_attr') }}">
+                {% for tag in form.tag %}
+                <li>{{ form_row(tag.tagName) }}</li>
+                {% endfor %}
+                </ul>
                 {{ form_end(form) }}
             {% endif %}
         </div>
