@@ -32,8 +32,12 @@ search:
   controller: App\Controller\searchController::index
 
 kategorijos:
-  path: /{kategorija}
+  path: /kategorija/{kategorija}
   controller: App\Controller\HomeController::categories
+
+etiketes:
+  path: /etikete/{etikete}
+  controller: App\Controller\HomeController::tags
 
 delete:
   path: /delete/{id}
