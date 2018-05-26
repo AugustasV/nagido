@@ -27,20 +27,24 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add("documentName", TextType::class, array(
+                "label" => "Dokumento pavadinimas",
                 'attr' => array()
             ))
             ->add("documentDate", DateType::class, array(
                 "html5" => true,
+                "label" => "Pradžios data",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => true
             ))
             ->add("documentExpires", DateType::class, array(
+                "label" => "Pabaigos data",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => false
             ))
             ->add("documentReminder", DateType::class, array(
+                "label" => "Priminimas",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => false
@@ -50,10 +54,12 @@ class DocumentType extends AbstractType
 //                'entry_options' => array('label' => false),
 //            ))
             ->add("documentNotes", TextareaType::class, array(
+                "label" => "Pastabos",
                 'attr' => array(),
                 'required' => false
             ))
             ->add('category', EntityType::class, array(
+                "label" => "Kategorijos",
                 'class' => Category::class,
                 'choice_label' => 'categoryName',
             ))
