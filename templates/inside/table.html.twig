@@ -76,12 +76,49 @@
                 <tr id="displayMoreData{{ loop.index }}" class="displayMoreData">
                     <td></td>
                     <td colspan="4">
-                        <div class="tabName">Etiketės: </div><div class="tabContent">Etiketės</div>
-                        <div class="tabName">Priedai: </div><div class="tabContent">Files</div>
-                        <div class="tabName">Galioja nuo: </div><div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
-                        <div class="tabName">Galioja iki: </div><div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
-                        <div class="tabName">Priminimas: </div><div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
-                        <div class="tabName notes">Pastabos: </div><div class="tabContent">{{ file.DocumentNotes }}</div>
+                        <div class="tabName">Etiketės: </div>
+                        {% if file.tagName is not defined %}
+                            <div class="tabContent"></div>
+                        {% else %}
+                            <div class="tabContent">
+                                {% for tag in file.tag %}
+                                    {{ tag.tagName }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+
+                            </div>
+                        {% endif %}
+
+                        <div class="tabName">Priedai: </div>
+                        <div class="tabContent">Files</div>
+
+                        <div class="tabName">Galioja nuo: </div>
+                        {% if file.DocumentDate == NULL %}
+                            <div class="tabContent"></div>
+                        {% else %}
+                            <div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
+                        {% endif %}
+
+                        <div class="tabName">Galioja iki: </div>
+                        {% if file.DocumentExpires == NULL %}
+                            <div class="tabContent"></div>
+                        {% else %}
+                            <div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
+                        {% endif %}
+
+
+                        <div class="tabName">Priminimas: </div>
+                        {% if file.DocumentReminder == NULL %}
+                            <div class="tabContent"></div>
+                        {% else %}
+                            <div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
+                        {% endif %}
+
+                        <div class="tabName">Pastabos: </div>
+                        {% if file.DocumentNotes == NULL %}
+                            <div class="tabContent"></div>
+                        {% else %}
+                            <div class="tabContent">{{ file.DocumentNotes }} </div>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
