@@ -27,18 +27,18 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add("documentName", TextType::class, array(
-                "label" => "Pavadinimas",
+                "label" => "Dokumento pavadinimas",
                 'attr' => array()
             ))
             ->add("documentDate", DateType::class, array(
-                "label" => "Pradžia",
                 "html5" => true,
+                "label" => "Pradžios data",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => true
             ))
             ->add("documentExpires", DateType::class, array(
-                "label" => "Pabaiga",
+                "label" => "Pabaigos data",
                 'widget' => 'single_text',
                 'attr' => array(),
                 'required' => false
@@ -62,15 +62,17 @@ class DocumentType extends AbstractType
                 'required' => false
             ))
             ->add('category', EntityType::class, array(
-                "label" => "Kategorija",
+                "label" => "Kategorijos",
                 'class' => Category::class,
                 'choice_label' => 'categoryName',
             ))
             ->add("save", SubmitType::class, array(
-                "label" => "Pridėti",
+                "label" => "Išsaugoti",
                 'attr' => array('style' => 'float: left')
             ))
             ->add("cancel", ButtonType::class, array(
+                "label" => "Atšaukti",
+                'attr' => array()
             ))
         ;
     }

@@ -66,9 +66,8 @@
                             <img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/>
                         </div>
                     </td>
-                    <td>{{ file.DocumentName}}</td>
-                    {#<td>{{ file.getCategoryId() }}</td>#}
-                    <td>Kategorija 1</td>
+                    <td>{{ file.documentName }}</td>
+                    <td>{{ file.getCategory().getCategoryName() }}</td>
                     <td>
                         <div><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="{{ file.id }}"/></div>
                         <div><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></div>
@@ -82,9 +81,7 @@
                         <div class="tabName">Galioja nuo: </div><div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
                         <div class="tabName">Galioja iki: </div><div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
                         <div class="tabName">Priminimas: </div><div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
-                        <div class="tabName notes">Pastabos: </div><div class="tabContent">
-                           Pastabos
-                        </div>
+                        <div class="tabName notes">Pastabos: </div><div class="tabContent">{{ file.DocumentNotes }}</div>
                     </td>
                 </tr>
             {% endfor %}
