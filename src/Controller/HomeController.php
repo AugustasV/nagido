@@ -36,21 +36,21 @@ class HomeController extends Controller
             if ($request->isXmlHttpRequest()) {
                 $documentId = $request->request->get('id');
                 $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 } else {
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 }
                 return new JsonResponse($jsonData);
@@ -99,21 +99,21 @@ class HomeController extends Controller
             if ($request->isXmlHttpRequest()) {
                 $documentId = $request->request->get('id');
                 $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 } else {
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 }
                 return new JsonResponse($jsonData);
@@ -168,21 +168,21 @@ class HomeController extends Controller
             if ($request->isXmlHttpRequest()) {
                 $documentId = $request->request->get('id');
                 $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 } else {
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 }
                 return new JsonResponse($jsonData);
@@ -232,21 +232,21 @@ class HomeController extends Controller
             if ($request->isXmlHttpRequest()) {
                 $documentId = $request->request->get('id');
                 $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 } else {
                     $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
                     );
                 }
                 return new JsonResponse($jsonData);
