@@ -59,6 +59,11 @@
         shell: bin/console cache:warmup --env=prod --no-debug
         args:
             chdir: "{{ deploy_helper.new_release_path }}"
+            
+      - name: Run DB migrations
+        shell: bin/console doctrine:migrations:migrate --env=prod --no-debug
+        args:
+            chdir: "{{ deploy_helper.new_release_path }}"
 
       - name: Finalize the deploy, removing the unfinished file and switching the symlink
         deploy_helper:
