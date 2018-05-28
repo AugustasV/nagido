@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -60,6 +61,12 @@ class DocumentType extends AbstractType
                 "label" => "Pastabos",
                 'attr' => array(),
                 'required' => false
+            ))
+            ->add('files', FileType::class, array(
+                'multiple' => true,
+                'attr'     => [
+                    'accept' => 'image/*'
+                ]
             ))
             ->add('category', EntityType::class, array(
                 "label" => "Kategorijos",

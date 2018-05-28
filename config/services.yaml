@@ -34,3 +34,7 @@ services:
         arguments:
           - '@fos_user.user_manager'
           - { google: googleId }
+
+    app.service.data_service:
+        class: App\Service\DataService
+        arguments: [ "@doctrine.orm.entity_manager" ]

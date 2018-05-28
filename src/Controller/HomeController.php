@@ -11,6 +11,7 @@ use App\Entity\User;
 //Form
 use App\Form\DocumentType;
 
+use App\Service\DataService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,52 +22,28 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
+
     /**
      * @param Request $request
      * @param AuthorizationCheckerInterface $authChecker
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param DataService $dataService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function index(Request $request, AuthorizationCheckerInterface $authChecker)
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker, DataService $dataService)
     {
         if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->render('home/index.html.twig', [
-            ]);
+            return $this->render('home/index.html.twig', []);
         } else {
-            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
-            if ($request->isXmlHttpRequest()) {
-                $documentId = $request->request->get('id');
-                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                } else {
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                }
-                return new JsonResponse($jsonData);
-            }
+
 
             $document = new Document();
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
-
-            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
-
             if($form->isSubmitted() && $form->isValid()) {
+
                 $article = $form->getData();
+                //$file = $article->getFiles();
                 $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
@@ -75,11 +52,10 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $user->getDocuments(),
-                'categories' => $categories,
+                'files' => $this->getUser()->getDocuments(),
+                'categories' => $dataService->getCategories(),
                 'form' => $form->createView(),
-                'tags' => $tags,
-                'reminders' => $reminders
+                'tags' => $dataService->getTags($this->getUser())
             ]);
         }
     }
