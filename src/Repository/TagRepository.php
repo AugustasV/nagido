@@ -19,6 +19,10 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    /**
+     * @param $user
+     * @return mixed
+     */
     public function tagFiles($user)
     {
         return $this->createQueryBuilder("tag")

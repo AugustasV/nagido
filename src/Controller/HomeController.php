@@ -5,7 +5,6 @@ namespace App\Controller;
 //DB
 use App\Entity\Category;
 use App\Entity\Document;
-use App\Entity\Tag;
 use App\Entity\User;
 
 //Form
@@ -22,28 +21,49 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
+    private $categories;
+
+    private $tags;
+
+    /**
+     * @param DataService $dataService
+     */
+    public function __construct(DataService $dataService)
+    {
+        $this->categories = $dataService->getCategories();
+        $this->tags = $dataService->getTags();
+    }
 
     /**
      * @param Request $request
      * @param AuthorizationCheckerInterface $authChecker
-     * @param DataService $dataService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function index(Request $request, AuthorizationCheckerInterface $authChecker, DataService $dataService)
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker)
     {
         if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->render('home/index.html.twig', []);
         } else {
-
 
             $document = new Document();
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()) {
-
                 $article = $form->getData();
-                //$file = $article->getFiles();
+
+//                $creationDate = clone $form["documentDate"]->getData();
+//                if ($form["documentExpires"]->getData() === null) {
+//                    switch ($form["category"]->getData()->getCategoryName()) {
+//                        case "Pažymos":
+//                            $creationDate->modify('+8 day');
+//                            break;
+//                        default:
+//                            $creationDate = null;
+//                    }
+//                    $article->setDocumentExpires($creationDate);
+//                }
+
                 $article->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
@@ -52,10 +72,10 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $this->getUser()->getDocuments(),
-                'categories' => $dataService->getCategories(),
                 'form' => $form->createView(),
-                'tags' => $dataService->getTags($this->getUser())
+                'files' => $this->getUser()->getDocuments(),
+                'categories' => $this->categories,
+                'tags' => $this->tags
             ]);
         }
     }
@@ -72,33 +92,9 @@ class HomeController extends Controller
             ]);
         } else {
 
-            if ($request->isXmlHttpRequest()) {
-                $documentId = $request->request->get('id');
-                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                } else {
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                }
-                return new JsonResponse($jsonData);
-            }
-
             $form = $this->newForm();
             $form->handleRequest($request);
 
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
             $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
@@ -111,10 +107,10 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $reminders,
-                'categories' => $categories,
                 'form' => $form->createView(),
-                'tags' => null
+                'files' => $reminders,
+                'categories' => $this->categories,
+                'tags' => $this->tags
             ]);
         }
     }
@@ -141,36 +137,13 @@ class HomeController extends Controller
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
 
-            if ($request->isXmlHttpRequest()) {
-                $documentId = $request->request->get('id');
-                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                } else {
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                }
-                return new JsonResponse($jsonData);
-            }
-
             $form = $this->newForm();
             $form->handleRequest($request);
 
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
             $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
             $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(["id" => $kategorija]);
             $categoryFiles = $this->getDoctrine()->getRepository(Document::class)->categoryFiles($category, $user);
+            //$categoryFiles = $this->getDoctrine()->getRepository(Document::class)->findBy(["documentName" => "test"], ['documentDate' => 'DESC']);
 
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
@@ -182,11 +155,11 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $categoryFiles,
-                'categories' => $categories,
                 'form' => $form->createView(),
-                'tags' => null,
-                'reminders' => $reminders
+                'files' => $categoryFiles,
+                'reminders' => $reminders,
+                'categories' => $this->categories,
+                'tags' => $this->tags
             ]);
         }
     }
@@ -205,37 +178,10 @@ class HomeController extends Controller
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
 
-            if ($request->isXmlHttpRequest()) {
-                $documentId = $request->request->get('id');
-                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
-                if($userFiles->getDocReminder() !== NULL) {
-                    $reminder = $userFiles->getDocReminder()->format("Y-m-d");
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docReminder" => $reminder,
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                } else {
-                    $jsonData = array(
-                        "docName" => $userFiles->getDocName(),
-                        "docDate" => $userFiles->getDocDate()->format("Y-m-d"),
-                        "docExpires" => $userFiles->getDocExpires()->format("Y-m-d"),
-                        "docCategory" => $userFiles->getCategoryId(),
-                    );
-                }
-                return new JsonResponse($jsonData);
-            }
-
             $form = $this->newForm();
             $form->handleRequest($request);
 
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
-
             $tagFiles = $this->getDoctrine()->getRepository(Document::class)->tagFiles($etikete, $user);
-            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
 
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
@@ -247,11 +193,10 @@ class HomeController extends Controller
             }
 
             return $this->render('home/home.html.twig', [
-                'files' => $tagFiles,
-                'categories' => $categories,
                 'form' => $form->createView(),
-                'tags' => $tags,
-                'reminders' => $reminders
+                'files' => $tagFiles,
+                'categories' => $this->categories,
+                'tags' => $this->tags
             ]);
         }
     }

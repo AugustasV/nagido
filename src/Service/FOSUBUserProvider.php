@@ -9,7 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FOSUBUserProvider extends BaseClass
 {
     /**
-     * {@inheritDoc}
+     * @param UserInterface $user
+     * @param UserResponseInterface $response
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
@@ -28,8 +29,10 @@ class FOSUBUserProvider extends BaseClass
         $user->$setter_token($response->getAccessToken());
         $this->userManager->updateUser($user);
     }
+
     /**
-     * {@inheritdoc}
+     * @param UserResponseInterface $response
+     * @return \FOS\UserBundle\Model\UserInterface|null|UserInterface
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {

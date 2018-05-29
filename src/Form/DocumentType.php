@@ -47,7 +47,10 @@ class DocumentType extends AbstractType
             ->add("documentReminder", DateType::class, array(
                 "label" => "Priminimas",
                 'widget' => 'single_text',
-                'attr' => array(),
+                'format' => 'yyyy-MM-dd',
+                'attr' => array(
+
+                ),
                 'required' => false
             ))
             ->add('tag', CollectionType::class, array(
@@ -62,12 +65,13 @@ class DocumentType extends AbstractType
                 'attr' => array(),
                 'required' => false
             ))
-            ->add('files', FileType::class, array(
-                'multiple' => true,
-                'attr'     => [
-                    'accept' => 'image/*'
-                ]
-            ))
+//            ->add('files', FileType::class, array(
+//                'multiple' => true,
+//                'attr'     => [
+//                    'accept' => 'image/*',
+//                    'multiple' => 'multiple',
+//                ]
+//            ))
             ->add('category', EntityType::class, array(
                 "label" => "Kategorijos",
                 'class' => Category::class,

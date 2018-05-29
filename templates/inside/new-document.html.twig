@@ -20,6 +20,7 @@
                 <li>{{ form_row(tag.tagName) }}</li>
                 {% endfor %}
                 </ul>
+                <div><label for="document_files" class="required">Files</label><input type="file" id="document_files" name="document[files][]" required="required" accept="image/*" multiple="multiple"></div>
                 {{ form_end(form) }}
             {% endif %}
         </div>
