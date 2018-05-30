@@ -1,32 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     windowSize();
-    showArticle(1);
+    // showArticle(1);
 });
-
-function showArticle(articleID) {
-    for (let i = 1; i <= 12; i++) {
-        let article = document.getElementById(i);
-        let sideNavigation = document.getElementById('sideNavigation');
-        if (i === articleID) {
-            article.style.display = 'block';
-            if (document.body.clientWidth < 1100) {
-                sideNavigation.style.visibility = 'hidden';
-            }
-            sideNavigation.scrollTop = 0;
-        } else {
-            article.style.display = 'none';
-        }
-    }
-    let smallTable = document.getElementById('smallTable');
-    let rows = smallTable.getElementsByTagName('tr').length;
-    for (i = 1; i <= rows; i++) {
-        let x = document.getElementById('displayMoreData' + i);
-        let y = document.getElementById('imgClickAndChange' + i);
-        x.style.display = 'none';
-        y.src = 'images/show-more-button.png';
-        y.title = 'Rodyti daugiau';
-    }
-}
+//
+// function showArticle(articleID) {
+//     for (let i = 1; i <= 12; i++) {
+//         let article = document.getElementById(i);
+//         let sideNavigation = document.getElementById('sideNavigation');
+//         if (i === articleID) {
+//             article.style.display = 'block';
+//             if (document.body.clientWidth < 1100) {
+//                 sideNavigation.style.visibility = 'hidden';
+//             }
+//             sideNavigation.scrollTop = 0;
+//         } else {
+//             article.style.display = 'none';
+//         }
+//     }
+//     let smallTable = document.getElementById('smallTable');
+//     let rows = smallTable.getElementsByTagName('tr').length;
+//     for (i = 1; i <= rows; i++) {
+//         let x = document.getElementById('displayMoreData' + i);
+//         let y = document.getElementById('imgClickAndChange' + i);
+//         x.style.display = 'none';
+//         y.src = 'images/show-more-button.png';
+//         y.title = 'Rodyti daugiau';
+//     }
+// }
 
 window.addEventListener("resize", windowSize);
 
@@ -170,15 +170,14 @@ for(let i = 0; i < 2; i++)
     if (table) {
         table.addEventListener('click', (e) => {
             if (e.target.className === 'delete') {
-                const id = e.target.getAttribute("data-id");
+                const id = e.target.getAttribute('data-id');
                 fetch(`/delete/${id}`, {
-                    method: "DELETE"
+                    method: 'DELETE'
                 }).then(res => window.location.reload());
             }
 
             if (e.target.className === 'edit') {
-                const id = e.target.getAttribute("data-id");
-                alert(id);
+                const id = e.target.getAttribute('data-id');
                 $.ajax({
                     url:        '/',
                     type:       'POST',
@@ -187,18 +186,18 @@ for(let i = 0; i < 2; i++)
                         id: id
                     },
                     success: function(data) {
-                        $("#document_documentName").val(data.documentName);
-                        $("#document_documentDate").val(data.documentDate);
-                        $("#document_documentExpires").val(data.documentExpires);
-                        let reminder = $("#document_documentReminder");
+                        $('#document_documentName').val(data.documentName);
+                        $('#document_documentDate').val(data.documentDate);
+                        $('#document_documentExpires').val(data.documentExpires);
+                        let reminder = $('#document_documentReminder');
                         if(reminder) {
                             reminder.val(data.documentReminder);
                         }
-                        let notes = $("#document_documentNotes");
+                        let notes = $('#document_documentNotes');
                         if (notes) {
                             notes.val(data.documentNotes);
                         }
-                        $("#form_category_id option[value= "+ data.category +"]").prop('selected', true);
+                        $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
                         display();
                     },
                 });

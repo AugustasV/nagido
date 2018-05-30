@@ -25,17 +25,45 @@ class HomeController extends Controller
     /**
      * @param Request $request
      * @param AuthorizationCheckerInterface $authChecker
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, AuthorizationCheckerInterface $authChecker)
     {
         if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->render('home/index.html.twig', []);
         } else {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                }
+                return new JsonResponse($jsonData);
+            }
 
             $document = new Document();
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
+
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
+
+            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
                 $article = $form->getData();
@@ -79,6 +107,29 @@ class HomeController extends Controller
             return $this->render('home/index.html.twig', [
             ]);
         } else {
+
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                }
+                return new JsonResponse($jsonData);
+            }
 
             $form = $this->newForm();
             $form->handleRequest($request);
@@ -125,6 +176,29 @@ class HomeController extends Controller
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
 
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                }
+                return new JsonResponse($jsonData);
+            }
+
             $form = $this->newForm();
             $form->handleRequest($request);
 
@@ -165,6 +239,29 @@ class HomeController extends Controller
             ]);
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
+
+            if ($request->isXmlHttpRequest()) {
+                $documentId = $request->request->get('id');
+                $userFiles = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $documentId]);
+                if($userFiles->getDocumentReminder() !== NULL) {
+                    $reminder = $userFiles->getDocumentReminder()->format("Y-m-d");
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentReminder" => $reminder,
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                } else {
+                    $jsonData = array(
+                        "documentName" => $userFiles->getDocumentName(),
+                        "documentDate" => $userFiles->getDocumentDate()->format("Y-m-d"),
+                        "documentExpires" => $userFiles->getDocumentExpires()->format("Y-m-d"),
+                        "documentCategory" => $userFiles->getCategory(),
+                    );
+                }
+                return new JsonResponse($jsonData);
+            }
 
             $form = $this->newForm();
             $form->handleRequest($request);
