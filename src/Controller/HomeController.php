@@ -21,18 +21,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
-    private $categories;
-
-    private $tags;
-
-    /**
-     * @param DataService $dataService
-     */
-    public function __construct(DataService $dataService)
-    {
-        $this->categories = $dataService->getCategories();
-        $this->tags = $dataService->getTags();
-    }
 
     /**
      * @param Request $request
@@ -74,8 +62,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'form' => $form->createView(),
                 'files' => $this->getUser()->getDocuments(),
-                'categories' => $this->categories,
-                'tags' => $this->tags
+                'categories' => null,
+                'tags' => null
             ]);
         }
     }
@@ -109,8 +97,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'form' => $form->createView(),
                 'files' => $reminders,
-                'categories' => $this->categories,
-                'tags' => $this->tags
+                'categories' => null,
+                'tags' => null
             ]);
         }
     }
@@ -158,8 +146,8 @@ class HomeController extends Controller
                 'form' => $form->createView(),
                 'files' => $categoryFiles,
                 'reminders' => $reminders,
-                'categories' => $this->categories,
-                'tags' => $this->tags
+                'categories' => null,
+                'tags' => null
             ]);
         }
     }
@@ -195,8 +183,8 @@ class HomeController extends Controller
             return $this->render('home/home.html.twig', [
                 'form' => $form->createView(),
                 'files' => $tagFiles,
-                'categories' => $this->categories,
-                'tags' => $this->tags
+                'categories' => null,
+                'tags' => null
             ]);
         }
     }
