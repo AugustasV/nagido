@@ -61,7 +61,7 @@ class Document
     private $tag;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="document", cascade={"persist"})
      */
     private $files;
 

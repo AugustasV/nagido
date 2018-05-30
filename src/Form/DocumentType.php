@@ -65,13 +65,15 @@ class DocumentType extends AbstractType
                 'attr' => array(),
                 'required' => false
             ))
-//            ->add('files', FileType::class, array(
-//                'multiple' => true,
-//                'attr'     => [
-//                    'accept' => 'image/*',
-//                    'multiple' => 'multiple',
-//                ]
-//            ))
+            ->add('files', FileType::class, array(
+                'mapped' => false,
+                'multiple' => true,
+                'attr'     => [
+                    'accept' => 'image/*',
+                    'multiple' => 'multiple',
+                ]
+            ))
+//            ->add('um','hidden', array('data' => $this->um, 'mapped' => false))
             ->add('category', EntityType::class, array(
                 "label" => "Kategorijos",
                 'class' => Category::class,

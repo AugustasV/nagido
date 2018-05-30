@@ -5,12 +5,13 @@ namespace App\Controller;
 //DB
 use App\Entity\Category;
 use App\Entity\Document;
+use App\Entity\Files;
+use App\Entity\Tag;
 use App\Entity\User;
 
 //Form
 use App\Form\DocumentType;
 
-use App\Service\DataService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class HomeController extends Controller
             }
 
             $document = new Document();
+
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
@@ -66,7 +68,18 @@ class HomeController extends Controller
             $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
-                $article = $form->getData();
+                $newDocument = $form->getData();
+                echo "<pre>";
+                var_dump($form["files"]->getData());
+                echo "</pre>";
+                $images = $form["files"]->getData();
+                foreach ($images as $image)
+                {
+                    $file = New Files;
+                    $file->setDocument($document);
+                    $file->setFileAttach($image->getfileName());
+                    $document->addFile($file);
+                }
 
 //                $creationDate = clone $form["documentDate"]->getData();
 //                if ($form["documentExpires"]->getData() === null) {
@@ -80,9 +93,9 @@ class HomeController extends Controller
 //                    $article->setDocumentExpires($creationDate);
 //                }
 
-                $article->setUser($this->getUser());
+                $newDocument->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($article);
+                $entityManager->persist($newDocument);
                 $entityManager->flush();
                 return $this->redirectToRoute('index');
             }
