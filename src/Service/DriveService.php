@@ -11,6 +11,7 @@ namespace App\Service;
 use Google_Client;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
+use Google_Service_Drive_Permission;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -60,13 +61,20 @@ class DriveService
                 'fields' => 'id'));
             $newFolder->setFolderColorRgb("#ff7f2a");
             $this->folderId = $newFolder->getId();
+
+            $newPermission = new Google_Service_Drive_Permission();
+            $newPermission->setType('anyone');
+            $newPermission->setRole('reader');
+            $this->service->permissions->create($this->folderId, $newPermission);
         } else {
             $this->folderId = $listFolder->getFiles()[0]->getId();
         }
+
     }
 
-    public function saveFiles($filePath, $fileName)
+    public function saveFiles($filePath, $fileName, $documentName)
     {
+        $Id = $this->createFolder($documentName);
 
         //Get file mimeType
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -78,13 +86,41 @@ class DriveService
             'name' => $fileName,
             'mimeType' => $mime_type,
             'description' => 'This is a '.$mime_type.' document',
-            'parents' => array($this->folderId)
+            'parents' => array($Id)
         ));
         //Insert new file
         $this->service->files->create($file, array(
             'data' => file_get_contents($filePath),
             'mimeType' => $mime_type
         ));
+    }
+
+    public function createFolder($folderName)
+    {
+        $listFolder = $this->service->files->listFiles(['q' => "name='$folderName'"]);
+        if (empty($listFolder->getFiles())) {
+            //Create new folder
+            $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                'name' => $folderName,
+                'mimeType' => 'application/vnd.google-apps.folder',
+                'folderColorRgb' => '#ff7f2a',
+                'parents' => array($this->folderId)
+            ));
+            //Insert folder
+            $newFolder = $this->service->files->create($fileMetadata, array(
+                'fields' => 'id'));
+            $newFolder->setFolderColorRgb("#ff7f2a");
+            return $newFolder->getId();
+        } else {
+            return $listFolder->getFiles()[0]->getId();
+        }
+    }
+
+    public function getFolderLink($documentName)
+    {
+            $listFolder = $this->service->files->listFiles(['q' => "name='$documentName'"]);
+            $link = "https://drive.google.com/drive/folders/" . $listFolder->getFiles()[0]->getId();
+            return $link;
     }
 
     public function deleteFiles()

@@ -65,6 +65,11 @@ class Document
      */
     private $files;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $documentPath;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -213,6 +218,18 @@ class Document
                 $file->setDocument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDocumentPath(): ?string
+    {
+        return $this->documentPath;
+    }
+
+    public function setDocumentPath(?string $documentPath): self
+    {
+        $this->documentPath = $documentPath;
 
         return $this;
     }

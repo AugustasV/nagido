@@ -23,8 +23,11 @@
                             {{ tag.tagName }}{% if not loop.last %},{% endif %}
                         {% endfor %}
                     </td>
-                    <td>Files </td>
-                    
+                    {% if file.DocumentPath == NULL %}
+                        <td></td>
+                    {% else %}
+                        <td><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a></td>
+                    {% endif %}
                     {% if file.DocumentDate == NULL %}
                         <td></td>
                         {% else %}

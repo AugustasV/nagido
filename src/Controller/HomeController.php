@@ -63,10 +63,7 @@ class HomeController extends Controller
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
             $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
-
-            $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
                 $document->setDocumentName($form["documentName"]->getData());
@@ -76,6 +73,10 @@ class HomeController extends Controller
                 $document->setDocumentNotes($form["documentNotes"]->getData());
                 $document->setUser($this->getUser());
                 $document->setCategory($form["category"]->getData());
+
+
+
+
 
                 $tags = $form["tag"]->getData();
                 foreach ($tags as $tagInd) {
@@ -94,19 +95,24 @@ class HomeController extends Controller
 
 
                 }
-                //die;
-//                $images = $form["files"]->getData();
-//                $driveService->storageInit();
-//                foreach ($images as $image) {
-//                    $fileName = $image->getfileName();
-//                    $filePath = $image->getpathName();
-//                    $driveService->saveFiles($filePath, $fileName);
-//
-////                    $file = New Files;
-////                    $file->setDocument($document);
-////                    $file->setFileAttach($image->getfileName());
-////                    $document->addFile($file);
-//                }
+
+                if (sizeof($form["files"]->getData()) > 0) {
+
+                    $images = $form["files"]->getData();
+                    $driveService->storageInit();
+                    foreach ($images as $image) {
+                        $fileName = $image->getfileName();
+                        $filePath = $image->getpathName();
+                        $driveService->saveFiles($filePath, $fileName, $form["documentName"]->getData());
+
+    //                    $file = New Files;
+    //                    $file->setDocument($document);
+    //                    $file->setFileAttach($image->getfileName());
+    //                    $document->addFile($file);
+                    }
+                    $document->setDocumentPath($driveService->getFolderLink($form["documentName"]->getData()));
+                }
+
 
 //                $creationDate = clone $form["documentDate"]->getData();
 //                if ($form["documentExpires"]->getData() === null) {
@@ -120,10 +126,10 @@ class HomeController extends Controller
 //                    $article->setDocumentExpires($creationDate);
 //                }
 
-                //$newDocument->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($document);
                 $entityManager->flush();
+                return $this->redirectToRoute('index');
             }
 
             return $this->render('home/home.html.twig', [
