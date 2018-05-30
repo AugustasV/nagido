@@ -5,13 +5,13 @@ namespace App\Controller;
 //DB
 use App\Entity\Category;
 use App\Entity\Document;
-use App\Entity\Files;
 use App\Entity\Tag;
 use App\Entity\User;
 
 //Form
 use App\Form\DocumentType;
 
+use App\Service\DriveService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +26,10 @@ class HomeController extends Controller
     /**
      * @param Request $request
      * @param AuthorizationCheckerInterface $authChecker
+     * @param DriveService $driveService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function index(Request $request, AuthorizationCheckerInterface $authChecker)
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker, DriveService $driveService)
     {
         if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->render('home/index.html.twig', []);
@@ -68,18 +69,44 @@ class HomeController extends Controller
             $reminders = $this->getDoctrine()->getRepository(Document::class)->reminderDates($this->getUser());
 
             if($form->isSubmitted() && $form->isValid()) {
-                $newDocument = $form->getData();
-                echo "<pre>";
-                var_dump($form["files"]->getData());
-                echo "</pre>";
-                $images = $form["files"]->getData();
-                foreach ($images as $image)
-                {
-                    $file = New Files;
-                    $file->setDocument($document);
-                    $file->setFileAttach($image->getfileName());
-                    $document->addFile($file);
+                $document->setDocumentName($form["documentName"]->getData());
+                $document->setDocumentDate($form["documentDate"]->getData());
+                $document->setDocumentReminder($form["documentReminder"]->getData());
+                $document->setDocumentExpires($form["documentExpires"]->getData());
+                $document->setDocumentNotes($form["documentNotes"]->getData());
+                $document->setUser($this->getUser());
+                $document->setCategory($form["category"]->getData());
+
+                $tags = $form["tag"]->getData();
+                foreach ($tags as $tagInd) {
+                    $user = $this->getDoctrine()
+                        ->getRepository(Tag::class)
+                        ->findOneBy(array('tagName' => $tagInd->getTagName()));
+                    if ($user) {
+                        $user->addDocument($document);
+                        $document->addTag($user);
+                    } else {
+                        $tag = New Tag();
+                        $tag->setTagName($tagInd->getTagName());
+                        $tag->addDocument($document);
+                        $document->addTag($tag);
+                    }
+
+
                 }
+                //die;
+//                $images = $form["files"]->getData();
+//                $driveService->storageInit();
+//                foreach ($images as $image) {
+//                    $fileName = $image->getfileName();
+//                    $filePath = $image->getpathName();
+//                    $driveService->saveFiles($filePath, $fileName);
+//
+////                    $file = New Files;
+////                    $file->setDocument($document);
+////                    $file->setFileAttach($image->getfileName());
+////                    $document->addFile($file);
+//                }
 
 //                $creationDate = clone $form["documentDate"]->getData();
 //                if ($form["documentExpires"]->getData() === null) {
@@ -93,18 +120,17 @@ class HomeController extends Controller
 //                    $article->setDocumentExpires($creationDate);
 //                }
 
-                $newDocument->setUser($this->getUser());
+                //$newDocument->setUser($this->getUser());
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($newDocument);
+                $entityManager->persist($document);
                 $entityManager->flush();
-                return $this->redirectToRoute('index');
             }
 
             return $this->render('home/home.html.twig', [
                 'form' => $form->createView(),
                 'files' => $this->getUser()->getDocuments(),
                 'categories' => null,
-                'tags' => null
+                'tags' => $tags
             ]);
         }
     }
