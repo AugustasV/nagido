@@ -59,6 +59,7 @@ class DocumentType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'mapped' => false
             ))
             ->add("documentNotes", TextareaType::class, array(
                 "label" => "Pastabos",
@@ -66,6 +67,7 @@ class DocumentType extends AbstractType
                 'required' => false
             ))
             ->add('files', FileType::class, array(
+                'required' => false,
                 'mapped' => false,
                 'multiple' => true,
                 'attr'     => [
