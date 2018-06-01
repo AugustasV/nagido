@@ -61,9 +61,14 @@ class Document
     private $tag;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="document", cascade={"persist"})
      */
     private $files;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $documentPath;
 
     public function __construct()
     {
@@ -213,6 +218,18 @@ class Document
                 $file->setDocument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDocumentPath(): ?string
+    {
+        return $this->documentPath;
+    }
+
+    public function setDocumentPath(?string $documentPath): self
+    {
+        $this->documentPath = $documentPath;
 
         return $this;
     }

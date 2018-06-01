@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,7 +47,10 @@ class DocumentType extends AbstractType
             ->add("documentReminder", DateType::class, array(
                 "label" => "Priminimas",
                 'widget' => 'single_text',
-                'attr' => array(),
+                'format' => 'yyyy-MM-dd',
+                'attr' => array(
+
+                ),
                 'required' => false
             ))
             ->add('tag', CollectionType::class, array(
@@ -55,12 +59,23 @@ class DocumentType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'mapped' => false
             ))
             ->add("documentNotes", TextareaType::class, array(
                 "label" => "Pastabos",
                 'attr' => array(),
                 'required' => false
             ))
+            ->add('files', FileType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'multiple' => true,
+                'attr'     => [
+                    'accept' => 'image/*',
+                    'multiple' => 'multiple',
+                ]
+            ))
+//            ->add('um','hidden', array('data' => $this->um, 'mapped' => false))
             ->add('category', EntityType::class, array(
                 "label" => "Kategorijos",
                 'class' => Category::class,

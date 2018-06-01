@@ -1,6 +1,7 @@
 {% block table %}
     <div>
         <table id="largeTable" class="documentsTable">
+            <thead>
             <tr>
                 <th>Pavadinimas</th>
                 <th>Kategorija</th>
@@ -12,6 +13,8 @@
                 <th>Pastabos</th>
                 <th>Veiksmai</th>
             </tr>
+            </thead>
+
 
             {% for file in files %}
 
@@ -23,8 +26,11 @@
                             {{ tag.tagName }}{% if not loop.last %},{% endif %}
                         {% endfor %}
                     </td>
-                    <td>Files </td>
-                    
+                    {% if file.DocumentPath == NULL %}
+                        <td></td>
+                    {% else %}
+                        <td><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a></td>
+                    {% endif %}
                     {% if file.DocumentDate == NULL %}
                         <td></td>
                         {% else %}

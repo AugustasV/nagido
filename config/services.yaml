@@ -34,3 +34,7 @@ services:
         arguments:
           - '@fos_user.user_manager'
           - { google: googleId }
+
+    app.service.drive_service:
+        class: App\Service\DriveService
+        arguments: ["@security.token_storage"]

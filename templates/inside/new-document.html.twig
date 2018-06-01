@@ -16,9 +16,9 @@
                 {{ form_row(form.documentReminder) }}
                 <label for="tags">Etiketės</label>
                 <ul style="list-style: none; padding: 0;" class="tags" data-prototype="{{ form_widget(form.tag.vars.prototype)|e('html_attr') }}">
-                {% for tag in form.tag %}
-                <li>{{ form_row(tag.tagName) }}</li>
-                {% endfor %}
+                    {% for tag in form.tag %}
+                        <li>{{ form_row(tag.tagName) }}</li>
+                    {% endfor %}
                 </ul>
                 {{ form_end(form) }}
             {% endif %}

@@ -27,9 +27,9 @@ class DocumentRepository extends ServiceEntityRepository
     public function search($value, $user)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentName LIKE :value')
-            ->andWhere('document.user = :user')
+            ->Where('document.documentName LIKE :value')
             ->setParameter('value', "%".$value."%")
+            ->andWhere('document.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
@@ -74,32 +74,15 @@ class DocumentRepository extends ServiceEntityRepository
             ;
     }
 
-//    /**
-//     * @return Document[] Returns an array of Document objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function count($user)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder("document")
+            ->select('count(document.id)')
+            ->andWhere('document.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Document
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

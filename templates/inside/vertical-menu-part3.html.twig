@@ -3,15 +3,15 @@
         <li>
             <div class="sideNavigationTitle_left"><b>ETIKETĖS</b></div>
             <div class="sideNavigationTitle_right">
-                <a href="#">
-                    <div><b>Redaguoti</b></div>
-                </a>
+                {#<a href="#">#}
+                    {#<div><b>Redaguoti</b></div>#}
+                {#</a>#}
             </div>
         </li>
 
         {% for tag in tags %}
             <li>
-                <a href="{{ path('etiketes', {'etikete': tag.id}) }}">
+                <a href="{{ path('etiketes') }}">
                     <div>
                         <img src="{{ asset('images/tag.png') }}" alt="Etiketė"/>
                         <span class="sideList">{{ tag.tagName }}</span>
