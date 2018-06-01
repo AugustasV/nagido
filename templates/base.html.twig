@@ -98,7 +98,74 @@
                 // remove the li for the tag form
                 $tagFormLi.remove();
             });
+
         }
+
+        var formatTime = function(unixTimestamp) {
+            var myDate = new Date(unixTimestamp * 1000);
+            var m = myDate.getMonth() + 1;
+            var d = myDate.getDate();
+            m = m > 9 ? m : "0"+m;
+            d = d > 9 ? d : "0"+d;
+            return (myDate.getFullYear() +'-'+ m) +'-'+ d;
+        }
+
+        var formatTags = function(tags) {
+            return tags.map(function(elem){
+                return elem.tagName;
+            }).join(", ");
+        }
+
+        $( document ).ready(function() {
+
+            $(document).on('keyup', '#searchInput', function (e) {
+                $this = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('search') }}',
+                    dataType: 'JSON',
+                    data: {
+                        id: $(this).val()
+                    },
+                    success: function(objResponse) {
+                        var response = $.parseJSON(objResponse.data);
+                        console.log(response);
+                        $("#largeTable tbody").html("");
+                        response.forEach(function(element) {
+                            var documentDate = element.documentDate;
+                            documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
+                            var documentReminder = element.documentReminder;
+                            documentReminder = element.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
+                            var documentExpires = element.documentExpires;
+                            documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
+                            var documentPath = element.documentPath;
+                            documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
+
+                            var tags = formatTags(element.tag);
+
+                            $('<tr>').append(
+                                $('<td>').text(element.documentName),
+                                $('<td>').text(element.category.categoryName),
+                                $('<td>').text(tags),
+                                $('<td>').html(
+                                    documentPath
+                                ),
+                                $('<td>').text(documentDate),
+                                $('<td>').text(documentExpires),
+                                $('<td>').text(documentReminder),
+                                $('<td>').text(element.documentNotes),
+                                $('<td>').html(
+                                '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
+                                '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
+                                )
+                            ).appendTo('#largeTable tbody');
+                        });
+                    }
+                });
+            });
+
+        });
+
 
     </script>
 </body>

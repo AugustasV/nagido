@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * @property Google_Service_Drive service
+ * @property TokenStorageInterface tokenStorage
  */
 class DriveService
 {
@@ -32,15 +33,8 @@ class DriveService
      */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
-        //Get User
-        $this->user = $tokenStorage->getToken()->getUser();
 
-        //Create google client
-        $client = new Google_Client();
-        $client->setAccessToken($this->user->getGoogleAccessToken());
-
-        //Set Drive Service
-        $this->service = new Google_Service_Drive($client);
+        $this->tokenStorage = $tokenStorage;
 
         //Set Storage Name
         $this->folderName = "Nagido-Files";
@@ -48,6 +42,16 @@ class DriveService
 
     public function storageInit()
     {
+        //Get User
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        //Create google client
+        $client = new Google_Client();
+        $client->setAccessToken($user->getGoogleAccessToken());
+
+        //Set Drive Service
+        $this->service = new Google_Service_Drive($client);
+
         $listFolder = $this->service->files->listFiles(['q' => "name='$this->folderName'"]);
         if (empty($listFolder->getFiles())) {
             //Create new folder

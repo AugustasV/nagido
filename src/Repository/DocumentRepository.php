@@ -27,9 +27,9 @@ class DocumentRepository extends ServiceEntityRepository
     public function search($value, $user)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentName LIKE :value')
-            ->andWhere('document.user = :user')
+            ->Where('document.documentName LIKE :value')
             ->setParameter('value', "%".$value."%")
+            ->andWhere('document.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult()

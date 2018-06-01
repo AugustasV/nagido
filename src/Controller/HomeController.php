@@ -22,6 +22,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
+    public function login()
+    {
+        return $this->render('home/index.html.twig', []);
+    }
 
     /**
      * @param Request $request
@@ -31,7 +35,7 @@ class HomeController extends Controller
      */
     public function index(Request $request, AuthorizationCheckerInterface $authChecker, DriveService $driveService)
     {
-        if (false === $authChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (false === $authChecker->isGranted('ROLE_USER')) {
             return $this->render('home/index.html.twig', []);
         } else {
             $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
@@ -129,7 +133,7 @@ class HomeController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($document);
                 $entityManager->flush();
-                return $this->redirectToRoute('index');
+                //return $this->redirectToRoute('index');
             }
 
             return $this->render('home/home.html.twig', [

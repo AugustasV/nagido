@@ -1,6 +1,7 @@
 {% block table %}
     <div>
         <table id="largeTable" class="documentsTable">
+            <thead>
             <tr>
                 <th>Pavadinimas</th>
                 <th>Kategorija</th>
@@ -12,6 +13,8 @@
                 <th>Pastabos</th>
                 <th>Veiksmai</th>
             </tr>
+            </thead>
+
 
             {% for file in files %}
 

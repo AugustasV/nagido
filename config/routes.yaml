@@ -29,14 +29,14 @@ reminder:
 
 search:
   path: /search
-  controller: App\Controller\searchController::index
+  controller: App\Controller\DocumentSearchController::index
 
 kategorijos:
   path: /kategorija/{kategorija}
   controller: App\Controller\HomeController::categories
 
 etiketes:
-  path: /etikete/{etikete}
+  path: /etikete
   controller: App\Controller\HomeController::tags
 
 delete:
