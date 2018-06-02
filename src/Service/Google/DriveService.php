@@ -6,7 +6,7 @@
  * Time: 15.25
  */
 
-namespace App\Service;
+namespace App\Service\Google;
 
 use Google_Client;
 use Google_Service_Drive;
