@@ -11,7 +11,7 @@
 
         {% for tag in tags %}
             <li>
-                <a href="{{ path('etiketes') }}">
+                <a class="tag-list" data-tag="{{ tag.id }}">
                     <div>
                         <img src="{{ asset('images/tag.png') }}" alt="Etiketė"/>
                         <span class="sideList">{{ tag.tagName }}</span>

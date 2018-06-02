@@ -116,8 +116,43 @@
             }).join(", ");
         }
 
-        $( document ).ready(function() {
+        function addData(objResponse) {
+            var response = $.parseJSON(objResponse.data);
+            console.log(response);
+            $("#largeTable tbody").html("");
+            response.forEach(function(element) {
+                var documentDate = element.documentDate;
+                documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
+                var documentReminder = element.documentReminder;
+                documentReminder = element.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
+                var documentExpires = element.documentExpires;
+                documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
+                //var documentPath = element.documentPath;
+                var documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
 
+                var tags = formatTags(element.tag);
+
+                $('<tr>').append(
+                    $('<td>').text(element.documentName),
+                    $('<td>').text(element.category.categoryName),
+                    $('<td>').text(tags),
+                    $('<td>').html(
+                        documentPath
+                    ),
+                    $('<td>').text(documentDate),
+                    $('<td>').text(documentExpires),
+                    $('<td>').text(documentReminder),
+                    $('<td>').text(element.documentNotes),
+                    $('<td>').html(
+                        '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
+                        '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
+                    )
+                ).appendTo('#largeTable tbody');
+            });
+        }
+
+        $( document ).ready(function() {
+            //Ajax call -- search
             $(document).on('keyup', '#searchInput', function (e) {
                 $this = $(this);
                 $.ajax({
@@ -128,40 +163,73 @@
                         id: $(this).val()
                     },
                     success: function(objResponse) {
-                        var response = $.parseJSON(objResponse.data);
-                        console.log(response);
-                        $("#largeTable tbody").html("");
-                        response.forEach(function(element) {
-                            var documentDate = element.documentDate;
-                            documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
-                            var documentReminder = element.documentReminder;
-                            documentReminder = element.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
-                            var documentExpires = element.documentExpires;
-                            documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
-                            var documentPath = element.documentPath;
-                            documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
-
-                            var tags = formatTags(element.tag);
-
-                            $('<tr>').append(
-                                $('<td>').text(element.documentName),
-                                $('<td>').text(element.category.categoryName),
-                                $('<td>').text(tags),
-                                $('<td>').html(
-                                    documentPath
-                                ),
-                                $('<td>').text(documentDate),
-                                $('<td>').text(documentExpires),
-                                $('<td>').text(documentReminder),
-                                $('<td>').text(element.documentNotes),
-                                $('<td>').html(
-                                '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
-                                '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
-                                )
-                            ).appendTo('#largeTable tbody');
-                        });
+                        addData(objResponse);
                     }
                 });
+            });
+
+            //Ajax call \\ Categories
+            $(document).on('click', '.category-list', function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('category') }}',
+                    dataType: 'JSON',
+                    data: {
+                        category: $(e.currentTarget).data("category")
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
+            });
+
+
+            //Ajax call \\ Reminders
+            $(document).on('click', '#reminder', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('reminder') }}',
+                    dataType: 'JSON',
+                    data: {
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
+            });
+
+
+            //Ajax call \\ Tags
+            $(document).on('click', '.tag-list', function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('tag') }}',
+                    dataType: 'JSON',
+                    data: {
+                        category: $(e.currentTarget).data("tag")
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
+            });
+
+            //Ajax call \\ All documents
+            $(document).on('click', '#documents', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('documents') }}',
+                    dataType: 'JSON',
+                    data: {
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
             });
 
         });
