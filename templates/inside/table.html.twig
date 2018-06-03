@@ -1,5 +1,5 @@
 {% block table %}
-    <div>
+    <td>
         <table id="largeTable" class="documentsTable">
             <thead>
             <tr>
@@ -29,7 +29,7 @@
                     {% if file.DocumentPath == NULL %}
                         <td></td>
                     {% else %}
-                        <td><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a></td>
+                        <td><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></td>
                     {% endif %}
                     {% if file.DocumentDate == NULL %}
                         <td></td>
@@ -84,7 +84,7 @@
                     <td colspan="4">
                         <div class="tabName">Etiketės: </div>
                         {% if file.tagName is not defined %}
-                            <div class="tabContent"></div>
+                            <div class="tabContent">-</div>
                         {% else %}
                             <div class="tabContent">
                                 {% for tag in file.tag %}
@@ -95,18 +95,22 @@
                         {% endif %}
 
                         <div class="tabName">Priedai: </div>
-                        <div class="tabContent">Files</div>
+                        {% if file.DocumentPath == NULL %}
+                            <div class="tabContent">-</div>
+                        {% else %}
+                            <div class="tabContent"><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></div>
+                        {% endif %}
 
                         <div class="tabName">Galioja nuo: </div>
                         {% if file.DocumentDate == NULL %}
-                            <div class="tabContent"></div>
+                            <div class="tabContent">-</div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
                         {% endif %}
 
                         <div class="tabName">Galioja iki: </div>
                         {% if file.DocumentExpires == NULL %}
-                            <div class="tabContent"></div>
+                            <div class="tabContent">-</div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
                         {% endif %}
@@ -114,14 +118,14 @@
 
                         <div class="tabName">Priminimas: </div>
                         {% if file.DocumentReminder == NULL %}
-                            <div class="tabContent"></div>
+                            <div class="tabContent">-</div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
                         {% endif %}
 
                         <div class="tabName">Pastabos: </div>
                         {% if file.DocumentNotes == NULL %}
-                            <div class="tabContent"></div>
+                            <div class="tabContent">-</div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentNotes }} </div>
                         {% endif %}
