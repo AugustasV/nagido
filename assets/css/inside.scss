@@ -88,11 +88,23 @@ h1 {
     border: 1px solid grey;
     border-radius: 4px;
     display: none;
+
+    .close {
+        display: none;
+        z-index: 1;
+        cursor: pointer;
+        margin-top: 5px;
+        margin-right: 15px;
+        color: #494948;
+        float: right;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
 }
 
 .searchForm input[type=text],
 .searchForm input[type=text]:hover {
-    width: 500px;
+    width: 450px;
     border: none;
     outline: none;
     background-color: inherit;
