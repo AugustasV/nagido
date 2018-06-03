@@ -292,10 +292,6 @@ table {
     border: 1px solid #9d938c;
     padding: 20px;
     width: 100%;
-
-    td:nth-child(2) {
-        white-space: nowrap;
-    }
 }
 
 th {
@@ -334,7 +330,7 @@ tr, td {
 .tabContent {
     display: block;
     text-align: left;
-    padding: 1.5px;
+    padding: 2px;
     border-bottom: 1px solid #F0F0F0;
     font-size: 0.9em;
     font-family: inherit;
@@ -342,6 +338,9 @@ tr, td {
 
 #largeTable {
     display: none;
+    td:nth-child(2) {
+        white-space: nowrap;
+    }
 }
 
 #smallTable {
