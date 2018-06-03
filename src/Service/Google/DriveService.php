@@ -21,8 +21,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class DriveService
 {
 
-    private $user;
-
     private $folderId;
 
     private $folderName;
@@ -129,7 +127,7 @@ class DriveService
 
     public function deleteFiles()
     {
-
+        $this->service->files->delete("14AT5iSH9bsDVXjtoUBbyGDWPgSRkjlaU");
     }
 
 }

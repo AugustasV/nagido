@@ -1,0 +1,51 @@
+{% block editDocument %}
+
+    <div id="editDocumentWindow" class="newDocumentWindow">
+        <div class="newWindow">
+            <form action="{{ path('update') }}" method="POST">
+                <input id="editId" type="hidden" name="documentId" value="">
+                <input id="name" name="documentName" type="text">
+                <select name="documentCategory" id="category">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.categoryName }}</option>
+                    {% endfor %}
+                </select>
+                <input type="date" name="documentDate" id="date">
+                <input type="date" name="documentExpires" id="expires">
+                <input type="date" name="documentReminder" id="reminder">
+                <textarea style="width: 100%" name="documentNotes" id="notes" cols="30" rows="10"></textarea>
+                <select name="documentTags[]" id="tags" multiple>
+                </select>
+                {#<div style="padding: 10px 0" id="tagss">#}
+
+                {#</div>#}
+                {#<ul style="list-style: none; padding: 0;" class="tags" data-prototype="<div id=&quot;document_tag___name__&quot;><div><input type=&quot;text&quot; id=&quot;document_tag___name___tagName&quot; name=&quot;document[tag][__name__][tagName]&quot; required=&quot;required&quot; /></div></div>">#}
+                   {#</ul>#}
+                <button type="submit" id="document_save" style="float: left">Save</button>
+                <button type="button" id="edit-document_cancel" name="document[cancel]">Cancel</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{#{% block editDocument %}#}
+
+    {#<div id="editDocumentWindow" class="newDocumentWindow">#}
+        {#<div class="newWindow">#}
+            {#{% if form %}#}
+                {#{{ form_start(form) }}#}
+                {#{{ form_row(form.documentName) }}#}
+                {#{{ form_row(form.category) }}#}
+                {#{{ form_row(form.documentDate) }}#}
+                {#{{ form_row(form.documentExpires) }}#}
+                {#{{ form_row(form.documentReminder) }}#}
+                {#<label for="tags">Etiketės</label>#}
+                {#<ul style="list-style: none; padding: 0;" class="tags" data-prototype="{{ form_widget(form.tag.vars.prototype)|e('html_attr') }}">#}
+                    {#{% for tag in form.tag %}#}
+                        {#<li>{{ form_row(tag.tagName) }}</li>#}
+                    {#{% endfor %}#}
+                {#</ul>#}
+                {#{{ form_end(form) }}#}
+            {#{% endif %}#}
+        {#</div>#}
+    {#</div>#}
+{#{% endblock %}#}

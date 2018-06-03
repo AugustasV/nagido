@@ -54,6 +54,7 @@ class DocumentType extends AbstractType
                 'required' => false
             ))
             ->add('tag', CollectionType::class, array(
+                'label' => false,
                 'entry_type' => TagType::class,
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
@@ -73,9 +74,9 @@ class DocumentType extends AbstractType
                 'attr'     => [
                     'accept' => 'image/*',
                     'multiple' => 'multiple',
+                    'capture'=> 'camera'
                 ]
             ))
-//            ->add('um','hidden', array('data' => $this->um, 'mapped' => false))
             ->add('category', EntityType::class, array(
                 "label" => "Kategorijos",
                 'class' => Category::class,

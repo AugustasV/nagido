@@ -41,3 +41,10 @@ services:
 
     app.service.data_service:
       class: App\Service\DataService
+
+    app.service.form_service:
+        class: App\Service\FormService
+        arguments:
+          - '@app.service.google.drive_service'
+          - '@security.token_storage'
+          - '@doctrine.orm.entity_manager'

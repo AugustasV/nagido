@@ -30,6 +30,15 @@
 
         {% endblock %}
     {% endblock %}
+    <style>
+        .tagBadge {
+            padding: 2px 9px;
+            background: orange;
+            border-radius: 5px;
+            color: white;
+            margin: 2px 5px;
+        }
+    </style>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -155,17 +164,20 @@
             //Ajax call -- search
             $(document).on('keyup', '#searchInput', function (e) {
                 $this = $(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ path('search') }}',
-                    dataType: 'JSON',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(objResponse) {
-                        addData(objResponse);
-                    }
-                });
+                if($this.val().length > 3 || $this.val().length == 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('search') }}',
+                        dataType: 'JSON',
+                        data: {
+                            id: $(this).val()
+                        },
+                        success: function(objResponse) {
+                            addData(objResponse);
+                        }
+                    });
+                }
+
             });
 
             //Ajax call \\ Categories
@@ -181,9 +193,7 @@
                         addData(objResponse);
                     }
                 });
-
             });
-
 
             //Ajax call \\ Reminders
             $(document).on('click', '#reminder', function (e) {
@@ -197,9 +207,7 @@
                         addData(objResponse);
                     }
                 });
-
             });
-
 
             //Ajax call \\ Tags
             $(document).on('click', '.tag-list', function (e) {
@@ -232,9 +240,88 @@
 
             });
 
+            $(document).on('click', '.delete', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('test') }}',
+                    dataType: 'JSON',
+                    success: function(objResponse) {
+                    }
+                });
+            });
+
+            //Ajax call -- Edit
+            $(document).on('click', '.edit', function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('edit') }}',
+                    dataType: 'JSON',
+                    data: {
+                        id: $(e.currentTarget).data("id")
+                    },
+                    success: function(objResponse) {
+                        var response = $.parseJSON(objResponse.data);
+                        $('#editDocumentWindow #name').val(response.documentName);
+                        $('#editDocumentWindow #category').val(response.category.id);
+
+
+                        var documentDate = response.documentDate;
+                        documentDate = response.documentDate === null ? "" : formatTime(documentDate.timestamp);
+                        $('#editDocumentWindow #date').val(documentDate);
+
+                        var documentExpires = response.documentExpires;
+                        documentExpires = response.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
+                        $('#editDocumentWindow #expires').val(documentExpires);
+
+                        var documentReminder = response.documentReminder;
+                        documentReminder = response.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
+                        $('#editDocumentWindow #reminder').val(documentReminder);
+
+
+                        $('#editDocumentWindow #notes').val(response.documentNotes);
+
+                        $('#editDocumentWindow #editId').val($(e.currentTarget).data("id"));
+
+
+                        //$('#document_documentExpires').val(response.documentExpires);
+                        console.log(response);
+                        response.tag.forEach((tag) => {
+                            $("#tags").append(
+                                $('<option>').text(tag.tagName)
+                            );
+                            //console.log(tag.id);
+                        });
+
+                        response.tag.forEach((tag) => {
+                            $("#tagss").append(
+                            $('<a class="tagBadge">').html("<span class='badgeName'>"+ tag.tagName +"</span><span style='margin-left: 5px; font-weight:bold; cursor:pointer;'>-</span>")
+                        );
+                        //console.log(tag.id);
+                    });
+
+                        document.getElementById('editDocumentWindow').style.display = 'block';
+                        /*
+
+                        var reminder = $('#document_documentReminder');
+                        if(reminder) {
+                            reminder.val(data.documentReminder);
+                        }
+                        var notes = $('#document_documentNotes');
+                        if (notes) {
+                            notes.val(data.documentNotes);
+                        }
+                        $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
+                        //addData(objResponse);
+                        */
+                    }
+                });
+            });
+
+            $(document).on('click', '#edit-document_cancel', function (e) {
+                $("#tags").html("");
+                document.getElementById('editDocumentWindow').style.display = 'none';
+            });
         });
-
-
     </script>
 </body>
 </html>
