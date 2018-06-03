@@ -29,7 +29,7 @@
                     {% if file.DocumentPath == NULL %}
                         <td></td>
                     {% else %}
-                        <td><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></td>
+                        <td><a href="{{ file.DocumentPath }}"><img src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></td>
                     {% endif %}
                     {% if file.DocumentDate == NULL %}
                         <td></td>
@@ -98,7 +98,7 @@
                         {% if file.DocumentPath == NULL %}
                             <div class="tabContent">-</div>
                         {% else %}
-                            <div class="tabContent"><a href="{{ file.DocumentPath }}"><img style="height: 20px" src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></div>
+                            <div class="tabContent"><a href="{{ file.DocumentPath }}"><img src="{{ asset('images/drive-icon.png') }}" alt="Drive Icon"></a></div>
                         {% endif %}
 
                         <div class="tabName">Galioja nuo: </div>
