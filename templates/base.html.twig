@@ -13,6 +13,9 @@
     {% endblock %}
 </head>
 <body>
+    <div class="loader-wrapper">
+        <div id="loader"></div>
+    </div>
     {% block body %}
         <div>{% block header %}{% endblock %}</div>
 
@@ -37,6 +40,37 @@
             border-radius: 5px;
             color: white;
             margin: 2px 5px;
+        }
+
+        .loader-wrapper {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            background: rgb(0, 0, 0); /* Fall-back for browsers that don't
+                                    support rgba */
+            background: rgba(0, 0, 0, .5);
+        }
+
+        #loader {
+            z-index: 999999;
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #ff7f2a; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
     <script
@@ -321,6 +355,11 @@
                 $("#tags").html("");
                 document.getElementById('editDocumentWindow').style.display = 'none';
             });
+
+            $('#newDocumentWindow form').submit(function() {
+                $('.loader-wrapper').css('visibility', 'visible');
+            });
+
         });
     </script>
 </body>
