@@ -164,7 +164,12 @@
             //Ajax call -- search
             $(document).on('keyup', '#searchInput', function (e) {
                 $this = $(this);
-                if($this.val().length > 3 || $this.val().length == 0) {
+
+                var $close = $('.close');
+
+                $close.css('display', 'inline-block');
+
+                if($this.val().length > 2 || $this.val().length == 0) {
                     $.ajax({
                         type: 'POST',
                         url: '{{ path('search') }}',
@@ -177,7 +182,10 @@
                         }
                     });
                 }
+            });
 
+            $(document).on('click', '.close', function(e){
+                location.reload(true);
             });
 
             //Ajax call \\ Categories
