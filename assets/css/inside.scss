@@ -3,7 +3,8 @@
 }
 
 body {
-    font-family: 'PT Sans Narrow', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95em;
     display: block;
     color: #494948;
     padding: 0;
@@ -53,8 +54,9 @@ header {
 }
 
 h1 {
+    font-family: 'Open Sans';
     display: none;
-    font-size: 2em;
+    font-size: 2.2em;
     text-align: center;
 }
 
@@ -95,7 +97,9 @@ h1 {
     outline: none;
     background-color: inherit;
     margin: 10px;
-    font-size: 0.9em;
+    font-size: 0.95em;
+    color: #494948;
+    font-family: inherit;
 }
 
 .signOutButton {
@@ -106,9 +110,11 @@ h1 {
     outline: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-family: inherit;
+    color: #494948;
+    font-size: 0.9em;
     display: block;
-    line-height: 1.15;
+    line-height: 1.2;
     padding: 10px;
 }
 
@@ -142,7 +148,7 @@ h1 {
 
 .sideNavigation ul li {
     padding: 8px 0 8px 10px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .sideNavigation li:hover,
@@ -200,7 +206,6 @@ h1 {
 a {
     text-decoration: none;
     width: 100%;
-    font-size: 0.9em;
     color: #494948;
 }
 
@@ -213,16 +218,18 @@ a {
     width: 200px;
     outline: none;
     text-align: center;
-    font-size: 0.9em;
+    font-family: inherit;
+    font-size: 0.91em;
+    color: #494948;
     margin: 0 0 10px 0;
 }
 
 .addDocumentButton span {
-    font-size: 1.1em;
-    padding: 15px;
+    padding: 10px;
 }
 
 .newDocumentWindow {
+    font-family: inherit;
     display: none;
     position: fixed;
     z-index: 40;
@@ -254,11 +261,13 @@ a {
 .newWindow form select {
     padding: 7px 15px;
     outline: none;
-    font-size: 0.9em;
+    font-family: inherit;
+    font-size: 0.85em;
 }
 
 label {
-    font-size: 1.2em;
+    font-size: 1em;
+    font-weight: bold;
     display: block;
     margin: 10px 0;
 }
@@ -273,18 +282,24 @@ label {
     outline: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-family: inherit;
+    font-size: 1em;
 }
 
 table {
+    font-size: 0.95em;
     border-collapse: collapse;
     border: 1px solid #9d938c;
     padding: 20px;
     width: 100%;
+
+    td:nth-child(2) {
+        white-space: nowrap;
+    }
 }
 
 th {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #9d938c;
     background-color: lightgrey;
     text-align: center;
@@ -292,13 +307,9 @@ th {
 }
 
 tr, td {
-    padding: 2px;
+    padding: 5px;
     border: 1px solid #9d938c;
     background-color: #ffffff;
-}
-
-tr:hover {
-    background-color: #ddd;
 }
 
 .notes {
@@ -316,16 +327,17 @@ tr:hover {
     width: 50%;
     font-weight: bold;
     line-height: 1;
-    padding: 1.5px;
+    padding: 1.3px;
     margin: 0 5px -2px 0;
 }
 
 .tabContent {
     display: block;
     text-align: left;
-    padding: 2px;
+    padding: 1.5px;
     border-bottom: 1px solid #F0F0F0;
-    font-size: 15px;
+    font-size: 0.9em;
+    font-family: inherit;
 }
 
 #largeTable {
