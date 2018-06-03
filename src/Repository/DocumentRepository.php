@@ -74,15 +74,25 @@ class DocumentRepository extends ServiceEntityRepository
             ;
     }
 
-    public function count($user)
+    public function countDocuments($user, $reminder)
     {
-        return $this->createQueryBuilder("document")
-            ->select('count(document.id)')
-            ->andWhere('document.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult()
-            ;
+        if ($reminder) {
+            return $this->createQueryBuilder("document")
+                ->select('count(document.id)')
+                ->Where('document.documentReminder IS NOT NULL AND document.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult()
+                ;
+        } else {
+            return $this->createQueryBuilder("document")
+                ->select('count(document.id)')
+                ->Where('document.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult()
+                ;
+        }
     }
 
 }

@@ -23,5 +23,3 @@ security:
             anonymous: ~
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_FULLY }
-
-    access_denied_url: /connect/google

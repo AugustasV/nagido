@@ -30,6 +30,15 @@
 
         {% endblock %}
     {% endblock %}
+    <style>
+        .tagBadge {
+            padding: 2px 9px;
+            background: orange;
+            border-radius: 5px;
+            color: white;
+            margin: 2px 5px;
+        }
+    </style>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -116,57 +125,203 @@
             }).join(", ");
         }
 
-        $( document ).ready(function() {
+        function addData(objResponse) {
+            var response = $.parseJSON(objResponse.data);
+            console.log(response);
+            $("#largeTable tbody").html("");
+            response.forEach(function(element) {
+                var documentDate = element.documentDate;
+                documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
+                var documentReminder = element.documentReminder;
+                documentReminder = element.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
+                var documentExpires = element.documentExpires;
+                documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
+                //var documentPath = element.documentPath;
+                var documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
 
+                var tags = formatTags(element.tag);
+
+                $('<tr>').append(
+                    $('<td>').text(element.documentName),
+                    $('<td>').text(element.category.categoryName),
+                    $('<td>').text(tags),
+                    $('<td>').html(
+                        documentPath
+                    ),
+                    $('<td>').text(documentDate),
+                    $('<td>').text(documentExpires),
+                    $('<td>').text(documentReminder),
+                    $('<td>').text(element.documentNotes),
+                    $('<td>').html(
+                        '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
+                        '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
+                    )
+                ).appendTo('#largeTable tbody');
+            });
+        }
+
+        $( document ).ready(function() {
+            //Ajax call -- search
             $(document).on('keyup', '#searchInput', function (e) {
                 $this = $(this);
+                if($this.val().length > 3 || $this.val().length == 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('search') }}',
+                        dataType: 'JSON',
+                        data: {
+                            id: $(this).val()
+                        },
+                        success: function(objResponse) {
+                            addData(objResponse);
+                        }
+                    });
+                }
+
+            });
+
+            //Ajax call \\ Categories
+            $(document).on('click', '.category-list', function (e) {
                 $.ajax({
                     type: 'POST',
-                    url: '{{ path('search') }}',
+                    url: '{{ path('category') }}',
                     dataType: 'JSON',
                     data: {
-                        id: $(this).val()
+                        category: $(e.currentTarget).data("category")
                     },
                     success: function(objResponse) {
-                        var response = $.parseJSON(objResponse.data);
-                        console.log(response);
-                        $("#largeTable tbody").html("");
-                        response.forEach(function(element) {
-                            var documentDate = element.documentDate;
-                            documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
-                            var documentReminder = element.documentReminder;
-                            documentReminder = element.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
-                            var documentExpires = element.documentExpires;
-                            documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
-                            var documentPath = element.documentPath;
-                            documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
-
-                            var tags = formatTags(element.tag);
-
-                            $('<tr>').append(
-                                $('<td>').text(element.documentName),
-                                $('<td>').text(element.category.categoryName),
-                                $('<td>').text(tags),
-                                $('<td>').html(
-                                    documentPath
-                                ),
-                                $('<td>').text(documentDate),
-                                $('<td>').text(documentExpires),
-                                $('<td>').text(documentReminder),
-                                $('<td>').text(element.documentNotes),
-                                $('<td>').html(
-                                '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
-                                '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
-                                )
-                            ).appendTo('#largeTable tbody');
-                        });
+                        addData(objResponse);
                     }
                 });
             });
 
+            //Ajax call \\ Reminders
+            $(document).on('click', '#reminder', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('reminder') }}',
+                    dataType: 'JSON',
+                    data: {
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+            });
+
+            //Ajax call \\ Tags
+            $(document).on('click', '.tag-list', function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('tag') }}',
+                    dataType: 'JSON',
+                    data: {
+                        category: $(e.currentTarget).data("tag")
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
+            });
+
+            //Ajax call \\ All documents
+            $(document).on('click', '#documents', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('documents') }}',
+                    dataType: 'JSON',
+                    data: {
+                    },
+                    success: function(objResponse) {
+                        addData(objResponse);
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.delete', function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('test') }}',
+                    dataType: 'JSON',
+                    success: function(objResponse) {
+                    }
+                });
+            });
+
+            //Ajax call -- Edit
+            $(document).on('click', '.edit', function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('edit') }}',
+                    dataType: 'JSON',
+                    data: {
+                        id: $(e.currentTarget).data("id")
+                    },
+                    success: function(objResponse) {
+                        var response = $.parseJSON(objResponse.data);
+                        $('#editDocumentWindow #name').val(response.documentName);
+                        $('#editDocumentWindow #category').val(response.category.id);
+
+
+                        var documentDate = response.documentDate;
+                        documentDate = response.documentDate === null ? "" : formatTime(documentDate.timestamp);
+                        $('#editDocumentWindow #date').val(documentDate);
+
+                        var documentExpires = response.documentExpires;
+                        documentExpires = response.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
+                        $('#editDocumentWindow #expires').val(documentExpires);
+
+                        var documentReminder = response.documentReminder;
+                        documentReminder = response.documentReminder === null ? "" : formatTime(documentReminder.timestamp);
+                        $('#editDocumentWindow #reminder').val(documentReminder);
+
+
+                        $('#editDocumentWindow #notes').val(response.documentNotes);
+
+                        $('#editDocumentWindow #editId').val($(e.currentTarget).data("id"));
+
+
+                        //$('#document_documentExpires').val(response.documentExpires);
+                        console.log(response);
+                        response.tag.forEach((tag) => {
+                            $("#tags").append(
+                                $('<option>').text(tag.tagName)
+                            );
+                            //console.log(tag.id);
+                        });
+
+                        response.tag.forEach((tag) => {
+                            $("#tagss").append(
+                            $('<a class="tagBadge">').html("<span class='badgeName'>"+ tag.tagName +"</span><span style='margin-left: 5px; font-weight:bold; cursor:pointer;'>-</span>")
+                        );
+                        //console.log(tag.id);
+                    });
+
+                        document.getElementById('editDocumentWindow').style.display = 'block';
+                        /*
+
+                        var reminder = $('#document_documentReminder');
+                        if(reminder) {
+                            reminder.val(data.documentReminder);
+                        }
+                        var notes = $('#document_documentNotes');
+                        if (notes) {
+                            notes.val(data.documentNotes);
+                        }
+                        $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
+                        //addData(objResponse);
+                        */
+                    }
+                });
+            });
+
+            $(document).on('click', '#edit-document_cancel', function (e) {
+                $("#tags").html("");
+                document.getElementById('editDocumentWindow').style.display = 'none';
+            });
         });
-
-
     </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
  * Time: 15.25
  */
 
-namespace App\Service;
+namespace App\Service\Google;
 
 use Google_Client;
 use Google_Service_Drive;
@@ -20,8 +20,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class DriveService
 {
-
-    private $user;
 
     private $folderId;
 
@@ -129,7 +127,7 @@ class DriveService
 
     public function deleteFiles()
     {
-
+        $this->service->files->delete("14AT5iSH9bsDVXjtoUBbyGDWPgSRkjlaU");
     }
 
 }

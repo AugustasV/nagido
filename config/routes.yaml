@@ -24,23 +24,37 @@ index:
     controller: App\Controller\HomeController::index
 
 reminder:
-  path: /priminimai
-  controller: App\Controller\HomeController::reminder
+  path: /reminder
+  controller: App\Controller\ReminderController::index
+
+documents:
+  path: /documents
+  controller: App\Controller\DocumentController::index
 
 search:
   path: /search
   controller: App\Controller\DocumentSearchController::index
 
-kategorijos:
-  path: /kategorija/{kategorija}
-  controller: App\Controller\HomeController::categories
+category:
+  path: /category
+  controller: App\Controller\CategoryController:index
 
-etiketes:
-  path: /etikete
-  controller: App\Controller\HomeController::tags
+tag:
+  path: /tag
+  controller: App\Controller\TagController::index
 
 delete:
   path: /delete/{id}
-  controller: App\Controller\HomeController::delete
+  controller: App\Controller\DocumentController::delete
 
+edit:
+  path: /edit
+  controller: App\Controller\DocumentController:edit
 
+update:
+  path: /update
+  controller: App\Controller\DocumentController:update
+
+test:
+  path: /test
+  controller: App\Controller\DocumentController::test
