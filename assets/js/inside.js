@@ -136,6 +136,7 @@ function display() {
 }
 
 document.querySelectorAll('#document_cancel').forEach((e) => { e.addEventListener('click', goBack); });
+document.querySelectorAll('#edit-document_cancel').forEach((e) => { e.addEventListener('click', goBack); });
 
 function goBack() {
     let x = document.getElementById('newDocumentWindow');
