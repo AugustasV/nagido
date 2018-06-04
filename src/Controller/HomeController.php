@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-//DB
 use App\Entity\Category;
 use App\Entity\Document;
 use App\Entity\Tag;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-
 
 class HomeController extends Controller
 {
@@ -33,18 +31,23 @@ class HomeController extends Controller
             return $this->render('home/index.html.twig', []);
         } else {
             /* Data */
-            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
-            $category = $this->getDoctrine()->getRepository(Category::class)->findAll();
-            $documentCount = $this->getDoctrine()->getRepository(Document::class)->countDocuments($this->getUser(), false);
-            $reminderCount = $this->getDoctrine()->getRepository(Document::class)->countDocuments($this->getUser(), true);
-            $tags = $this->getDoctrine()->getRepository(Tag::class)->tagFiles($user);
+            $user = $this->getDoctrine()->getRepository(User::class)
+                ->find($this->getUser());
+            $category = $this->getDoctrine()->getRepository(Category::class)
+                ->findAll();
+            $documentCount = $this->getDoctrine()->getRepository(Document::class)
+                ->countDocuments($this->getUser(), false);
+            $reminderCount = $this->getDoctrine()->getRepository(Document::class)
+                ->countDocuments($this->getUser(), true);
+            $tags = $this->getDoctrine()->getRepository(Tag::class)
+                ->tagFiles($user);
 
             /* Form */
             $document = new Document();
             $form = $this->createForm(DocumentType::class, $document);
             $form->handleRequest($request);
 
-            if($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $formService->validateForm($document, $form);
                 return $this->redirect("/");
             }

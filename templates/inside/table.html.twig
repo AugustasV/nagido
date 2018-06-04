@@ -59,17 +59,18 @@
             {% endfor %}
         </table>
         <table id="smallTable" class="documentsTable">
-            <tr>
-                <th colspan="2">Pavadinimas</th>
-                <th>Kategorija</th>
-                <th>Veiksmai</th>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th colspan="2">Pavadinimas</th>
+                    <th>Kategorija</th>
+                    <th>Veiksmai</th>
+                </tr>
+            </thead>
             {% for file in files %}
                 <tr>
                     <td>
                         <div class="clickAndChange" data-row-nr="{{ loop.index }}">
-                            <img src="{{ asset('images/show-more-button.png') }}" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/>
+                            <img src="{{ asset('images/show-more-button.png') }}" class="imgClickAndChange" id="imgClickAndChange{{ loop.index }}" alt="Rodyti daugiau" title="Rodyti daugiau"/>
                         </div>
                     </td>
                     <td>{{ file.documentName }}</td>
@@ -79,7 +80,7 @@
                         <div><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="{{ file.id }}"/></div>
                     </td>
                 </tr>
-                <tr id="displayMoreData{{ loop.index }}" class="displayMoreData">
+                <tr class="displayMoreData" id="displayMoreData{{ loop.index }}">
                     <td></td>
                     <td colspan="4">
                         <div class="tabName">Etiketės: </div>
@@ -92,29 +93,24 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-
                         <div class="tabName">Priedai: </div>
                         {% if file.DocumentPath == NULL %}
                             <div class="tabContent"><br></div>
                         {% else %}
                             <div class="tabContent"><a href="{{ file.DocumentPath }}"><img src="{{ asset('images/drive-icon.png') }}" alt="Priedai"></a><br><br></div>
                         {% endif %}
-
                         <div class="tabName">Galioja nuo: </div>
                         {% if file.DocumentDate == NULL %}
                             <div class="tabContent"><br></div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentDate | date("Y-m-d") }}</div>
                         {% endif %}
-
                         <div class="tabName">Galioja iki: </div>
                         {% if file.DocumentExpires == NULL %}
                             <div class="tabContent"><br></div>
                         {% else %}
                             <div class="tabContent">{{ file.DocumentExpires | date("Y-m-d") }}</div>
                         {% endif %}
-
-
                         <div class="tabName">Priminimas: </div>
                         {% if file.DocumentReminder == NULL %}
                             <div class="tabContent"><br></div>

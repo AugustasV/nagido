@@ -24,4 +24,4 @@ before_script:
   - yarn run encore production
 script:
   - vendor/bin/phpcs -p --standard=PSR2 --extensions=php ./src
-  - bin/phpunit
+  - vendor/bin/phpunit

@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Document;
 use App\Service\DataService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,7 +25,8 @@ class TagController extends Controller
     {
         $input = $request->request->get('category');
 
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)->tagFiles($input, $this->getUser());
+        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)
+            ->tagFiles($input, $this->getUser());
 
         return $dataService->processData($documents);
     }
