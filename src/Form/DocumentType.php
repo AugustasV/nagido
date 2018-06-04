@@ -61,7 +61,10 @@ class DocumentType extends AbstractType
             ))
             ->add("documentNotes", TextareaType::class, array(
                 "label" => "Pastabos",
-                'attr' => array(),
+                'attr' => array(
+                    "style" => "width: 100%",
+                    "rows" => "3"
+                ),
                 'required' => false
             ))
             ->add('files', FileType::class, array(
