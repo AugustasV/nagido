@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class FormService
 {
-
     /**
      * FormService constructor.
      * @param DriveService $driveService
@@ -79,7 +78,7 @@ class FormService
             $user->addDocument($document);
             $document->addTag($user);
         } else {
-            $tag = New Tag();
+            $tag = new Tag();
             $tag->setTagName($tagInd->getTagName());
             $tag->addDocument($document);
             $document->addTag($tag);
@@ -96,15 +95,3 @@ class FormService
         $entityManager->flush();
     }
 }
-
-//                $creationDate = clone $form["documentDate"]->getData();
-//                if ($form["documentExpires"]->getData() === null) {
-//                    switch ($form["category"]->getData()->getCategoryName()) {
-//                        case "Pažymos":
-//                            $creationDate->modify('+8 day');
-//                            break;
-//                        default:
-//                            $creationDate = null;
-//                    }
-//                    $article->setDocumentExpires($creationDate);
-//                }

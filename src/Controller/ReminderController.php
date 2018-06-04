@@ -18,7 +18,8 @@ class ReminderController extends Controller
 {
     public function index(Request $request, DataService $dataService)
     {
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)->reminderDates($this->getUser());
+        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)
+            ->reminderDates($this->getUser());
         return $dataService->processData($documents);
     }
 }

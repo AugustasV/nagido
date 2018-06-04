@@ -91,30 +91,30 @@ class DocumentController extends Controller
         $notes = $request->request->get('documentNotes');
         $tags = $request->request->get('checkbox');
 
-        //var_dump($tags);
-        //die;
 
-        $document = $this->getDoctrine()->getManager()->getRepository(Document::class)->findOneBy(["id" => $id]);
-        $category = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["id" => $category]);
+        $document = $this->getDoctrine()->getManager()->getRepository(Document::class)
+            ->findOneBy(["id" => $id]);
+        $category = $this->getDoctrine()->getManager()->getRepository(Category::class)
+            ->findOneBy(["id" => $category]);
 
         $document->setDocumentName($name);
         $document->setCategory($category);
         $document->setDocumentNotes($notes);
 
-        //$document->setDocumentDate(\DateTime::createFromFormat('Y-m-d', $date));
-
         if ($tags !== null) {
             foreach ($tags as $tagId) {
-                $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)->findOneBy(["id" => $tagId]);
+                $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                    ->findOneBy(["id" => $tagId]);
                 if ($tagRep) {
                     $document->removeTag($tagRep);
                 } else {
-                    $tagName = $this->getDoctrine()->getManager()->getRepository(Tag::class)->findOneBy(["tagName" => $tagId]);
+                    $tagName = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                        ->findOneBy(["tagName" => $tagId]);
                     if ($tagName) {
                         $tagName->addDocument($document);
                         $document->addTag($tagName);
                     } else {
-                        $tag = New Tag();
+                        $tag = new Tag();
                         $tag->setTagName($tagId);
                         $tag->addDocument($document);
                         $document->addTag($tag);
@@ -122,18 +122,17 @@ class DocumentController extends Controller
                 }
             }
         }
+
         if ($date === "") {
             $document->setDocumentDate(null);
         } else {
             $document->setDocumentDate(\DateTime::createFromFormat('Y-m-d', $date));
         }
-
         if ($expires === "") {
             $document->setDocumentExpires(null);
         } else {
             $document->setDocumentExpires(\DateTime::createFromFormat('Y-m-d', $expires));
         }
-
         if ($reminder === "") {
             $document->setDocumentReminder(null);
         } else {
@@ -144,6 +143,5 @@ class DocumentController extends Controller
         $entityManager->persist($document);
         $entityManager->flush();
         return $this->redirect("/");
-
     }
 }
