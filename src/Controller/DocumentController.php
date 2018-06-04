@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dangis
- * Date: 18.6.2
- * Time: 14.02
- */
 
 namespace App\Controller;
 
@@ -44,25 +38,6 @@ class DocumentController extends Controller
     }
 
     /**
-     * @param $id
-     */
-    public function delete($id)
-    {
-        $file = $this->getDoctrine()->getRepository(Document::class)->find($id);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($file);
-        $entityManager->flush();
-        $response = new Response();
-        $response->send();
-    }
-
-    public function test()
-    {
-        $this->drive->deleteFiles();
-    }
-
-    /**
      * @param Request $request
      * @param DataService $dataService
      * @return JsonResponse
@@ -71,7 +46,7 @@ class DocumentController extends Controller
     {
         $input = $request->request->get('id');
 
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)->findOneBy(["id" => $input]);
+        $documents = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $input]);
 
         return $dataService->processData($documents);
     }
@@ -92,9 +67,9 @@ class DocumentController extends Controller
         $tags = $request->request->get('checkbox');
 
 
-        $document = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $document = $this->getDoctrine()->getRepository(Document::class)
             ->findOneBy(["id" => $id]);
-        $category = $this->getDoctrine()->getManager()->getRepository(Category::class)
+        $category = $this->getDoctrine()->getRepository(Category::class)
             ->findOneBy(["id" => $category]);
 
         $document->setDocumentName($name);
@@ -103,12 +78,12 @@ class DocumentController extends Controller
 
         if ($tags !== null) {
             foreach ($tags as $tagId) {
-                $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                $tagRep = $this->getDoctrine()->getRepository(Tag::class)
                     ->findOneBy(["id" => $tagId]);
                 if ($tagRep) {
                     $document->removeTag($tagRep);
                 } else {
-                    $tagName = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                    $tagName = $this->getDoctrine()->getRepository(Tag::class)
                         ->findOneBy(["tagName" => $tagId]);
                     if ($tagName) {
                         $tagName->addDocument($document);
@@ -143,5 +118,22 @@ class DocumentController extends Controller
         $entityManager->persist($document);
         $entityManager->flush();
         return $this->redirect("/");
+    }
+
+    public function test(Request $request)
+    {
+        $id = $request->request->get('id');
+
+        $file = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $id]);
+        $documentPath = $file->getDocumentPath();
+        if ($documentPath) {
+            $this->drive->deleteFiles($documentPath);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($file);
+        $entityManager->flush();
+
+        return new Response();
     }
 }
