@@ -202,6 +202,24 @@
             font: 400 13.3333px Arial;
         }
 
+        .countWrapper {
+            position: relative;
+        }
+        
+        .count {
+            position: absolute;
+            right: 0;
+            width: 74px;
+            height: 33px;
+            line-height: 37px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #reminder .count {
+            color: #ff7f2a;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -277,8 +295,8 @@
 
         function addData(objResponse) {
             var response = $.parseJSON(objResponse.data);
-            console.log(response);
             $("#largeTable tbody").html("");
+            $("#smallTable tbody").html("");
             response.forEach(function(element) {
                 var documentDate = element.documentDate;
                 documentDate = element.documentDate === null ? "" : formatTime(documentDate.timestamp);
@@ -287,9 +305,10 @@
                 var documentExpires = element.documentExpires;
                 documentExpires = element.documentExpires === null ? "" : formatTime(documentExpires.timestamp);
                 //var documentPath = element.documentPath;
-                var documentPath =  element.documentPath === null ? "" : '<a href="'+element.documentPath+'"><img style="height: 20px" src="http://icons.iconarchive.com/icons/dakirby309/simply-styled/48/Google-Drive-Folder-icon.png" alt=""></a>';
-
+                var documentPath =  element.documentPath === null ? ""
+                    : '<a href="'+element.documentPath+'"><img src="{{ asset("images/drive-icon.png") }}" alt=""></a>';
                 var tags = formatTags(element.tag);
+                var documentNotes = element.documentNotes === null ? "" : element.documentNotes;
 
                 $('<tr>').append(
                     $('<td>').text(element.documentName),
@@ -305,7 +324,67 @@
                         '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
                     )
                 ).appendTo('#largeTable tbody');
+
+
+
+                $('<tr>').append(
+                    $('<td>').html(
+                        `
+                        <div class="clickAndChange">
+                    <img src="{{ asset('images/show-more-button.png') }}" class="imgClickAndChange" alt="Rodyti daugiau" title="Rodyti daugiau"/>
+                    </div>
+                        `
+                    ),
+                    $('<td>').text(element.documentName),
+                    $('<td>').text(element.category.categoryName),
+                    $('<td>').html(
+                        '<span><img class="edit" src="{{ asset('images/edit1.png') }}" alt="Redagavimas" title="Redaguoti" data-id="'+ element.id +'"/></span>' +
+                        '<span><img class="delete" src="{{ asset('images/delete.png') }}" alt="Ištrinimas" title="Ištrinti įrašą" data-id="'+ element.id +'"/></span>'
+                    )
+                ).appendTo('#smallTable tbody');
+
+                $('<tr class="displayMoreData">').append(
+                    $('<td>'),
+                    $('<td colspan="4">').html(
+                        `
+                        <div class="tabName">Etiketės: </div>
+
+
+
+                            <div class="tabContent">
+                                ${ tags }&nbsp;
+                            </div>
+
+
+                        <div class="tabName">Priedai: </div>
+
+                        <div class="tabContent">${ documentPath }&nbsp;</div>
+
+                        <div class="tabName">Galioja nuo: </div>
+                            <div class="tabContent">${ documentDate }&nbsp;</div>
+
+                        <div class="tabName">Galioja iki: </div>
+
+                            <div class="tabContent">${ documentExpires }&nbsp;</div>
+
+                        <div class="tabName">Priminimas: </div>
+
+                            <div class="tabContent">${ documentReminder }&nbsp;</div>
+
+
+                        <div class="tabName">Pastabos: </div>
+
+                            <div class="tabContent">${ documentNotes }&nbsp;</div>
+
+                        `
+                    )
+                ).appendTo('#smallTable tbody');
+
+
             });
+
+
+
         }
 
         $( document ).ready(function() {
@@ -498,6 +577,23 @@
                     } else {
                         input.attr( "disabled");
                     }
+                }
+            });
+
+
+            $(document).on('click', '.clickAndChange', function (e) {
+                var mobileTableImage = $(e.currentTarget).children(".imgClickAndChange");
+                var mobileTableData = $(e.currentTarget).closest('tr').next(".displayMoreData");
+
+                mobileTableData.toggleClass("table-active");
+                if (mobileTableData.hasClass("table-active")) {
+                    mobileTableData.css("display", "table-row");
+                    mobileTableImage.attr("src","images/show-less-button.png");
+                    mobileTableImage.attr("title","Rodyti mažiau");
+                } else {
+                    mobileTableData.css("display", "none");
+                    mobileTableImage.attr("src","images/show-more-button.png");
+                    mobileTableImage.attr("title","Rodyti daugiau");
                 }
             });
 

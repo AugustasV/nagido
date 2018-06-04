@@ -143,12 +143,12 @@ function goBack() {
     x.style.display = 'none';
 }
 
-document.querySelectorAll('.clickAndChange').forEach((e) => { e.addEventListener('click', toggleRR); });
+// document.querySelectorAll('.clickAndChange').forEach((e) => { e.addEventListener('click', toggleRR); });
 
-function toggleRR() {
-
-    toggle(this.dataset.rowNr);
-}
+// function toggleRR() {
+//
+//     toggle(this.dataset.rowNr);
+// }
 
 function toggle(i) {
     let x = document.getElementById('displayMoreData' + i);
