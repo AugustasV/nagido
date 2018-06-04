@@ -396,7 +396,7 @@
 
                 $close.css('display', 'inline-block');
 
-                if($this.val().length > 2 || $this.val().length == 0) {
+                if($this.val().length > 0 || $this.val().length == 0) {
                     $.ajax({
                         type: 'POST',
                         url: '{{ path('search') }}',
