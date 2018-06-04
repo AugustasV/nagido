@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title>{{ "NAGIDO" }}</title>
         {% block stylesheets %}
-            <link href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700" rel="stylesheet" type="text/css">
+            <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -278,7 +278,12 @@
             //Ajax call -- search
             $(document).on('keyup', '#searchInput', function (e) {
                 $this = $(this);
-                if($this.val().length > 3 || $this.val().length == 0) {
+
+                var $close = $('.close');
+
+                $close.css('display', 'inline-block');
+
+                if($this.val().length > 2 || $this.val().length == 0) {
                     $.ajax({
                         type: 'POST',
                         url: '{{ path('search') }}',
@@ -291,7 +296,10 @@
                         }
                     });
                 }
+            });
 
+            $(document).on('click', '.close', function(e){
+                location.reload(true);
             });
 
             //Ajax call \\ Categories

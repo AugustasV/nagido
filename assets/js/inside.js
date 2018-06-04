@@ -59,7 +59,7 @@ function windowSize() {
         searchForm.style.display = "inline-block";
         searchForm.style.marginLeft = '-4px';
         searchForm.style.width = '520px';
-        document.getElementById('searchInput').style.width = '500px';
+        document.getElementById('searchInput').style.width = '470px';
     } else if (bodyWidth < 992) {
         searchForm.style.display = 'none';
     }
@@ -111,15 +111,15 @@ function displaySearchInput() {
     if (bodyWidth < 600) {
         searchForm.style.marginLeft = '-130px';
         searchForm.style.width = '230px';
-        searchInput.style.width = '200px';
+        searchInput.style.width = '170px';
     } else if (bodyWidth >= 600 && bodyWidth < 992) {
         searchForm.style.marginLeft = '-260px';
         searchForm.style.width = '400px';
-        searchInput.style.width = '370px';
+        searchInput.style.width = '340px';
     } else if (bodyWidth >= 992) {
         searchForm.style.marginLeft = '-4px';
         searchForm.style.width = '520px';
-        searchInput.style.width = '500px';
+        searchInput.style.width = '470px';
     }
 }
 
@@ -136,6 +136,7 @@ function display() {
 }
 
 document.querySelectorAll('#document_cancel').forEach((e) => { e.addEventListener('click', goBack); });
+document.querySelectorAll('#edit-document_cancel').forEach((e) => { e.addEventListener('click', goBack); });
 
 function goBack() {
     let x = document.getElementById('newDocumentWindow');
@@ -202,7 +203,6 @@ for(let i = 0; i < 2; i++)
                     },
                 });
             }
-
         });
     }
 }
