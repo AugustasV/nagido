@@ -477,10 +477,13 @@
 
             $(document).on('click', '.delete', function (e) {
                 $.ajax({
-                    type: 'GET',
-                    url: '{{ path('test') }}',
-                    dataType: 'JSON',
-                    success: function(objResponse) {
+                    type: 'POST',
+                    url: '{{ path('delete') }}',
+                    data: {
+                        id: $(e.currentTarget).data("id")
+                    },
+                    success: function() {
+                        location.reload();
                     }
                 });
             });
