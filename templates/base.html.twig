@@ -498,6 +498,7 @@
                         var response = $.parseJSON(objResponse.data);
                         $('#editDocumentWindow #name').val(response.documentName);
                         $('#editDocumentWindow #category').val(response.category.id);
+                        console.log(response.documentName);
 
 
                         var documentDate = response.documentDate;
@@ -594,6 +595,12 @@
                     mobileTableData.css("display", "none");
                     mobileTableImage.attr("src","images/show-more-button.png");
                     mobileTableImage.attr("title","Rodyti daugiau");
+                }
+            });
+
+            $("#sideNavigation li").on("click", (e) => {
+                if ($(window).width() < 1115) {
+                    $("#sideNavigation").css("visibility", "hidden");
                 }
             });
 
