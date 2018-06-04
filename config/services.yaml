@@ -37,14 +37,17 @@ services:
 
     app.service.google.drive_service:
         class: App\Service\Google\DriveService
-        arguments: ["@security.token_storage"]
+        arguments:
+         - '@security.token_storage'
 
     app.service.data_service:
       class: App\Service\DataService
 
+    app.service.google.calendar_service:
+          class: App\Service\Google\CalendarService
+
     app.service.form_service:
-        class: App\Service\FormService
+        class: App\Service\SaveDocument
         arguments:
           - '@app.service.google.drive_service'
-          - '@security.token_storage'
           - '@doctrine.orm.entity_manager'

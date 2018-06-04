@@ -27,7 +27,7 @@ class DocumentRepository extends ServiceEntityRepository
     public function search($value, $user)
     {
         return $this->createQueryBuilder("document")
-            ->Where('document.documentName LIKE :value')
+            ->where('document.documentName LIKE :value')
             ->setParameter('value', "%".$value."%")
             ->andWhere('document.user = :user')
             ->setParameter('user', $user)
@@ -43,7 +43,7 @@ class DocumentRepository extends ServiceEntityRepository
     public function reminderDates($id)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.documentReminder IS NOT NULL AND document.user = :user')
+            ->where('document.documentReminder IS NOT NULL AND document.user = :user')
             ->setParameter('user', $id)
             ->getQuery()
             ->getResult()
@@ -53,7 +53,7 @@ class DocumentRepository extends ServiceEntityRepository
     public function categoryFiles($category, $user)
     {
         return $this->createQueryBuilder("document")
-            ->andWhere('document.category = :category AND document.user = :user')
+            ->where('document.category = :category AND document.user = :user')
             ->setParameter('user', $user)
             ->setParameter('category', $category)
             ->getQuery()
@@ -65,7 +65,7 @@ class DocumentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder("document")
             ->leftJoin('document.tag', 'c')
-            ->andWhere('c.id = :tag')
+            ->where('c.id = :tag')
             ->setParameter('tag', $tag)
             ->andWhere('document.user = :user')
             ->setParameter('user', $user)
@@ -74,12 +74,23 @@ class DocumentRepository extends ServiceEntityRepository
             ;
     }
 
+    public function documentTags()
+    {
+        return $this->createQueryBuilder("document")
+            ->leftJoin('document.tag', 'tag')
+            ->where('tag.id = 168')
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+
     public function countDocuments($user, $reminder)
     {
         if ($reminder) {
             return $this->createQueryBuilder("document")
                 ->select('count(document.id)')
-                ->Where('document.documentReminder IS NOT NULL AND document.user = :user')
+                ->where('document.documentReminder IS NOT NULL AND document.user = :user')
                 ->setParameter('user', $user)
                 ->getQuery()
                 ->getResult()
@@ -87,7 +98,7 @@ class DocumentRepository extends ServiceEntityRepository
         } else {
             return $this->createQueryBuilder("document")
                 ->select('count(document.id)')
-                ->Where('document.user = :user')
+                ->where('document.user = :user')
                 ->setParameter('user', $user)
                 ->getQuery()
                 ->getResult()

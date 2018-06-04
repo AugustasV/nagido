@@ -20,7 +20,7 @@ class DocumentSearchController extends Controller
     {
         $input = $request->request->get('id');
 
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $documents = $this->getDoctrine()->getRepository(Document::class)
             ->search($input, $this->getUser());
 
         return $dataService->processData($documents);

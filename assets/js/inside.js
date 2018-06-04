@@ -164,45 +164,45 @@ function toggle(i) {
     }
 }
 
-for(let i = 0; i < 2; i++)
-{
-    let table = document.getElementsByTagName('table')[i];
-
-    if (table) {
-        table.addEventListener('click', (e) => {
-            if (e.target.className === 'delete') {
-                const id = e.target.getAttribute('data-id');
-                fetch(`/delete/${id}`, {
-                    method: 'DELETE'
-                }).then(res => window.location.reload());
-            }
-
-            if (e.target.className === 'edit') {
-                const id = e.target.getAttribute('data-id');
-                $.ajax({
-                    url:        '/',
-                    type:       'POST',
-                    async:      true,
-                    data: {
-                        id: id
-                    },
-                    success: function(data) {
-                        $('#document_documentName').val(data.documentName);
-                        $('#document_documentDate').val(data.documentDate);
-                        $('#document_documentExpires').val(data.documentExpires);
-                        let reminder = $('#document_documentReminder');
-                        if(reminder) {
-                            reminder.val(data.documentReminder);
-                        }
-                        let notes = $('#document_documentNotes');
-                        if (notes) {
-                            notes.val(data.documentNotes);
-                        }
-                        $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
-                        //display();
-                    },
-                });
-            }
-        });
-    }
-}
+// for(let i = 0; i < 2; i++)
+// {
+//     let table = document.getElementsByTagName('table')[i];
+//
+//     if (table) {
+//         table.addEventListener('click', (e) => {
+//             if (e.target.className === 'delete') {
+//                 const id = e.target.getAttribute('data-id');
+//                 fetch(`/delete/${id}`, {
+//                     method: 'DELETE'
+//                 }).then(res => window.location.reload());
+//             }
+//
+//             if (e.target.className === 'edit') {
+//                 const id = e.target.getAttribute('data-id');
+//                 $.ajax({
+//                     url:        '/',
+//                     type:       'POST',
+//                     async:      true,
+//                     data: {
+//                         id: id
+//                     },
+//                     success: function(data) {
+//                         $('#document_documentName').val(data.documentName);
+//                         $('#document_documentDate').val(data.documentDate);
+//                         $('#document_documentExpires').val(data.documentExpires);
+//                         let reminder = $('#document_documentReminder');
+//                         if(reminder) {
+//                             reminder.val(data.documentReminder);
+//                         }
+//                         let notes = $('#document_documentNotes');
+//                         if (notes) {
+//                             notes.val(data.documentNotes);
+//                         }
+//                         $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
+//                         //display();
+//                     },
+//                 });
+//             }
+//         });
+//     }
+// }
