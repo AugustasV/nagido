@@ -89,9 +89,10 @@ class DocumentController extends Controller
         $expires = $request->request->get('documentExpires');
         $reminder = $request->request->get('documentReminder');
         $notes = $request->request->get('documentNotes');
-        $tags = $request->request->get('documentTags');
+        $tags = $request->request->get('checkbox');
 
-
+        //var_dump($tags);
+        //die;
 
         $document = $this->getDoctrine()->getManager()->getRepository(Document::class)->findOneBy(["id" => $id]);
         $category = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["id" => $category]);
@@ -100,13 +101,31 @@ class DocumentController extends Controller
         $document->setCategory($category);
         $document->setDocumentNotes($notes);
 
-        $document->setDocumentDate(\DateTime::createFromFormat('Y-m-d', $date));
+        //$document->setDocumentDate(\DateTime::createFromFormat('Y-m-d', $date));
 
-        foreach ($tags as $tag) {
-            $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)->findOneBy(["id" => $tag]);
-            var_dump($tagRep);
-            die;
-            $document->removeTag($tagRep);
+        if ($tags !== null) {
+            foreach ($tags as $tagId) {
+                $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)->findOneBy(["id" => $tagId]);
+                if ($tagRep) {
+                    $document->removeTag($tagRep);
+                } else {
+                    $tagName = $this->getDoctrine()->getManager()->getRepository(Tag::class)->findOneBy(["tagName" => $tagId]);
+                    if ($tagName) {
+                        $tagName->addDocument($document);
+                        $document->addTag($tagName);
+                    } else {
+                        $tag = New Tag();
+                        $tag->setTagName($tagId);
+                        $tag->addDocument($document);
+                        $document->addTag($tag);
+                    }
+                }
+            }
+        }
+        if ($date === "") {
+            $document->setDocumentDate(null);
+        } else {
+            $document->setDocumentDate(\DateTime::createFromFormat('Y-m-d', $date));
         }
 
         if ($expires === "") {

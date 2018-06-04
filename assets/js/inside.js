@@ -198,7 +198,7 @@ for(let i = 0; i < 2; i++)
                             notes.val(data.documentNotes);
                         }
                         $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
-                        display();
+                        //display();
                     },
                 });
             }

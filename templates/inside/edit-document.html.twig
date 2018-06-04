@@ -14,13 +14,16 @@
                 <input type="date" name="documentExpires" id="expires">
                 <input type="date" name="documentReminder" id="reminder">
                 <textarea style="width: 100%" name="documentNotes" id="notes" cols="30" rows="10"></textarea>
-                <select name="documentTags[]" id="tags" multiple>
-                </select>
-                {#<div style="padding: 10px 0" id="tagss">#}
 
-                {#</div>#}
-                {#<ul style="list-style: none; padding: 0;" class="tags" data-prototype="<div id=&quot;document_tag___name__&quot;><div><input type=&quot;text&quot; id=&quot;document_tag___name___tagName&quot; name=&quot;document[tag][__name__][tagName]&quot; required=&quot;required&quot; /></div></div>">#}
-                   {#</ul>#}
+                <ul style="padding: 10px 0" id="tagss">
+
+                </ul>
+                <div class="newTags">
+                    <input id="js-new-tag" type="text">
+                    <span id="js-add-Tag">+</span>
+                </div>
+
+
                 <button type="submit" id="document_save" style="float: left">Save</button>
                 <button type="button" id="edit-document_cancel" name="document[cancel]">Cancel</button>
             </form>

@@ -35,11 +35,18 @@
     {% endblock %}
     <style>
         .tagBadge {
-            padding: 2px 9px;
-            background: orange;
-            border-radius: 5px;
+            display: inline-block;
+            padding: 0px 5px;
+            padding-right: 20px;
+            background: #ff7f2a;
+            //border-radius: 7px;
             color: white;
-            margin: 2px 5px;
+            margin: 3px 3px;
+        }
+
+        .tagBadge input {
+            width: unset !important;
+            margin: 8px;
         }
 
         .loader-wrapper {
@@ -56,6 +63,79 @@
             background: rgb(0, 0, 0); /* Fall-back for browsers that don't
                                     support rgba */
             background: rgba(0, 0, 0, .5);
+        }
+
+        #document_files::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+        #document_files::before {
+            content: 'Select some files';
+            display: inline-block;
+            background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+            border: 1px solid #999;
+            border-radius: 3px;
+            padding: 5px 8px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            text-shadow: 1px 1px #fff;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+        #document_files:hover::before {
+            border-color: black;
+        }
+
+        #document_category {
+            background: none;
+            border: solid 1px #ff7f2a;
+            height: 37px;
+        }
+
+        #form-date-buton, #form-other-buton {
+            width: 100%;
+            margin: 18px 0 0 0;
+            border: solid 1px #ff7f2a;
+            background: none;
+            color: black;
+        }
+
+        #form-date-buton:hover, #form-other-buton:hover {
+            border: solid 1px #ff7f2a;
+            background: #ff7f2a;
+            color: black;
+        }
+
+        .sp {
+            width: 27px;
+            margin: 3px;
+            height: 27px;
+            display: block;
+            top: 0;
+            right: 0;
+            position: absolute;
+            background: red;
+            line-height: 27px;
+            border-radius: 33px;
+            text-align: center;
+            color: white;
+        }
+
+        .newTags {
+            display: flex;
+            align-items: center;
+        }
+
+        .newTags span {
+            width: 34px;
+            height: 34px;
+            text-align: center;
+            line-height: 34px;
+            font-size: 30px;
+            color: #ff7f2a;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         #loader {
@@ -328,36 +408,57 @@
 
                         response.tag.forEach((tag) => {
                             $("#tagss").append(
-                            $('<a class="tagBadge">').html("<span class='badgeName'>"+ tag.tagName +"</span><span style='margin-left: 5px; font-weight:bold; cursor:pointer;'>-</span>")
-                        );
-                        //console.log(tag.id);
-                    });
-
+                            //$('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ tag.id +"\">"+ tag.tagName+"")
+                            $('<label class="tagBadge">').html("<input disabled class=\"realCheckbox\" type=\"hidden\" name=\"checkbox[]\" value=\""+tag.id+"\"><input checked class=\"dummyCheckbox\" type=\"checkbox\" >"+ tag.tagName+"")
+                            );
+                        });
                         document.getElementById('editDocumentWindow').style.display = 'block';
-                        /*
-
-                        var reminder = $('#document_documentReminder');
-                        if(reminder) {
-                            reminder.val(data.documentReminder);
-                        }
-                        var notes = $('#document_documentNotes');
-                        if (notes) {
-                            notes.val(data.documentNotes);
-                        }
-                        $('#form_category_id option[value= '+ data.categoryId +']').prop('selected', true);
-                        //addData(objResponse);
-                        */
                     }
                 });
             });
 
             $(document).on('click', '#edit-document_cancel', function (e) {
                 $("#tags").html("");
+                $("#tagss").html("");
                 document.getElementById('editDocumentWindow').style.display = 'none';
+            });
+
+            $("#form-date-buton").on("click", (e) => {
+                e.preventDefault();
+                $( "#dates" ).slideToggle( "slow", function() {
+                });
+            });
+
+            $("#form-other-buton").on("click", (e) => {
+                e.preventDefault();
+            $( "#other" ).slideToggle( "slow", function() {
+            });
+        });
+
+            $("#js-add-Tag").on("click", (e) => {
+                e.preventDefault();
+                var name = $( "#js-new-tag" ).val();
+
+                $("#tagss").append(
+                    $('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ name +"\">"+ name +"")
+                );
+
+                $( "#js-new-tag" ).val("");
             });
 
             $('#newDocumentWindow form').submit(function() {
                 $('.loader-wrapper').css('visibility', 'visible');
+            });
+
+            $(document).on('click', '.tagBadge .dummyCheckbox', function (e) {
+                if ($('.tagBadge .dummyCheckbox').not(':checked')) {
+                    var input = $(e.currentTarget).prev();
+                    if ( input.attr( "disabled" )) {
+                        input.removeAttr("disabled");
+                    } else {
+                        input.attr( "disabled");
+                    }
+                }
             });
 
         });

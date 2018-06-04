@@ -36,7 +36,7 @@ class DocumentType extends AbstractType
                 "label" => "Pradžios data",
                 'widget' => 'single_text',
                 'attr' => array(),
-                'required' => true
+                'required' => false
             ))
             ->add("documentExpires", DateType::class, array(
                 "label" => "Pabaigos data",
@@ -48,9 +48,6 @@ class DocumentType extends AbstractType
                 "label" => "Priminimas",
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
-                'attr' => array(
-
-                ),
                 'required' => false
             ))
             ->add('tag', CollectionType::class, array(
