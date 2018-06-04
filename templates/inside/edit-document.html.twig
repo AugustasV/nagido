@@ -1,5 +1,4 @@
 {% block editDocument %}
-
     <div id="editDocumentWindow" class="newDocumentWindow">
         <div class="newWindow">
             <form action="{{ path('update') }}" method="POST">
@@ -31,12 +30,10 @@
                         <input type="date" name="documentReminder" id="reminder">
                     </div>
                 </div>
-
                 <button class="form-other-button">Kita</button>
                 <div style="display: none;" id="other">
                     <label>Etiketės</label>
                     <ul style="padding: 10px 0; margin-top: 0; padding-top: 0;" id="tagss">
-
                     </ul>
                     <div class="newTags">
                         <input placeholder="Pridėti etiketę" id="js-new-tag" type="text">
@@ -51,38 +48,9 @@
                         <input type="file" id="document_files" name="document[files][]" accept="image/*" multiple="multiple" capture="camera">
                     </div>
                 </div>
-
-
-
-
-
-
-
                 <button type="submit" id="document_save" style="float: left">Save</button>
                 <button type="button" id="edit-document_cancel" name="document[cancel]">Cancel</button>
             </form>
         </div>
     </div>
 {% endblock %}
-{#{% block editDocument %}#}
-
-    {#<div id="editDocumentWindow" class="newDocumentWindow">#}
-        {#<div class="newWindow">#}
-            {#{% if form %}#}
-                {#{{ form_start(form) }}#}
-                {#{{ form_row(form.documentName) }}#}
-                {#{{ form_row(form.category) }}#}
-                {#{{ form_row(form.documentDate) }}#}
-                {#{{ form_row(form.documentExpires) }}#}
-                {#{{ form_row(form.documentReminder) }}#}
-                {#<label for="tags">Etiketės</label>#}
-                {#<ul style="list-style: none; padding: 0;" class="tags" data-prototype="{{ form_widget(form.tag.vars.prototype)|e('html_attr') }}">#}
-                    {#{% for tag in form.tag %}#}
-                        {#<li>{{ form_row(tag.tagName) }}</li>#}
-                    {#{% endfor %}#}
-                {#</ul>#}
-                {#{{ form_end(form) }}#}
-            {#{% endif %}#}
-        {#</div>#}
-    {#</div>#}
-{#{% endblock %}#}

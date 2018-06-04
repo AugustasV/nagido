@@ -24,7 +24,10 @@ class FormService
      * @param TokenStorageInterface $tokenStorage
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(DriveService $driveService, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+    public function __construct(
+        DriveService $driveService,
+        TokenStorageInterface $tokenStorage,
+        EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->drive = $driveService;
