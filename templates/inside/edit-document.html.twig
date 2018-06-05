@@ -1,11 +1,11 @@
 {% block editDocument %}
     <div id="editDocumentWindow" class="newDocumentWindow">
         <div class="newWindow">
-            <form action="{{ path('update') }}" method="POST">
+            <form action="{{ path('update') }}" method="POST" enctype="multipart/form-data">
                 <div>
                     <label for="editId" class="required">Dokumento pavadinimas</label>
                     <input id="editId" type="hidden" name="documentId" value="">
-                    <input id="namel" name="documentName" type="text">
+                    <input id="name" name="documentName" type="text">
                 </div>
                 <div>
                     <label for="name" class="required">Kategorijos</label>
@@ -44,8 +44,8 @@
                         <textarea style="width: 100%" name="documentNotes" id="notes" cols="30" rows="3"></textarea>
                     </div>
                     <div class="file-button">
-                        <label for="document_files">Failai</label>
-                        <input type="file" id="document_files" name="document[files][]" accept="image/*" multiple="multiple" capture="camera">
+                        <label for="document-files">Failai</label>
+                        <input type="file" id="document-files" name="files[]" accept="application/zip, text/plain, application/pdf, image/*" multiple="multiple" capture="camera">
                     </div>
                 </div>
                 <button type="submit" id="document_save" style="float: left">Išsaugoti</button>

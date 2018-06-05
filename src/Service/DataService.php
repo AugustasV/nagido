@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Serializer;
 
 class DataService
 {
-
     /**
      * @param $data
      * @return JsonResponse

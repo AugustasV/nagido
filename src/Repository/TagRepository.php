@@ -27,39 +27,10 @@ class TagRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder("tag")
             ->leftJoin('tag.documents', 'c')
-            ->andWhere('c.user = :user')
+            ->where('c.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
             ;
     }
-
-//    /**
-//     * @return Tag[] Returns an array of Tag objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tag
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

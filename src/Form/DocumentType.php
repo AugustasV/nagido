@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dangis
- * Date: 18.5.19
- * Time: 15.43
- */
 
 namespace App\Form;
 
@@ -24,6 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DocumentType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -72,7 +70,7 @@ class DocumentType extends AbstractType
                 'mapped' => false,
                 'multiple' => true,
                 'attr'     => [
-                    'accept' => 'image/*',
+                    'accept' => 'application/zip, text/plain, application/pdf, image/*',
                     'multiple' => 'multiple',
                     'capture'=> 'camera'
                 ]
@@ -93,6 +91,9 @@ class DocumentType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

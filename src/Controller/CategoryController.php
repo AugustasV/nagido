@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dangis
- * Date: 18.6.2
- * Time: 14.02
- */
 
 namespace App\Controller;
 
@@ -25,7 +19,7 @@ class CategoryController extends Controller
     {
         $input = $request->request->get('category');
 
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $documents = $this->getDoctrine()->getRepository(Document::class)
             ->categoryFiles($input, $this->getUser());
 
         return $dataService->processData($documents);

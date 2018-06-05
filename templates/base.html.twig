@@ -396,7 +396,7 @@
 
                 $close.css('display', 'inline-block');
 
-                if($this.val().length > 2 || $this.val().length == 0) {
+                if($this.val().length > 0 || $this.val().length == 0) {
                     $.ajax({
                         type: 'POST',
                         url: '{{ path('search') }}',
@@ -477,10 +477,13 @@
 
             $(document).on('click', '.delete', function (e) {
                 $.ajax({
-                    type: 'GET',
-                    url: '{{ path('test') }}',
-                    dataType: 'JSON',
-                    success: function(objResponse) {
+                    type: 'POST',
+                    url: '{{ path('delete') }}',
+                    data: {
+                        id: $(e.currentTarget).data("id")
+                    },
+                    success: function() {
+                        location.reload();
                     }
                 });
             });
@@ -498,6 +501,7 @@
                         var response = $.parseJSON(objResponse.data);
                         $('#editDocumentWindow #name').val(response.documentName);
                         $('#editDocumentWindow #category').val(response.category.id);
+                        console.log(response.documentName);
 
 
                         var documentDate = response.documentDate;
@@ -557,15 +561,19 @@
             $("#js-add-Tag").on("click", (e) => {
                 e.preventDefault();
                 var name = $( "#js-new-tag" ).val();
-
-                $("#tagss").append(
-                    $('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ name +"\">"+ name +"")
-                );
+                if (name.length >= 3) {
+                    $("#tagss").append(
+                        $('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ name +"\">"+ name +"")
+                    );
+                    $("#js-new-tag").attr("placeholder", "Pridėti etiketę");
+                } else {
+                    $("#js-new-tag").attr("placeholder", "Maziausiau 3 simboliai");
+                }
 
                 $( "#js-new-tag" ).val("");
             });
 
-            $('#newDocumentWindow form').submit(function() {
+            $('#newDocumentWindow form, #editDocumentWindow form').submit(function() {
                 $('.loader-wrapper').css('visibility', 'visible');
             });
 
@@ -594,6 +602,12 @@
                     mobileTableData.css("display", "none");
                     mobileTableImage.attr("src","images/show-more-button.png");
                     mobileTableImage.attr("title","Rodyti daugiau");
+                }
+            });
+
+            $("#sideNavigation li").on("click", (e) => {
+                if ($(window).width() < 1115) {
+                    $("#sideNavigation").css("visibility", "hidden");
                 }
             });
 

@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ReminderController extends Controller
 {
-    public function index(Request $request, DataService $dataService)
+    public function index(DataService $dataService)
     {
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $documents = $this->getDoctrine()->getRepository(Document::class)
             ->reminderDates($this->getUser());
         return $dataService->processData($documents);
     }

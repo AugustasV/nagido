@@ -43,9 +43,13 @@ tag:
   path: /tag
   controller: App\Controller\TagController::index
 
+#delete:
+#  path: /delete/{id}
+#  controller: App\Controller\DocumentController::delete
+
 delete:
-  path: /delete/{id}
-  controller: App\Controller\DocumentController::delete
+  path: /delete
+  controller: App\Controller\DocumentController::test
 
 edit:
   path: /edit

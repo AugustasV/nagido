@@ -50,6 +50,9 @@ class FOSUBUserProvider extends BaseClass
             $user->setEmail($response->getData()['email']);
             $user->setPassword($username);
             $user->setEnabled(true);
+            if ($user->getEmail() == "nagidoprojektas@gmail.com") {
+                $user->setRoles(["ROLE_ADMIN"]);
+            }
             $this->userManager->updateUser($user);
             return $user;
         }

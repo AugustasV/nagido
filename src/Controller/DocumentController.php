@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dangis
- * Date: 18.6.2
- * Time: 14.02
- */
 
 namespace App\Controller;
 
@@ -12,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Document;
 use App\Entity\Tag;
 use App\Service\DataService;
+use App\Service\Google\CalendarService;
 use App\Service\Google\DriveService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property DriveService drive
+ * @property CalendarService calendar
  */
 class DocumentController extends Controller
 {
@@ -27,9 +23,10 @@ class DocumentController extends Controller
      * DocumentController constructor.
      * @param DriveService $driveService
      */
-    public function __construct(DriveService $driveService)
+    public function __construct(DriveService $driveService, CalendarService $calendarService)
     {
         $this->drive = $driveService;
+        $this->calendar = $calendarService;
     }
 
     /**
@@ -44,25 +41,6 @@ class DocumentController extends Controller
     }
 
     /**
-     * @param $id
-     */
-    public function delete($id)
-    {
-        $file = $this->getDoctrine()->getRepository(Document::class)->find($id);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($file);
-        $entityManager->flush();
-        $response = new Response();
-        $response->send();
-    }
-
-    public function test()
-    {
-        $this->drive->deleteFiles();
-    }
-
-    /**
      * @param Request $request
      * @param DataService $dataService
      * @return JsonResponse
@@ -71,7 +49,7 @@ class DocumentController extends Controller
     {
         $input = $request->request->get('id');
 
-        $documents = $this->getDoctrine()->getManager()->getRepository(Document::class)->findOneBy(["id" => $input]);
+        $documents = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $input]);
 
         return $dataService->processData($documents);
     }
@@ -90,12 +68,24 @@ class DocumentController extends Controller
         $reminder = $request->request->get('documentReminder');
         $notes = $request->request->get('documentNotes');
         $tags = $request->request->get('checkbox');
+        $files = $request->files->get('files');
 
-
-        $document = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $document = $this->getDoctrine()->getRepository(Document::class)
             ->findOneBy(["id" => $id]);
-        $category = $this->getDoctrine()->getManager()->getRepository(Category::class)
+        $category = $this->getDoctrine()->getRepository(Category::class)
             ->findOneBy(["id" => $category]);
+
+        if (sizeof($files) > 0) {
+            $this->drive->storageInit();
+            foreach ($files as $file) {
+                $originalName = $file->getClientOriginalName();
+                $filePath = $file->getpathName();
+                $this->drive->saveFiles($filePath, $name, $originalName);
+            }
+            if ($document->getDocumentPath() === null) {
+                $document->setDocumentPath($this->drive->getFolderLink($name));
+            }
+        }
 
         $document->setDocumentName($name);
         $document->setCategory($category);
@@ -103,12 +93,12 @@ class DocumentController extends Controller
 
         if ($tags !== null) {
             foreach ($tags as $tagId) {
-                $tagRep = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                $tagRep = $this->getDoctrine()->getRepository(Tag::class)
                     ->findOneBy(["id" => $tagId]);
                 if ($tagRep) {
                     $document->removeTag($tagRep);
                 } else {
-                    $tagName = $this->getDoctrine()->getManager()->getRepository(Tag::class)
+                    $tagName = $this->getDoctrine()->getRepository(Tag::class)
                         ->findOneBy(["tagName" => $tagId]);
                     if ($tagName) {
                         $tagName->addDocument($document);
@@ -143,5 +133,24 @@ class DocumentController extends Controller
         $entityManager->persist($document);
         $entityManager->flush();
         return $this->redirect("/");
+    }
+
+    public function test(Request $request)
+    {
+        $id = $request->request->get('id');
+
+        $file = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $id]);
+        $documentPath = $file->getDocumentPath();
+        $documentReminder = $file->getDocumentReminder();
+
+        if ($documentPath) {
+            $this->calendar->deleteReminder($documentReminder);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($file);
+        $entityManager->flush();
+
+        return new Response();
     }
 }
