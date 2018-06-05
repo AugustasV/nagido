@@ -89,11 +89,11 @@ function openNav() {
         sideNavigation.style.width = '250px';
         sideNavigation.style.visibility = 'visible';
 
-        window.addEventListener('click', function(event) {
-            if (event.pageX > 250 && bodyWidth < 1100) {
-                sideNavigation.style.visibility = 'hidden';
-            }
-        });
+        // window.addEventListener('click', function(event) {
+        //     if (event.pageX > 250 && bodyWidth < 1100) {
+        //         sideNavigation.style.visibility = 'hidden';
+        //     }
+        // });
     }
     sideNavigation.scrollTop = 0;
 }
