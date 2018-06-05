@@ -70,19 +70,7 @@ class SaveDocument
             $this->calendar->setDate($datetime, $documentNotes, $documentName);
         }
 
-        if ($form["documentDate"]->getData() !== null) {
-            $creationDate = clone $form["documentDate"]->getData();
-            if ($form["documentExpires"]->getData() === null) {
-                switch ($form["category"]->getData()->getCategoryName()) {
-                    case "Pažymos":
-                        $creationDate->modify('+8 day');
-                        break;
-                    default:
-                        $creationDate = null;
-                }
-                $document->setDocumentExpires($creationDate);
-            }
-        }
+        
 
 
         $this->em->persist($document);
