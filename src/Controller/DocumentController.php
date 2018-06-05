@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Document;
 use App\Entity\Tag;
 use App\Service\DataService;
+use App\Service\Google\CalendarService;
 use App\Service\Google\DriveService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property DriveService drive
+ * @property CalendarService calendar
  */
 class DocumentController extends Controller
 {
@@ -21,9 +23,10 @@ class DocumentController extends Controller
      * DocumentController constructor.
      * @param DriveService $driveService
      */
-    public function __construct(DriveService $driveService)
+    public function __construct(DriveService $driveService, CalendarService $calendarService)
     {
         $this->drive = $driveService;
+        $this->calendar = $calendarService;
     }
 
     /**
@@ -65,12 +68,24 @@ class DocumentController extends Controller
         $reminder = $request->request->get('documentReminder');
         $notes = $request->request->get('documentNotes');
         $tags = $request->request->get('checkbox');
-
+        $files = $request->files->get('files');
 
         $document = $this->getDoctrine()->getRepository(Document::class)
             ->findOneBy(["id" => $id]);
         $category = $this->getDoctrine()->getRepository(Category::class)
             ->findOneBy(["id" => $category]);
+
+        if (sizeof($files) > 0) {
+            $this->drive->storageInit();
+            foreach ($files as $file) {
+                $originalName = $file->getClientOriginalName();
+                $filePath = $file->getpathName();
+                $this->drive->saveFiles($filePath, $name, $originalName);
+            }
+            if ($document->getDocumentPath() === null) {
+                $document->setDocumentPath($this->drive->getFolderLink($name));
+            }
+        }
 
         $document->setDocumentName($name);
         $document->setCategory($category);
@@ -126,8 +141,10 @@ class DocumentController extends Controller
 
         $file = $this->getDoctrine()->getRepository(Document::class)->findOneBy(["id" => $id]);
         $documentPath = $file->getDocumentPath();
+        $documentReminder = $file->getDocumentReminder();
+
         if ($documentPath) {
-            $this->drive->deleteFiles($documentPath);
+            $this->calendar->deleteReminder($documentReminder);
         }
 
         $entityManager = $this->getDoctrine()->getManager();

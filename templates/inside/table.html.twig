@@ -14,10 +14,7 @@
                 <th>Veiksmai</th>
             </tr>
             </thead>
-
-
             {% for file in files %}
-
                 <tr>
                     <td>{{ file.documentName }}</td>
                     <td>{{ file.getCategory().getCategoryName() }}</td>
@@ -29,7 +26,7 @@
                     {% if file.DocumentPath == NULL %}
                         <td></td>
                     {% else %}
-                        <td><a href="{{ file.DocumentPath }}"><img src="{{ asset('images/drive-icon.png') }}" alt="Priedai"></a></td>
+                        <td><a target="_blank" href="{{ file.DocumentPath }}"><img src="{{ asset('images/drive-icon.png') }}" alt="Priedai"></a></td>
                     {% endif %}
                     {% if file.DocumentDate == NULL %}
                         <td></td>
@@ -117,7 +114,6 @@
                         {% else %}
                             <div class="tabContent">{{ file.DocumentReminder | date("Y-m-d") }}</div>
                         {% endif %}
-
                         <div class="tabName">Pastabos: </div>
                         {% if file.DocumentNotes == NULL %}
                             <div class="tabContent"><br></div>

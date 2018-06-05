@@ -7,10 +7,8 @@ use App\Entity\Document;
 use App\Entity\Tag;
 
 use App\Form\DocumentType;
-use App\Service\Google\CalendarService;
 use App\Service\SaveDocument;
-use DateInterval;
-use DateTime;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +22,11 @@ class HomeController extends Controller
      * @param Request $request
      * @param AuthorizationCheckerInterface $authChecker
      * @param SaveDocument $saveDocument
-     * @param CalendarService $calendarService
+     * @param ValidatorInterface $validator
      * @return Response
+     * @throws \Exception
      */
-    public function index(Request $request, AuthorizationCheckerInterface $authChecker, SaveDocument $saveDocument, CalendarService $calendarService) : Response
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker, SaveDocument $saveDocument, ValidatorInterface $validator) : Response
     {
         if (false === $authChecker->isGranted('ROLE_USER')) {
             return $this->render('home/index.html.twig', []);
@@ -43,7 +42,6 @@ class HomeController extends Controller
             $tags = $this->getDoctrine()->getRepository(Tag::class)
                 ->tagFiles($user);
 
-
             /* Form */
             $document = new Document();
             $form = $this->createForm(DocumentType::class, $document);
@@ -53,6 +51,8 @@ class HomeController extends Controller
                 $saveDocument->createDocument($form, $user);
                 return $this->redirect("/");
             }
+
+
 
             return $this->render('home/home.html.twig', [
                 'form' => $form->createView(),

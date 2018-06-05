@@ -70,7 +70,7 @@ class DocumentType extends AbstractType
                 'mapped' => false,
                 'multiple' => true,
                 'attr'     => [
-                    'accept' => 'image/*',
+                    'accept' => 'application/zip, text/plain, application/pdf, image/*',
                     'multiple' => 'multiple',
                     'capture'=> 'camera'
                 ]

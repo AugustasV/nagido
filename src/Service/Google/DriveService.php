@@ -73,7 +73,7 @@ class DriveService
         }
     }
 
-    public function saveFiles($filePath, $fileName, $documentName)
+    public function saveFiles($filePath, $documentName, $originalName)
     {
         $Id = $this->createFolder($documentName);
         $service = $this->getClient();
@@ -84,7 +84,7 @@ class DriveService
 
         //New file
         $file = new Google_Service_Drive_DriveFile(array(
-            'name' => $fileName,
+            'name' => $originalName,
             'mimeType' => $mime_type,
             'description' => 'This is a '.$mime_type.' document',
             'parents' => array($Id)

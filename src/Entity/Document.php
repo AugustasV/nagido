@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DocumentRepository")
@@ -20,6 +21,11 @@ class Document
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Laukas turi būti užpildytas!")
+     * @Assert\Length(
+     *      max = 130,
+     *      maxMessage = "Simbolių limitas: {{ limit }}!"
+     * )
      */
     private $documentName;
 
@@ -30,6 +36,7 @@ class Document
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan("today UTC", message="Priminimas neturėtų būti praeityje!")
      */
     private $documentReminder;
 
@@ -40,6 +47,10 @@ class Document
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      max = 130,
+     *      maxMessage = "Simbolių limitas: {{ limit }}!"
+     * )
      */
     private $documentNotes;
 

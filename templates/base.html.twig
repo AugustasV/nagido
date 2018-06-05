@@ -561,15 +561,19 @@
             $("#js-add-Tag").on("click", (e) => {
                 e.preventDefault();
                 var name = $( "#js-new-tag" ).val();
-
-                $("#tagss").append(
-                    $('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ name +"\">"+ name +"")
-                );
+                if (name.length >= 3) {
+                    $("#tagss").append(
+                        $('<label class="tagBadge">').html("<input checked type=\"checkbox\" name=\"checkbox[]\" value=\""+ name +"\">"+ name +"")
+                    );
+                    $("#js-new-tag").attr("placeholder", "Pridėti etiketę");
+                } else {
+                    $("#js-new-tag").attr("placeholder", "Maziausiau 3 simboliai");
+                }
 
                 $( "#js-new-tag" ).val("");
             });
 
-            $('#newDocumentWindow form').submit(function() {
+            $('#newDocumentWindow form, #editDocumentWindow form').submit(function() {
                 $('.loader-wrapper').css('visibility', 'visible');
             });
 

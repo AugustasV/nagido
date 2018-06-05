@@ -57,19 +57,33 @@ class SaveDocument
         if (sizeof($files) > 0) {
             $this->drive->storageInit();
             foreach ($files as $file) {
-                $fileName = $file->getfileName();
+                $originalName = $file->getClientOriginalName();
                 $filePath = $file->getpathName();
-                $this->drive->saveFiles($filePath, $fileName, $documentName);
+                $this->drive->saveFiles($filePath, $documentName, $originalName);
             }
             $document->setDocumentPath($this->drive->getFolderLink($documentName));
         }
 
         if ($documentReminder) {
-            $datetime = $documentReminder->sub(new DateInterval('PT3H'));
+            $datetime = $documentReminder->sub(new DateInterval('PT0H'));
             $datetime = $datetime->format(DateTime::ATOM);
-            $documentPath = $this->drive->getFolderLink($documentName);
-            $this->calendar->setDate($datetime, $documentNotes, $documentName, $documentPath);
+            $this->calendar->setDate($datetime, $documentNotes, $documentName);
         }
+
+        if ($form["documentDate"]->getData() !== null) {
+            $creationDate = clone $form["documentDate"]->getData();
+            if ($form["documentExpires"]->getData() === null) {
+                switch ($form["category"]->getData()->getCategoryName()) {
+                    case "Pažymos":
+                        $creationDate->modify('+8 day');
+                        break;
+                    default:
+                        $creationDate = null;
+                }
+                $document->setDocumentExpires($creationDate);
+            }
+        }
+
 
         $this->em->persist($document);
         $this->em->flush();
