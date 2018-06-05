@@ -1,7 +1,7 @@
 {% block list1 %}
     <ul id="ul1">
         <li class="countWrapper">
-            <a id="documents">
+            <a href="{{ path('index') }}" id="documents">
                 <div>
                     <img src="{{ asset('images/paper.png') }}" alt="Dokumentas"/>
                     <span class="sideList">Dokumentai</span>  <span class="count">{{ documentCount }}</span>

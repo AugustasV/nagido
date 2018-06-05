@@ -417,6 +417,7 @@
 
             //Ajax call \\ Categories
             $(document).on('click', '.category-list', function (e) {
+                $('.loader-wrapper').css('visibility', 'visible');
                 $.ajax({
                     type: 'POST',
                     url: '{{ path('category') }}',
@@ -425,6 +426,7 @@
                         category: $(e.currentTarget).data("category")
                     },
                     success: function(objResponse) {
+                        $('.loader-wrapper').css('visibility', 'hidden');
                         addData(objResponse);
                     }
                 });
@@ -448,6 +450,7 @@
 
             //Ajax call \\ Tags
             $(document).on('click', '.tag-list', function (e) {
+                $('.loader-wrapper').css('visibility', 'visible');
                 $.ajax({
                     type: 'POST',
                     url: '{{ path('tag') }}',
@@ -456,6 +459,7 @@
                         category: $(e.currentTarget).data("tag")
                     },
                     success: function(objResponse) {
+                        $('.loader-wrapper').css('visibility', 'hidden');
                         addData(objResponse);
                     }
                 });
@@ -463,21 +467,21 @@
             });
 
             //Ajax call \\ All documents
-            $(document).on('click', '#documents', function (e) {
-                $('.loader-wrapper').css('visibility', 'visible');
-                $.ajax({
-                    type: 'GET',
-                    url: '{{ path('documents') }}',
-                    dataType: 'JSON',
-                    data: {
-                    },
-                    success: function(objResponse) {
-                        $('.loader-wrapper').css('visibility', 'hidden');
-                        addData(objResponse);
-                    }
-                });
+            {#$(document).on('click', '#documents', function (e) {#}
+                {#$('.loader-wrapper').css('visibility', 'visible');#}
+                {#$.ajax({#}
+                    {#type: 'GET',#}
+                    {#url: '{{ path('documents') }}',#}
+                    {#dataType: 'JSON',#}
+                    {#data: {#}
+                    {#},#}
+                    {#success: function(objResponse) {#}
+                        {#$('.loader-wrapper').css('visibility', 'hidden');#}
+                        {#addData(objResponse);#}
+                    {#}#}
+                {#});#}
 
-            });
+            {#});#}
 
             $(document).on('click', '.delete', function (e) {
                 $.ajax({
