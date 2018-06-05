@@ -464,22 +464,7 @@
 
             });
 
-            //Ajax call \\ All documents
-            $(document).on('click', '#documents', function (e) {
-                $('.loader-wrapper').css('visibility', 'visible');
-                $.ajax({
-                    type: 'GET',
-                    url: '{{ path('documents') }}',
-                    dataType: 'JSON',
-                    data: {
-                    },
-                    success: function(objResponse) {
-                        $('.loader-wrapper').css('visibility', 'hidden');
-                        addData(objResponse);
-                    }
-                });
 
-            });
 
             $(document).on('click', '.delete', function (e) {
                 $.ajax({
