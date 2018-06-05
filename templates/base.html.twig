@@ -432,21 +432,7 @@
                 });
             });
 
-            //Ajax call \\ Reminders
-            $(document).on('click', '#reminder', function (e) {
-                $('.loader-wrapper').css('visibility', 'visible');
-                $.ajax({
-                    type: 'GET',
-                    url: '{{ path('reminder') }}',
-                    dataType: 'JSON',
-                    data: {
-                    },
-                    success: function(objResponse) {
-                        $('.loader-wrapper').css('visibility', 'hidden');
-                        addData(objResponse);
-                    }
-                });
-            });
+            
 
             //Ajax call \\ Tags
             $(document).on('click', '.tag-list', function (e) {
